@@ -12,3 +12,6 @@ Imports:
     methods (>= 4.4.0),
     RCurl (>= 1.98.1.17),
     rtracklayer (>= 1.64.0)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

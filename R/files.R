@@ -298,6 +298,54 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
   return(local_file)
 }
 
+#' @title Load a GTF or GFF3 file from GENCODE as a data frame.
+#'
+#' @description This function imports a GTF or GFF3 file (commonly from the GENCODE website) and converts it into a data frame.
+#' The function provides flexibility for users to work with genomic feature files easily in the R environment.
+#'
+#' @usage load_file(filename)
+#' @param filename A character string representing the path to the GTF or GFF3 file (e.g., "gencode.vM36.annotation.gtf.gz").
+#' The file could be in GTF or GFF3 format and must be downloaded from a reliable source like GENCODE.
+#'
+#' @return A data frame containing the parsed content of the GTF or GFF3 file.
+#' The data frame includes standard columns such as 'seqnames', 'start', 'end', 'strand', 'feature', and 'gene_id', among others.
+#'
+#' @details The function uses the `rtracklayer` package to import the GTF or GFF3 file and returns it as a data frame.
+#' The user should ensure that the input file is properly formatted and accessible from the specified path.
+#' Files larger than a few hundred MBs may take longer to load and process.
+#'
+#' @examples
+#' \dontrun{
+#' # Load a GTF file from GENCODE
+#' mouse_v36_gtf <- load_file(filename = "gencode.vM36.annotation.gtf.gz")
+#' head(mouse_v36_gtf)  # Preview the first few rows of the data frame
+#'
+#' # Load a GFF3 file if required
+#' df_gff3 <- load_file("example.gff3")
+#' head(df_gff3)  # Preview the first few rows of the data frame
+#' }
+#' @importFrom rtracklayer import
+#' @importFrom methods is
+#' @export
+#' @keywords import, GENCODE, GTF, GFF3
 
+load_file <- function(filename) {
+  if (!is.character(filename) || length(filename) != 1) {
+    stop("The 'filename' parameter must be a single character string representing the file path.")
+  }
+  if (!file.exists(filename)) {
+    stop("The specified file does not exist. Please check the file path.")
+  }
+  gtf <- tryCatch({
+    rtracklayer::import(filename)
+  }, error = function(e) {
+    stop("Error importing the file. Please ensure the file is in GTF or GFF3 format: ", e$message)
+  })
+  if (!methods::is(gtf, "GRanges")) {
+    stop("The imported file is not in a valid GRanges format. Please check the file format.")
+  }
+  df <- as.data.frame(gtf)
+  return(df)
+}
 
 

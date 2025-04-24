@@ -3,5 +3,8 @@
 export(get_gff3)
 export(get_gtf)
 export(get_latest_release)
+export(load_file)
 importFrom(RCurl,getURL)
+importFrom(methods,is)
+importFrom(rtracklayer,import)
 importFrom(utils,download.file)

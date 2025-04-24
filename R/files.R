@@ -60,6 +60,244 @@ get_latest_release <- function(species, verbose = TRUE) {
   return(latest_release)
 }
 
+#' @title Download GTF File from the GENCODE Database
+#'
+#' @description
+#'  Downloads a GTF file for a specified species, release version, and annotation type from the GENCODE database.
+#' The file is saved to a user-specified directory or the current working directory by default.
+#'
+#' @usage
+#' get_gtf(species, release_version, annotation_type, dest_folder)
+#'
+#' @param species A character string indicating the species. Supported values are:
+#'   - "human"
+#'   - "mouse"
+#' @param release_version A character string specifying the release version. Options include:
+#'   - "latest_release": Automatically fetches the latest release for the specified species.
+#'   - "release_X": Specific human release (e.g., "release_47").
+#'   - "release_MX": Specific mouse release (e.g., "release_M36").
+#' @param annotation_type A character string specifying the annotation type. Valid options are:
+#'   - "annotation.gtf.gz"
+#'   - "basic.annotation.gtf.gz"
+#'   - "chr_patch_hapl_scaff.annotation.gtf.gz"
+#'   - "chr_patch_hapl_scaff.basic.annotation.gtf.gz"
+#'   - "long_noncoding_RNAs.gtf.gz"
+#'   - "primary_assembly.annotation.gtf.gz"
+#'   - "primary_assembly.basic.annotation.gtf.gz"
+#'   - "tRNAs.gtf.gz"
+#'   - "polyAs.gtf.gz"
+#' @param dest_folder A character string specifying the destination folder where the file will be downloaded. Defaults to the current working directory.
+#'
+#' @return A character string specifying the path to the downloaded GTF file.
+#'
+#' @details
+#' The function dynamically determines the correct file URL based on the provided parameters and downloads the GTF file to the desired location.
+#' If "latest_release" is specified for `release_version`, the function will first determine the latest available release using `get_latest_release()`.
+#'
+#'
+#' @examples
+#' # Download the latest human GTF file with primary assembly annotations
+#' \dontrun{
+#' gtf_file <- get_gtf(
+#'   species = "human",
+#'   release_version = "latest_release",
+#'   annotation_type = "primary_assembly.basic.annotation.gtf.gz"
+#' )
+#' print(gtf_file)
+#'
+#' # Download a specific mouse release with long noncoding RNA annotations
+#' gtf_file <- get_gtf(
+#'   species = "mouse",
+#'   release_version = "release_M36",
+#'   annotation_type = "long_noncoding_RNAs.gtf.gz",
+#'   dest_folder = "~/Downloads"
+#' )
+#' print(gtf_file)
+#' }
+#'
+#' @importFrom utils download.file
+#' @export
+#' @keywords GENCODE, GTF, annotations, download
+
+get_gtf <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
+  if (!species %in% c("human", "mouse")) {
+    stop("Invalid species. Please use 'human' or 'mouse'.")
+  }
+
+  if (!release_version %in% c("latest_release") && !grepl("^release_M\\d+$", release_version) && !grepl("^release_\\d+$", release_version)) {
+    stop("Invalid release version. Please use 'release_MX' for mouse (e.g., release_M36), or 'release_X' for human, or 'latest_release'.")
+  }
+
+  valid_annotation_types <- c(
+    "annotation.gtf.gz",
+    "basic.annotation.gtf.gz",
+    "chr_patch_hapl_scaff.annotation.gtf.gz",
+    "chr_patch_hapl_scaff.basic.annotation.gtf.gz",
+    "long_noncoding_RNAs.gtf.gz",
+    "primary_assembly.annotation.gtf.gz",
+    "primary_assembly.basic.annotation.gtf.gz",
+    "tRNAs.gtf.gz",
+    "polyAs.gtf.gz"
+  )
+
+  if (!annotation_type %in% valid_annotation_types) {
+    stop("Invalid annotation type. Please use one of the following: ", paste(valid_annotation_types, collapse = ", "))
+  }
+  base_url <- switch(species,
+                     human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+                     mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/")
+
+  # Resolve the release version
+  if (release_version == "latest_release") {
+    release_version <- get_latest_release(species)
+  }
+
+  if (species == "mouse") {
+    # Mouse uses the vM<number> naming scheme
+    version_prefix <- paste0("vM", gsub("release_M", "", release_version))
+  } else {
+    version_prefix <- paste0("v", gsub("release_", "", release_version))
+  }
+  file_name <- paste0("gencode.", version_prefix, ".", annotation_type)
+  file_url <- paste0(base_url, release_version, "/", file_name)
+  local_file <- file.path(dest_folder, file_name)
+  message("Downloading GTF file from ", file_url)
+  download_result <- tryCatch({
+    download.file(file_url, destfile = local_file, mode = "wb")
+    TRUE
+  }, error = function(e) {
+    message("Error downloading file: ", e$message)
+    FALSE
+  })
+  if (!download_result) {
+    stop("Failed to download the GTF file. Please check the URL or your internet connection.")
+  }
+  message("GTF file downloaded successfully: ", local_file)
+  return(local_file)
+}
+
+
+#' @title Download GFF3 File from the GENCODE Database
+#'
+#' @description
+#' Downloads a GFF3 file for a specified species, release version, and annotation type from the GENCODE database.
+#' The file is saved to a user-specified directory or the current working directory by default.
+#'
+#' @usage
+#' get_gff3(species, release_version, annotation_type, dest_folder)
+#'
+#' @param species A character string indicating the species. Supported values are:
+#'   - "human"
+#'   - "mouse"
+#'
+#' @param release_version A character string specifying the release version. Options include:
+#'   - "latest_release": Fetches the latest release for the species.
+#'   - "release_X": Specific release version for human (e.g., "release_42").
+#'   - "release_MX": Specific release version for mouse (e.g., "release_M36").
+#'
+#' @param annotation_type A character string specifying the annotation type. Supported values include:
+#'   - "annotation.gff3.gz"
+#'   - "basic.annotation.gff3.gz"
+#'   - "chr_patch_hapl_scaff.annotation.gff3.gz"
+#'   - "chr_patch_hapl_scaff.basic.annotation.gff3.gz"
+#'   - "long_noncoding_RNAs.gff3.gz"
+#'   - "primary_assembly.annotation.gff3.gz"
+#'   - "primary_assembly.basic.annotation.gff3.gz"
+#'   - "tRNAs.gff3.gz"
+#'   - "polyAs.gff3.gz"
+#'
+#' @param dest_folder A character string specifying the destination folder. Defaults to the current working directory.
+#'
+#' @return
+#' A character string specifying the full path of the downloaded GFF3 file.
+#'
+#' @details
+#' The function dynamically determines the correct file URL based on the provided parameters and downloads the GFF3 file to the desired location.
+#' If "latest_release" is specified for `release_version`, the function will first determine the latest available release using `get_latest_release()`.
+#'
+#' @examples
+#' # Download the latest human GFF3 file with primary assembly annotations
+#' \dontrun{
+#' gff3_file <- get_gff3(
+#'   species = "human",
+#'   release_version = "latest_release",
+#'   annotation_type = "primary_assembly.basic.annotation.gff3.gz"
+#' )
+#' print(gff3_file)
+#' }
+#'
+#' # Download a specific mouse release with long noncoding RNA annotations
+#' \dontrun{
+#' gff3_file <- get_gff3(
+#'   species = "mouse",
+#'   release_version = "release_M36",
+#'   annotation_type = "long_noncoding_RNAs.gff3.gz",
+#'   dest_folder = "~/Downloads"
+#' )
+#' print(gff3_file)
+#' }
+#'
+#' @importFrom utils download.file
+#' @export
+#' @keywords GENCODE, GFF3, annotations, download
+
+get_gff3 <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
+  if (!species %in% c("human", "mouse")) {
+    stop("Invalid species. Please use 'human' or 'mouse'.")
+  }
+
+  if (!release_version %in% c("latest_release") && !grepl("^release_M\\d+$", release_version) && !grepl("^release_\\d+$", release_version)) {
+    stop("Invalid release version. Please use 'release_MX' for mouse (e.g., release_M36), or 'release_X' for human, or 'latest_release'.")
+  }
+
+  valid_annotation_types <- c(
+    "annotation.gff3.gz",
+    "basic.annotation.gff3.gz",
+    "chr_patch_hapl_scaff.annotation.gff3.gz",
+    "chr_patch_hapl_scaff.basic.annotation.gff3.gz",
+    "long_noncoding_RNAs.gff3.gz",
+    "primary_assembly.annotation.gff3.gz",
+    "primary_assembly.basic.annotation.gff3.gz",
+    "tRNAs.gff3.gz",
+    "polyAs.gff3.gz"
+  )
+
+  if (!annotation_type %in% valid_annotation_types) {
+    stop("Invalid annotation type. Please use one of the following: ", paste(valid_annotation_types, collapse = ", "))
+  }
+  base_url <- switch(species,
+                     human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+                     mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/")
+
+  # Resolve the release version
+  if (release_version == "latest_release") {
+    release_version <- get_latest_release(species)
+  }
+  if (species == "mouse") {
+    # Mouse uses the vM<number> naming scheme
+    version_prefix <- paste0("vM", gsub("release_M", "", release_version))
+  } else {
+    version_prefix <- paste0("v", gsub("release_", "", release_version))
+  }
+  file_name <- paste0("gencode.", version_prefix, ".", annotation_type)
+  file_url <- paste0(base_url, release_version, "/", file_name)
+  local_file <- file.path(dest_folder, file_name)
+  message("Downloading GFF3 file from ", file_url)
+  download_result <- tryCatch({
+    download.file(file_url, destfile = local_file, mode = "wb")
+    TRUE
+  }, error = function(e) {
+    message("Error downloading file: ", e$message)
+    FALSE
+  })
+  if (!download_result) {
+    stop("Failed to download the GFF3 file. Please check the URL or your internet connection.")
+  }
+
+  message("GFF3 file downloaded successfully: ", local_file)
+  return(local_file)
+}
+
 
 
 

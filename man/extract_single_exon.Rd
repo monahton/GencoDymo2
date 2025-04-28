@@ -54,7 +54,6 @@ print(single_exon_genes)
 single_exon_transcripts <- extract_single_exon(input, level = "transcript")
 print(single_exon_transcripts)
 
-
 }
 \seealso{
 \code{\link{extract_introns}}, \code{\link{load_file}}

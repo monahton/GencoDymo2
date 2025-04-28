@@ -33,7 +33,7 @@ gtf_v1 <- load_file(file_v1)
 suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
 suppressPackageStartupMessages(library(GenomicRanges))
 gtf_granges <- GRanges(gtf_v1)
-cds_seqs <- extract_cds_sequences(gtf_granges,BSgenome.Hsapiens.UCSC.hg38,save_fasta = FALSE)
+cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
 
 # Mouse CDS extraction
 # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)

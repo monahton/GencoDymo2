@@ -76,7 +76,7 @@ library(GencoDymo2)
 
 For details on how to use this package, please see the vignette.  
 Additional details on how to install and use GencoDymo2 are available on
-the following link:
+the following link: <https://monahton.github.io/GencoDymo2/>
 
 In case of problems installing or using the package, open an issue or
 send an email to <aboualezz.monah@hsr.it>.

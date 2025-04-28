@@ -1,0 +1,29 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c(
+    "BSgenome.Hsapiens.UCSC.hg38",
+    "transcript_id",
+    "intron_number",
+    "donor_ss",
+    "acceptor_ss",
+    "seqnames",
+    "intron_start",
+    "intron_end",
+    "strand",
+    "gene_name",
+    "gene_id",
+    "load_gtf",
+    "transcript_id",
+    "exon_count",
+    "Freq",
+    "type",
+    ".",
+    "width",
+    "EXON_CLASSIFICATION",
+    "group",
+    "median",
+    "quantile",
+    "sd",
+    "cryptic_acceptor",
+    "cryptic_donor"
+  ))
+}

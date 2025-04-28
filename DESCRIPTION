@@ -9,9 +9,22 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
+    Biostrings (>= 2.72.1),
+    BSgenome (>= 1.74.0),
+    data.table (>= 1.17.0),
+    dplyr (>= 1.1.4),
+    GenomicRanges (>= 1.56.2),
     methods (>= 4.4.0),
+    plotrix (>= 3.8.4),
+    progress (>= 1.2.3),
     RCurl (>= 1.98.1.17),
-    rtracklayer (>= 1.64.0)
+    rtracklayer (>= 1.64.0),
+    tidyr (>= 1.3.1),
+    tools (>= 4.4.0)
 Suggests: 
+    devtools (>= 2.4.5),
+    IRanges (>= 2.38.1),
+    knitr (>= 1.50),
+    rmarkdown (>= 2.29),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

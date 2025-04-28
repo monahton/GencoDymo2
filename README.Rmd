@@ -41,14 +41,14 @@ The **GENCODE** project [1], part of the ENCODE project [2], offers accurate ann
 
 You can install the development version of GencoDymo2 from GitHub with:
 
-```{r install}
+```{r install, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("monahton/GencoDymo2")
 ```
 
 After installation, load the package:
 
-```{r loading}
+```{r loading, eval=FALSE}
 library(GencoDymo2)
 ```
 

@@ -316,15 +316,11 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
 #' Files larger than a few hundred MBs may take longer to load and process.
 #'
 #' @examples
-#' \dontrun{
-#' # Load a GTF file from GENCODE
-#' mouse_v36_gtf <- load_file(filename = "gencode.vM36.annotation.gtf.gz")
-#' head(mouse_v36_gtf)
+#' # Load example GTF files from the package
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' head(gtf_v1)
 #'
-#' # Load a GFF3 file if required
-#' df_gff3 <- load_file("example.gff3")
-#' head(df_gff3)
-#' }
 #' @importFrom rtracklayer import
 #' @importFrom methods is
 #' @export

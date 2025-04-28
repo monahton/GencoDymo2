@@ -4,7 +4,7 @@
 #'
 #' @usage compare_release(input1, input2, type, gene_type = NULL, baseline = "count2")
 #'
-#'@param input1 A character string specifying the file path to a GTF/GFF file from the first GENCODE release, or a data frame containing the annotation data.
+#' @param input1 A character string specifying the file path to a GTF/GFF file from the first GENCODE release, or a data frame containing the annotation data.
 #' @param input2 A character string specifying the file path to a GTF/GFF file from the second GENCODE release, or a data frame containing the annotation data.
 #' @param type A character string indicating the type of genomic element to compare. Valid options are \code{"gene"}, \code{"transcript"}, \code{"exon"}, or \code{"intron"}.
 #' @param gene_type An optional character string specifying a particular gene biotype to filter comparisons (e.g., \code{"protein_coding"}, \code{"lncRNA"}). If \code{NULL} (default), all gene types are included.
@@ -53,7 +53,7 @@ compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "
   load_if_file <- function(input) {
     if (is.character(input) && file.exists(input)) {
       message("Loading data from file: ", input)
-      return(load_file(input))  # Assuming `load_file` function exists
+      return(load_file(input)) # Assuming `load_file` function exists
     } else if (is.data.frame(input)) {
       return(input)
     } else {
@@ -266,9 +266,9 @@ extract_element_by_strand <- function(input, type, strand, verbose = TRUE) {
     stop("Invalid 'strand' specified. Choose from: '+' or '-'.")
   }
   if (strand == "+") {
-    filtered_data <- filter(input, type == type & strand=="+")
+    filtered_data <- filter(input, type == type & strand == "+")
   } else {
-    filtered_data <- filter(input, type == type & strand=="-")
+    filtered_data <- filter(input, type == type & strand == "-")
   }
   element_count <- nrow(filtered_data)
   if (verbose) {
@@ -368,7 +368,6 @@ stat_summary <- function(input, type, verbose = TRUE) {
     }
     exons <- subset(input, type == "exon")
     data <- dplyr::select(exons, width, group = EXON_CLASSIFICATION)
-
   } else { # type == "intron"
     if (verbose) message("Classifying introns based on their properties...")
     data_list <- list(
@@ -383,24 +382,27 @@ stat_summary <- function(input, type, verbose = TRUE) {
   if (verbose) message("Calculating summary statistics...")
 
   # Calculate summary stats and allow NA for empty groups
-  stats <- tryCatch({
-    data %>%
-      dplyr::group_by(group) %>%
-      dplyr::summarise(
-        mean = mean(width, na.rm = TRUE),
-        median = median(width, na.rm = TRUE),
-        Q1 = quantile(width, 0.25, na.rm = TRUE),
-        Q3 = quantile(width, 0.75, na.rm = TRUE),
-        sd = sd(width, na.rm = TRUE),
-        std_error = plotrix::std.error(width, na.rm = TRUE),
-        N = dplyr::n(),
-        .groups = "drop"
-      ) %>%
-      dplyr::arrange(group)
-  }, error = function(e) {
-    warning("Error while calculating summary statistics: ", e$message)
-    return(data.frame())
-  })
+  stats <- tryCatch(
+    {
+      data %>%
+        dplyr::group_by(group) %>%
+        dplyr::summarise(
+          mean = mean(width, na.rm = TRUE),
+          median = median(width, na.rm = TRUE),
+          Q1 = quantile(width, 0.25, na.rm = TRUE),
+          Q3 = quantile(width, 0.75, na.rm = TRUE),
+          sd = sd(width, na.rm = TRUE),
+          std_error = plotrix::std.error(width, na.rm = TRUE),
+          N = dplyr::n(),
+          .groups = "drop"
+        ) %>%
+        dplyr::arrange(group)
+    },
+    error = function(e) {
+      warning("Error while calculating summary statistics: ", e$message)
+      return(data.frame())
+    }
+  )
 
   if (verbose) message("Summary statistics calculation completed.")
   return(as.data.frame(stats))
@@ -435,7 +437,6 @@ stat_summary <- function(input, type, verbose = TRUE) {
 #' @keywords gc content genomics
 
 calculate_gc_content <- function(input, genome, verbose = TRUE) {
-
   if (!methods::is(genome, "BSgenome")) {
     stop("The 'genome' argument must be a BSgenome object.")
   }
@@ -467,7 +468,7 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 
   # Add universal start and end for GRanges construction
   features$start_unified <- if ("start" %in% colnames(features)) features$start else features$intron_start
-  features$end_unified   <- if ("end" %in% colnames(features)) features$end else features$intron_end
+  features$end_unified <- if ("end" %in% colnames(features)) features$end else features$intron_end
 
   if (verbose) message("Creating GRanges object...")
   gr <- GenomicRanges::GRanges(
@@ -477,11 +478,14 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
   )
 
   if (verbose) message("Extracting sequences...")
-  seqs <- tryCatch({
-    BSgenome::getSeq(genome, gr)
-  }, error = function(e) {
-    stop("Error extracting sequences: ", e$message)
-  })
+  seqs <- tryCatch(
+    {
+      BSgenome::getSeq(genome, gr)
+    },
+    error = function(e) {
+      stop("Error extracting sequences: ", e$message)
+    }
+  )
 
   if (verbose) message("Calculating GC content...")
   gc_content <- Biostrings::letterFrequency(seqs, letters = "GC", as.prob = TRUE)[, 1]
@@ -518,7 +522,6 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 #'   sequence = c("ATGCTAGCTAG", "GCTAGCTAGCT")
 #' )
 #' df_to_fasta(seq_data, "transcript_id", "sequence", temp_output)
-#'
 #'
 #' @importFrom progress progress_bar
 #' @export
@@ -586,7 +589,7 @@ df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose =
 #' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
 #' suppressPackageStartupMessages(library(GenomicRanges))
 #' gtf_granges <- GRanges(gtf_v1)
-#' cds_seqs <- extract_cds_sequences(gtf_granges,BSgenome.Hsapiens.UCSC.hg38,save_fasta = FALSE)
+#' cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
 #'
 #' # Mouse CDS extraction
 #' # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
@@ -609,7 +612,7 @@ extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, s
       stop("GTF file not found: ", input)
     }
     if (verbose) message("Loading GTF file...")
-    gtf <- load_file(input)  # returns GRanges
+    gtf <- load_file(input) # returns GRanges
   } else if (methods::is(input, "GRanges")) {
     if (verbose) message("Using provided GRanges object...")
     gtf <- input
@@ -628,11 +631,14 @@ extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, s
 
   if (verbose) message("Extracting CDS sequences from genome...")
 
-  cds_seqs <- tryCatch({
-    BSgenome::getSeq(genome, cds)
-  }, error = function(e) {
-    stop("Error extracting sequences from genome: ", e$message)
-  })
+  cds_seqs <- tryCatch(
+    {
+      BSgenome::getSeq(genome, cds)
+    },
+    error = function(e) {
+      stop("Error extracting sequences from genome: ", e$message)
+    }
+  )
 
   # Prepare output table
   cds_df <- as.data.frame(cds)
@@ -650,8 +656,3 @@ extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, s
   }
   return(cds_df)
 }
-
-
-
-
-

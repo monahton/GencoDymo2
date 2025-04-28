@@ -38,14 +38,15 @@ get_latest_release <- function(species, verbose = TRUE) {
     stop("Invalid species. Please use 'human' or 'mouse'.")
   }
   base_url <- switch(species,
-                     human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
-                     mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/")
+    human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+    mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/"
+  )
   url <- paste0(base_url, "/")
   ftp_contents <- RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
   # Remove HTML tags
   lines <- strsplit(ftp_contents, "\n")[[1]]
   releases <- grep("release_", lines, value = TRUE)
-  releases <- sub('.*href="([^"]+)".*', '\\1', releases)
+  releases <- sub('.*href="([^"]+)".*', "\\1", releases)
   releases <- trimws(releases)
   releases <- gsub("/", "", releases)
   releases <- releases[grepl("^release_", releases)]
@@ -145,8 +146,9 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
     stop("Invalid annotation type. Please use one of the following: ", paste(valid_annotation_types, collapse = ", "))
   }
   base_url <- switch(species,
-                     human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
-                     mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/")
+    human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+    mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/"
+  )
 
   # Resolve the release version
   if (release_version == "latest_release") {
@@ -163,13 +165,16 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
   file_url <- paste0(base_url, release_version, "/", file_name)
   local_file <- file.path(dest_folder, file_name)
   message("Downloading GTF file from ", file_url)
-  download_result <- tryCatch({
-    download.file(file_url, destfile = local_file, mode = "wb")
-    TRUE
-  }, error = function(e) {
-    message("Error downloading file: ", e$message)
-    FALSE
-  })
+  download_result <- tryCatch(
+    {
+      download.file(file_url, destfile = local_file, mode = "wb")
+      TRUE
+    },
+    error = function(e) {
+      message("Error downloading file: ", e$message)
+      FALSE
+    }
+  )
   if (!download_result) {
     stop("Failed to download the GTF file. Please check the URL or your internet connection.")
   }
@@ -237,7 +242,6 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #' )
 #' print(gff3_file)
 #'
-#'
 #' @importFrom utils download.file
 #' @export
 #' @keywords GENCODE, GFF3, annotations, download
@@ -267,8 +271,9 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
     stop("Invalid annotation type. Please use one of the following: ", paste(valid_annotation_types, collapse = ", "))
   }
   base_url <- switch(species,
-                     human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
-                     mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/")
+    human = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+    mouse = "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/"
+  )
 
   # Resolve the release version
   if (release_version == "latest_release") {
@@ -284,13 +289,16 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
   file_url <- paste0(base_url, release_version, "/", file_name)
   local_file <- file.path(dest_folder, file_name)
   message("Downloading GFF3 file from ", file_url)
-  download_result <- tryCatch({
-    download.file(file_url, destfile = local_file, mode = "wb")
-    TRUE
-  }, error = function(e) {
-    message("Error downloading file: ", e$message)
-    FALSE
-  })
+  download_result <- tryCatch(
+    {
+      download.file(file_url, destfile = local_file, mode = "wb")
+      TRUE
+    },
+    error = function(e) {
+      message("Error downloading file: ", e$message)
+      FALSE
+    }
+  )
   if (!download_result) {
     stop("Failed to download the GFF3 file. Please check the URL or your internet connection.")
   }
@@ -333,16 +341,17 @@ load_file <- function(filename) {
   if (!file.exists(filename)) {
     stop("The specified file does not exist. Please check the file path.")
   }
-  gtf <- tryCatch({
-    rtracklayer::import(filename)
-  }, error = function(e) {
-    stop("Error importing the file. Please ensure the file is in GTF or GFF3 format: ", e$message)
-  })
+  gtf <- tryCatch(
+    {
+      rtracklayer::import(filename)
+    },
+    error = function(e) {
+      stop("Error importing the file. Please ensure the file is in GTF or GFF3 format: ", e$message)
+    }
+  )
   if (!methods::is(gtf, "GRanges")) {
     stop("The imported file is not in a valid GRanges format. Please check the file format.")
   }
   df <- as.data.frame(gtf)
   return(df)
 }
-
-

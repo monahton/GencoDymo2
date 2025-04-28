@@ -199,7 +199,6 @@ extract_introns <- function(input, verbose = TRUE) {
 #' single_exon_transcripts <- extract_single_exon(input, level = "transcript")
 #' print(single_exon_transcripts)
 #'
-#'
 #' @seealso \code{\link{extract_introns}}, \code{\link{load_file}}
 #'
 #' @importFrom utils write.table
@@ -297,18 +296,21 @@ extract_single_exon <- function(input, level = "gene", output_file = NULL) {
 #' @keywords splice site donor acceptor introns genome sequence
 
 assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = TRUE) {
-
   log_message <- function(msg) {
     if (verbose) cat(paste0("\033[0;32m", msg, "\033[0m\n"))
   }
 
-  required_columns <- c("seqnames", "intron_start", "intron_end", "strand",
-                        "transcript_id", "intron_number", "gene_name", "gene_id")
+  required_columns <- c(
+    "seqnames", "intron_start", "intron_end", "strand",
+    "transcript_id", "intron_number", "gene_name", "gene_id"
+  )
 
   if (!is.data.frame(input) || !all(required_columns %in% colnames(input))) {
-    stop("Input must be a data frame containing the following columns: ",
-         paste(required_columns, collapse = ", "),
-         ". Did you run extract_introns on your input data?")
+    stop(
+      "Input must be a data frame containing the following columns: ",
+      paste(required_columns, collapse = ", "),
+      ". Did you run extract_introns on your input data?"
+    )
   }
 
   # Check if genome is loaded and valid
@@ -323,25 +325,28 @@ assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, ver
   prepare_splice_sites <- function(input, genome, site_type) {
     if (site_type == "donor") {
       input$start_ss <- ifelse(input$strand == "+", input$intron_start, input$intron_end - 1)
-      input$end_ss   <- ifelse(input$strand == "+", input$intron_start + 1, input$intron_end)
+      input$end_ss <- ifelse(input$strand == "+", input$intron_start + 1, input$intron_end)
     } else if (site_type == "acceptor") {
       input$start_ss <- ifelse(input$strand == "+", input$intron_end - 1, input$intron_start)
-      input$end_ss   <- ifelse(input$strand == "+", input$intron_end, input$intron_start + 1)
+      input$end_ss <- ifelse(input$strand == "+", input$intron_end, input$intron_start + 1)
     }
 
     # Attempt sequence extraction
-    ss_seq <- tryCatch({
-      BSgenome::getSeq(
-        genome,
-        names = input$seqnames,
-        start = input$start_ss,
-        end = input$end_ss,
-        strand = input$strand
-      )
-    }, error = function(e) {
-      msg <- paste("Failed to retrieve", site_type, "splice site sequences:", e$message)
-      stop(msg)
-    })
+    ss_seq <- tryCatch(
+      {
+        BSgenome::getSeq(
+          genome,
+          names = input$seqnames,
+          start = input$start_ss,
+          end = input$end_ss,
+          strand = input$strand
+        )
+      },
+      error = function(e) {
+        msg <- paste("Failed to retrieve", site_type, "splice site sequences:", e$message)
+        stop(msg)
+      }
+    )
 
     input[[paste0(site_type, "_ss")]] <- as.character(ss_seq)
     return(input)
@@ -356,11 +361,15 @@ assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, ver
   log_message("Merging donor and acceptor splice site data...")
   final_data <- input %>%
     dplyr::left_join(donor_data %>% dplyr::select(transcript_id, intron_number, donor_ss),
-                     by = c("transcript_id", "intron_number")) %>%
+      by = c("transcript_id", "intron_number")
+    ) %>%
     dplyr::left_join(acceptor_data %>% dplyr::select(transcript_id, intron_number, acceptor_ss),
-                     by = c("transcript_id", "intron_number")) %>%
-    dplyr::select(seqnames, intron_start, intron_end, strand, transcript_id,
-                  intron_number, gene_name, gene_id, donor_ss, acceptor_ss)
+      by = c("transcript_id", "intron_number")
+    ) %>%
+    dplyr::select(
+      seqnames, intron_start, intron_end, strand, transcript_id,
+      intron_number, gene_name, gene_id, donor_ss, acceptor_ss
+    )
 
   return(final_data)
 }
@@ -386,7 +395,7 @@ assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, ver
 #'   Default is `c("AG")`.
 #' @param verbose Logical; if `TRUE`, progress messages are printed. Default is `TRUE`.
 #'
-#'@return The input data frame with two logical columns:
+#' @return The input data frame with two logical columns:
 #' \itemize{
 #'   \item \code{cryptic_donor}: \code{TRUE} if donor site is non-canonical.
 #'   \item \code{cryptic_acceptor}: \code{TRUE} if acceptor site is non-canonical.
@@ -425,9 +434,11 @@ find_cryptic_splice_sites <- function(input, genome,
   if (!is.data.frame(input)) {
     stop("Input must be a data frame. Provided input is of type: ", class(input))
   }
-  required_cols <- c("seqnames", "intron_start", "intron_end", "strand",
-                     "transcript_id", "intron_number", "gene_name", "gene_id",
-                     "donor_ss", "acceptor_ss")
+  required_cols <- c(
+    "seqnames", "intron_start", "intron_end", "strand",
+    "transcript_id", "intron_number", "gene_name", "gene_id",
+    "donor_ss", "acceptor_ss"
+  )
   missing_cols <- setdiff(required_cols, colnames(input))
   if (length(missing_cols) > 0) {
     stop("Input data frame is missing the following required columns: ", paste(missing_cols, collapse = ", "))
@@ -493,10 +504,10 @@ find_cryptic_splice_sites <- function(input, genome,
 #' introns <- extract_introns(gtf_v1)
 #' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
 #' # Extract donor splice site motifs
-#' motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,"5ss",verbose = FALSE)
+#' motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, "5ss", verbose = FALSE)
 #'
 #' # Extract acceptor splice site motifs without saving the FASTA file
-#' motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,type="3ss",verbose = FALSE)
+#' motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, type = "3ss", verbose = FALSE)
 #'
 #' @seealso \code{\link{assign_splice_sites}}, \code{\link{df_to_fasta}}
 #'
@@ -542,10 +553,11 @@ extract_ss_motif <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, type =
     cat(paste0("\033[0;32mPreparing ", motif_label, " sequences ... \033[0m\n"))
   }
   motifs <- as.data.frame(BSgenome::getSeq(genome,
-                                           df$seqnames,
-                                           start = df$motif_start,
-                                           end = df$motif_end,
-                                           strand = df$strand))
+    df$seqnames,
+    start = df$motif_start,
+    end = df$motif_end,
+    strand = df$strand
+  ))
   colnames(motifs)[1] <- motif_label
   df2 <- cbind(df, motifs)
   if (save_fasta) {
@@ -556,8 +568,7 @@ extract_ss_motif <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, type =
       output_file <- ifelse(type == "5ss", "5ss_motif_fasta.fa", "3ss_motif_fasta.fa")
     }
     df2$fasta_id <- paste0(df2$transcript_id, ";", df2$intron_number)
-    df_to_fasta(df2, id_col = "fasta_id", seq_col = motif_label, output_file = output_file, verbose = TRUE
-    )
+    df_to_fasta(df2, id_col = "fasta_id", seq_col = motif_label, output_file = output_file, verbose = TRUE)
     df2$fasta_id <- NULL
   }
   return(df2)

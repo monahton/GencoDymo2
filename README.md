@@ -44,6 +44,19 @@ sites. Moreover, GencoDymo2 can produce FASTA files of donor and
 acceptor splice site motifs that can be directly uploaded to the
 MaxEntScan tool \[3\] for the calculation of splice site scores.
 
+1.  Frankish, A., Diekhans, M., Ferreira, A.M., et al. (2023). *GENCODE:
+    reference annotation for the human and mouse genomes in 2023*.
+    Nucleic Acids Research, 51(D1), D942–D949.
+    <https://doi.org/10.1093/nar/gkac1071>​
+2.  ENCODE Project Consortium. (2012). *An integrated encyclopedia of
+    DNA elements in the human genome*. Nature, 489(7414), 57–74.
+    <https://doi.org/10.1038/nature11247>​
+3.  Yeo, G., & Burge, C.B. (2004). *Maximum entropy modeling of short
+    sequence motifs with applications to RNA splicing signals*. Journal
+    of Computational Biology, 11(2-3), 377–394.
+
+<br>
+
 ## Installation
 
 You can install the development version of GencoDymo2 from GitHub with:

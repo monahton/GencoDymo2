@@ -36,7 +36,8 @@ Imports:
 Suggests: 
     devtools (>= 2.4.5),
     IRanges (>= 2.38.1),
-    knitr (>= 1.50),
-    rmarkdown (>= 2.29),
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

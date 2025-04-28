@@ -536,4 +536,4 @@ The following provides the session information used when compiling this document
 2. ENCODE Project Consortium. (2012). _An integrated encyclopedia of DNA elements in the human genome_. Nature, 489(7414), 57–74. https://doi.org/10.1038/nature11247​
 3. Yeo, G., & Burge, C.B. (2004). _Maximum entropy modeling of short sequence motifs with applications to RNA splicing signals_. Journal of Computational Biology, 11(2-3), 377–394. https://doi.org/10.1089/1066527041410418​
 4. Parada GE, Munita R, Cerda CA and Gysling K. _“A comprehensive survey of non-canonical splice sites in the human transcriptome”_. Nucleic Acids Res. 2014. 42: 10564-10578. doi: 10.1093/nar/gku744.
-5. Abou Alezz M, Celli L, Belotti G, Lisa A and Bione S. _"Unexpected features of GC-AG introns in long non-coding and protein-coding genes suggest a new role as regulatory elements"_. bioRxiv. 2019. doi: 10.1101/683938
+5. Abou Alezz, M., Celli, L., Belotti, G., et al. (2020). _GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation_. Front. Genet. 2020 11:488. https://doi:10.3389/fgene.2020.00488

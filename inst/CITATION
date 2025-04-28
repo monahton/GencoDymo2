@@ -1,0 +1,13 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs",
+  author   = c(
+    person("Monah", "Abou Alezz", email = "aboualezz.monah@hsr.it", role = c("aut", "cre", "cph")),
+    person("Lorenzo", "Salviati", email = "lorenzo.salviati01@universitadipavia.it", role = "ctb"),
+    person("Roberta", "Alfieri", email = "roberta.alfieri@igm.cnr.it", role = "ctb"),
+    person("Silvia", "Bione", email = "bione@igm.cnr.it", role = "ctb")
+  ),
+  year     = "2025",
+  note     = "R package version 1.0.0.9000",
+  url      = "https://github.com/monahton/GencoDymo2"
+)

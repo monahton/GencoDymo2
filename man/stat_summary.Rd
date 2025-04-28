@@ -23,13 +23,13 @@ Calculates descriptive summary statistics (mean, median, standard deviation, etc
 For exons, statistics are grouped by \code{EXON_CLASSIFICATION}. For introns, groups include \code{first_intron}, \code{inner_intron}, and splice site types (e.g., \code{gc_intron}).
 }
 \examples{
-\dontrun{
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
 # Exon statistics
-exon_stats <- stat_summary(exon_df, type = "exon")
+exon_stats <- stat_summary(gtf_v1, type = "exon")
 
 # Intron statistics
-intron_stats <- stat_summary(intron_df, type = "intron")
-}
+# intron_stats <- stat_summary(gtf_v1, type = "intron")
 
 }
 \keyword{genomics}

@@ -21,13 +21,12 @@ Removes redundant genomic elements (exons or introns) from a data frame, ensurin
 This function uses genomic coordinates (chromosome, start, end) and gene ID to identify and remove duplicate entries. For exons, coordinates are directly compared. For introns, coordinates are derived from \code{intron_start} and \code{intron_end} columns (check \code{extract_introns} function for more details)
 }
 \examples{
-\dontrun{
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
 # Eliminate redundant exons
-nonredundant_exons <- eliminate_redundant_elements(exon_df, element_type = "exon")
-
+nonredundant_exons <- eliminate_redundant_elements(gtf_v1, element_type = "exon")
 # Eliminate redundant introns
-nonredundant_introns <- eliminate_redundant_elements(intron_df, element_type = "intron")
-}
+# nonredundant_introns <- eliminate_redundant_elements(gtf_v1, element_type = "intron")
 
 }
 \keyword{elements}

@@ -34,14 +34,15 @@ The function processes the input GTF data to:
 If \code{verbose = TRUE}, the function prints counts of each exon type.
 }
 \examples{
-\dontrun{
-# Using a GTF file
-gtf_df <- classify_exons("gencode.v27.gtf")
 
-# Using a pre-loaded data frame
-data <- load_gtf("gencode.v27.gtf")
-classified_data <- classify_exons(data)
-}
+# Example 1: Using the provided example GTF files
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- classify_exons(file_v1)
+
+# Example 2: Using a pre-loaded data frame
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+classified_data_v1 <- classify_exons(gtf_v1)
 
 }
 \keyword{classification}

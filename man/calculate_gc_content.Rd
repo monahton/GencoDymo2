@@ -23,11 +23,10 @@ Computes the GC content percentage for exons or introns using genome sequence da
 This function extracts the DNA sequence for each feature using genomic coordinates, then calculates the proportion of G and C nucleotides. Requires a BSgenome package for the relevant genome.
 }
 \examples{
-\dontrun{
 library(BSgenome.Hsapiens.UCSC.hg38)
-gtf_data <- load_gtf("gencode.v41.gtf")
-gtf_with_gc <- calculate_gc_content(gtf_data, BSgenome.Hsapiens.UCSC.hg38)
-}
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+gtf_with_gc <- calculate_gc_content(gtf_v1, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = FALSE)
 
 }
 \keyword{content}

@@ -32,19 +32,19 @@
 #' The function provides both numerical results and a formatted console output highlighting key metrics.
 #'
 #' @examples
-#' \dontrun{
-#' # Example 1: Using data frames
-#' gtf_v27 <- load_file("gencode.v27.annotation.gtf")
-#' gtf_v28 <- load_file("gencode.v28.annotation.gtf")
-#' comparison <- compare_release(gtf_v27, gtf_v28, type = "gene")
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' file_v2 <- system.file("extdata", "gencode.v2.example.gtf.gz", package = "GencoDymo2")
+#' # Example 1: Using data frames with the provided example GTF files
+#' gtf_v1 <- load_file(file_v1)
+#' gtf_v2 <- load_file(file_v2)
+#' comparison <- compare_release(gtf_v1, gtf_v2, type = "gene")
 #'
 #' # Example 2: Using file paths
-#' comparison <- compare_release("gencode.v27.gtf", "gencode.v28.gtf", type = "exon")
+#' # comparison <- compare_release(file_v1, file_v2, type = "exon")
 #'
-#' # Example 3: Specifying a gene_type and baseline
-#' lncRNA_comparison <- compare_release(gtf_v27, gtf_v28, type = "transcript",
-#'                                      gene_type = "lncRNA", baseline = "average")
-#' }
+#' # Example 3: Specifying a gene_type and baseline if applicable
+#' # comparison<-compare_release(gtf_v1,gtf_v2,"gene",gene_type="protein_coding",baseline = "average")
+#'
 #' @seealso \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.
 #' @export
 #' @keywords gencode comparison annotation releases delta
@@ -122,14 +122,15 @@ compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "
 #' If \code{verbose = TRUE}, the function prints counts of each exon type.
 #'
 #' @examples
-#' \dontrun{
-#' # Using a GTF file
-#' gtf_df <- classify_exons("gencode.v27.gtf")
 #'
-#' # Using a pre-loaded data frame
-#' data <- load_gtf("gencode.v27.gtf")
-#' classified_data <- classify_exons(data)
-#' }
+#' # Example 1: Using the provided example GTF files
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- classify_exons(file_v1)
+#'
+#' # Example 2: Using a pre-loaded data frame
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' classified_data_v1 <- classify_exons(gtf_v1)
 #'
 #' @import dplyr
 #' @export
@@ -138,7 +139,7 @@ compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "
 classify_exons <- function(input, verbose = TRUE) {
   if (is.character(input)) {
     if (verbose) message("Loading GTF file: ", input)
-    gtf <- load_gtf(input)
+    gtf <- load_file(input)
   } else if (is.data.frame(input)) {
     if (verbose) message("Using input dataframe...")
     gtf <- input
@@ -179,8 +180,6 @@ classify_exons <- function(input, verbose = TRUE) {
   return(gtf_class)
 }
 
-
-
 #' @title Eliminate Redundant Genomic Elements
 #' @description Removes redundant genomic elements (exons or introns) from a data frame, ensuring each element is uniquely represented. Redundancy is determined by genomic coordinates and gene ID.
 #'
@@ -194,13 +193,12 @@ classify_exons <- function(input, verbose = TRUE) {
 #' @details This function uses genomic coordinates (chromosome, start, end) and gene ID to identify and remove duplicate entries. For exons, coordinates are directly compared. For introns, coordinates are derived from \code{intron_start} and \code{intron_end} columns (check \code{extract_introns} function for more details)
 #'
 #' @examples
-#' \dontrun{
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
 #' # Eliminate redundant exons
-#' nonredundant_exons <- eliminate_redundant_elements(exon_df, element_type = "exon")
-#'
+#' nonredundant_exons <- eliminate_redundant_elements(gtf_v1, element_type = "exon")
 #' # Eliminate redundant introns
-#' nonredundant_introns <- eliminate_redundant_elements(intron_df, element_type = "intron")
-#' }
+#' # nonredundant_introns <- eliminate_redundant_elements(gtf_v1, element_type = "intron")
 #'
 #' @importFrom tidyr unite
 #' @importFrom data.table rleidv
@@ -243,13 +241,13 @@ eliminate_redundant_elements <- function(input, element_type = "exon") {
 #' @details This function filters the input data based on the \code{type} and \code{strand} columns. It is useful for strand-specific analyses, such as studying antisense transcripts or strand-biased genomic features.
 #'
 #' @examples
-#' \dontrun{
-#' # Extract genes on the forward strand
-#' forward_genes <- extract_element_by_strand(gtf_df, type = "gene", strand = "+")
+#' # Example 1: Extract genes on the forward strand using gencode.v1
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' forward_genes_v1 <- extract_element_by_strand(gtf_v1, type = "gene", strand = "+")
 #'
-#' # Extract exons on the reverse strand
-#' reverse_exons <- extract_element_by_strand(gtf_df, type = "exon", strand = "-")
-#' }
+#' # Example 2: Extract exons on the reverse strand using gencode.v1
+#' reverse_exons_v1 <- extract_element_by_strand(gtf_v1, type = "exon", strand = "-")
 #'
 #' @importFrom dplyr filter
 #' @importFrom tools toTitleCase
@@ -301,10 +299,10 @@ extract_element_by_strand <- function(input, type, strand, verbose = TRUE) {
 #' The result provides the total length of the mature spliced RNA for each transcript.
 #'
 #' @examples
-#' \dontrun{
-#' gtf_data <- load_gtf("gencode.v27.gtf")
-#' spliced_lengths <- spliced_trans_length(gtf_data)
-#' }
+#'
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' spliced_lengths <- spliced_trans_length(gtf_v1)
 #'
 #' @importFrom data.table setDT
 #' @export
@@ -342,13 +340,13 @@ spliced_trans_length <- function(input) {
 #' For exons, statistics are grouped by \code{EXON_CLASSIFICATION}. For introns, groups include \code{first_intron}, \code{inner_intron}, and splice site types (e.g., \code{gc_intron}).
 #'
 #' @examples
-#' \dontrun{
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
 #' # Exon statistics
-#' exon_stats <- stat_summary(exon_df, type = "exon")
+#' exon_stats <- stat_summary(gtf_v1, type = "exon")
 #'
 #' # Intron statistics
-#' intron_stats <- stat_summary(intron_df, type = "intron")
-#' }
+#' # intron_stats <- stat_summary(gtf_v1, type = "intron")
 #'
 #' @import dplyr
 #' @importFrom plotrix std.error
@@ -424,15 +422,15 @@ stat_summary <- function(input, type, verbose = TRUE) {
 #' @details This function extracts the DNA sequence for each feature using genomic coordinates, then calculates the proportion of G and C nucleotides. Requires a BSgenome package for the relevant genome.
 #'
 #' @examples
-#' \dontrun{
 #' library(BSgenome.Hsapiens.UCSC.hg38)
-#' gtf_data <- load_gtf("gencode.v41.gtf")
-#' gtf_with_gc <- calculate_gc_content(gtf_data, BSgenome.Hsapiens.UCSC.hg38)
-#' }
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' gtf_with_gc <- calculate_gc_content(gtf_v1, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = FALSE)
 #'
 #' @importFrom BSgenome getSeq
 #' @importFrom Biostrings letterFrequency
 #' @importFrom GenomicRanges GRanges
+#' @import BSgenome.Hsapiens.UCSC.hg38
 #' @export
 #' @keywords gc content genomics
 
@@ -496,8 +494,6 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
   return(input)
 }
 
-
-
 #' @title Convert Data Frame to FASTA File
 #'
 #' @description Converts a data frame containing sequence IDs and sequences into a FASTA-formatted file, optionally compressed as gzip.
@@ -515,13 +511,14 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 #' @details This function efficiently writes large sequence datasets to FASTA format, handling compression and progress reporting. It validates input columns and manages memory by processing data in chunks.
 #'
 #' @examples
-#' \dontrun{
+#' temp_dir <- tempdir()
+#' temp_output <- file.path(temp_dir, "output.fa.gz")
 #' seq_data <- data.frame(
 #'   transcript_id = c("ENST0001", "ENST0002"),
 #'   sequence = c("ATGCTAGCTAG", "GCTAGCTAGCT")
 #' )
-#' df_to_fasta(seq_data, "transcript_id", "sequence", "output.fa.gz")
-#' }
+#' df_to_fasta(seq_data, "transcript_id", "sequence", temp_output)
+#'
 #'
 #' @importFrom progress progress_bar
 #' @export
@@ -583,18 +580,22 @@ df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose =
 #' @details This function processes CDS entries from the input GTF, extracts their sequences from the reference genome, and optionally saves them in FASTA format. Useful for downstream analyses like protein translation.
 #'
 #' @examples
-#' \dontrun{
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
 #' # Human CDS extraction
-#' cds_seqs <- extract_cds_sequences("gencode.v41.gtf", BSgenome.Hsapiens.UCSC.hg38, save_fasta = TRUE)
+#' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+#' suppressPackageStartupMessages(library(GenomicRanges))
+#' gtf_granges <- GRanges(gtf_v1)
+#' cds_seqs <- extract_cds_sequences(gtf_granges,BSgenome.Hsapiens.UCSC.hg38,save_fasta = FALSE)
 #'
 #' # Mouse CDS extraction
-#' cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
-#' }
+#' # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
 #'
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Biostrings DNAStringSet
 #' @importFrom BSgenome getSeq
 #' @importFrom methods is
+#' @import BSgenome.Hsapiens.UCSC.hg38
 #' @export
 #' @keywords cds genome sequence
 

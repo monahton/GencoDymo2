@@ -27,13 +27,16 @@ Extracts CDS regions from a GTF annotation file or data frame using genomic coor
 This function processes CDS entries from the input GTF, extracts their sequences from the reference genome, and optionally saves them in FASTA format. Useful for downstream analyses like protein translation.
 }
 \examples{
-\dontrun{
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
 # Human CDS extraction
-cds_seqs <- extract_cds_sequences("gencode.v41.gtf", BSgenome.Hsapiens.UCSC.hg38, save_fasta = TRUE)
+suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+suppressPackageStartupMessages(library(GenomicRanges))
+gtf_granges <- GRanges(gtf_v1)
+cds_seqs <- extract_cds_sequences(gtf_granges,BSgenome.Hsapiens.UCSC.hg38,save_fasta = FALSE)
 
 # Mouse CDS extraction
-cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
-}
+# cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
 
 }
 \keyword{cds}

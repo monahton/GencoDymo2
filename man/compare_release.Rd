@@ -45,19 +45,19 @@ This function processes two GENCODE releases to compare annotation counts for a 
 The function provides both numerical results and a formatted console output highlighting key metrics.
 }
 \examples{
-\dontrun{
-# Example 1: Using data frames
-gtf_v27 <- load_file("gencode.v27.annotation.gtf")
-gtf_v28 <- load_file("gencode.v28.annotation.gtf")
-comparison <- compare_release(gtf_v27, gtf_v28, type = "gene")
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+file_v2 <- system.file("extdata", "gencode.v2.example.gtf.gz", package = "GencoDymo2")
+# Example 1: Using data frames with the provided example GTF files
+gtf_v1 <- load_file(file_v1)
+gtf_v2 <- load_file(file_v2)
+comparison <- compare_release(gtf_v1, gtf_v2, type = "gene")
 
 # Example 2: Using file paths
-comparison <- compare_release("gencode.v27.gtf", "gencode.v28.gtf", type = "exon")
+# comparison <- compare_release(file_v1, file_v2, type = "exon")
 
-# Example 3: Specifying a gene_type and baseline
-lncRNA_comparison <- compare_release(gtf_v27, gtf_v28, type = "transcript",
-                                     gene_type = "lncRNA", baseline = "average")
-}
+# Example 3: Specifying a gene_type and baseline if applicable
+# comparison<-compare_release(gtf_v1,gtf_v2,"gene",gene_type="protein_coding",baseline = "average")
+
 }
 \seealso{
 \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.

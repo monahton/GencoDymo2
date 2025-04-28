@@ -25,13 +25,13 @@ Filters a data frame or GTF/GFF3 file to extract specific genomic elements (gene
 This function filters the input data based on the \code{type} and \code{strand} columns. It is useful for strand-specific analyses, such as studying antisense transcripts or strand-biased genomic features.
 }
 \examples{
-\dontrun{
-# Extract genes on the forward strand
-forward_genes <- extract_element_by_strand(gtf_df, type = "gene", strand = "+")
+# Example 1: Extract genes on the forward strand using gencode.v1
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+forward_genes_v1 <- extract_element_by_strand(gtf_v1, type = "gene", strand = "+")
 
-# Extract exons on the reverse strand
-reverse_exons <- extract_element_by_strand(gtf_df, type = "exon", strand = "-")
-}
+# Example 2: Extract exons on the reverse strand using gencode.v1
+reverse_exons_v1 <- extract_element_by_strand(gtf_v1, type = "exon", strand = "-")
 
 }
 \keyword{elements}

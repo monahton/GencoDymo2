@@ -29,13 +29,14 @@ Converts a data frame containing sequence IDs and sequences into a FASTA-formatt
 This function efficiently writes large sequence datasets to FASTA format, handling compression and progress reporting. It validates input columns and manages memory by processing data in chunks.
 }
 \examples{
-\dontrun{
+temp_dir <- tempdir()
+temp_output <- file.path(temp_dir, "output.fa.gz")
 seq_data <- data.frame(
   transcript_id = c("ENST0001", "ENST0002"),
   sequence = c("ATGCTAGCTAG", "GCTAGCTAGCT")
 )
-df_to_fasta(seq_data, "transcript_id", "sequence", "output.fa.gz")
-}
+df_to_fasta(seq_data, "transcript_id", "sequence", temp_output)
+
 
 }
 \keyword{conversion}

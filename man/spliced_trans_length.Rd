@@ -25,10 +25,10 @@ This function processes the input data to:
 The result provides the total length of the mature spliced RNA for each transcript.
 }
 \examples{
-\dontrun{
-gtf_data <- load_gtf("gencode.v27.gtf")
-spliced_lengths <- spliced_trans_length(gtf_data)
-}
+
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+spliced_lengths <- spliced_trans_length(gtf_v1)
 
 }
 \keyword{length}

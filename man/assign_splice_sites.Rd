@@ -45,12 +45,11 @@ This function performs the following steps:
 }
 }
 \examples{
-\dontrun{
-library(BSgenome.Hsapiens.UCSC.hg38)
-gtf <- load_gtf("path/to/gtf_file")
-introns_df <- extract_introns(gtf)
+suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+introns_df <- extract_introns(gtf_v1)
 result <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
-}
 
 }
 \seealso{

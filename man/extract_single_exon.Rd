@@ -37,7 +37,6 @@ This function identifies single-exon genes or transcripts from a genomic annotat
 }
 }
 \examples{
-\dontrun{
 # Example input data frame
 input <- data.frame(
   type = c("exon", "exon", "exon", "exon", "exon"),
@@ -55,11 +54,6 @@ print(single_exon_genes)
 single_exon_transcripts <- extract_single_exon(input, level = "transcript")
 print(single_exon_transcripts)
 
-# Example with GENCODE data file
-gencode_data <- "gencode.v47.annotation.gtf"
-single_exon_genes <- extract_single_exon(gencode_data, level = "gene")
-print(single_exon_genes)
-}
 
 }
 \seealso{

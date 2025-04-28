@@ -26,20 +26,16 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
-#' # From a GTF file
-#' introns <- extract_introns("gencode.v42.gtf")
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
 #'
 #' # From a pre-loaded data frame
-#' gtf_data <- load_file("gencode.v42.gtf")
-#' introns <- extract_introns(gtf_data)
-#' }
+#' gtf_v1 <- load_file(file_v1)
+#' introns <- extract_introns(gtf_v1)
 #'
 #' @seealso \code{\link{load_file}}, \code{\link{classify_exons}}
 #' @import dplyr
 #' @export
 #' @keywords GTF introns coordinates splicing
-
 extract_introns <- function(input, verbose = TRUE) {
   if (is.character(input)) {
     if (!file.exists(input)) {
@@ -186,7 +182,6 @@ extract_introns <- function(input, verbose = TRUE) {
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' # Example input data frame
 #' input <- data.frame(
 #'   type = c("exon", "exon", "exon", "exon", "exon"),
@@ -204,11 +199,6 @@ extract_introns <- function(input, verbose = TRUE) {
 #' single_exon_transcripts <- extract_single_exon(input, level = "transcript")
 #' print(single_exon_transcripts)
 #'
-#' # Example with GENCODE data file
-#' gencode_data <- "gencode.v47.annotation.gtf"
-#' single_exon_genes <- extract_single_exon(gencode_data, level = "gene")
-#' print(single_exon_genes)
-#' }
 #'
 #' @seealso \code{\link{extract_introns}}, \code{\link{load_file}}
 #'
@@ -293,12 +283,11 @@ extract_single_exon <- function(input, level = "gene", output_file = NULL) {
 #'
 #'
 #' @examples
-#' \dontrun{
-#' library(BSgenome.Hsapiens.UCSC.hg38)
-#' gtf <- load_gtf("path/to/gtf_file")
-#' introns_df <- extract_introns(gtf)
+#' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' introns_df <- extract_introns(gtf_v1)
 #' result <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
-#' }
 #'
 #' @seealso \code{\link{extract_introns}}, \code{\link{find_cryptic_splice_sites}}
 #'
@@ -411,15 +400,13 @@ assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, ver
 #' - The progress of the function is printed if the `verbose` argument is set to `TRUE`, showing also the total number of cryptic donor and acceptor sites and their respective percentages.
 #'
 #' @examples
-#' \dontrun{
-#' # Assuming you have a GTF file and have extracted introns:
-#' gtf_file <- "gencode.v41.annotation.gtf.gz"
-#' gtf_df <- load_file(gtf_file)
-#' introns_df <- extract_introns(gtf_df)
+#' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' introns_df <- extract_introns(gtf_v1)
 #' introns_ss <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
 #' cryptic_sites <- find_cryptic_splice_sites(introns_ss, BSgenome.Hsapiens.UCSC.hg38)
 #' head(cryptic_sites)
-#' }
 #'
 #' @seealso \code{\link{assign_splice_sites}}, \code{\link{extract_ss_motif}}
 #'
@@ -501,17 +488,15 @@ find_cryptic_splice_sites <- function(input, genome,
 #'   used as FASTA headers.
 #'
 #' @examples
-#' \dontrun{
-#' # Load the genomic data
-#' gtf_data <- load_gtf("path_to_gtf_file")
-#' introns <- extract_introns(gtf_data)
-#'
-#' # Extract donor splice site motifs and save them to a FASTA file
-#' motifs_df <- extract_ss_motif(introns, "5ss", verbose = TRUE)
+#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#' gtf_v1 <- load_file(file_v1)
+#' introns <- extract_introns(gtf_v1)
+#' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+#' # Extract donor splice site motifs
+#' motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,"5ss",verbose = FALSE)
 #'
 #' # Extract acceptor splice site motifs without saving the FASTA file
-#' motifs_df <- extract_ss_motif(introns, type = "3ss", verbose = FALSE)
-#' }
+#' motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,type="3ss",verbose = FALSE)
 #'
 #' @seealso \code{\link{assign_splice_sites}}, \code{\link{df_to_fasta}}
 #'

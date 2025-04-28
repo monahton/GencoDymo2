@@ -34,14 +34,11 @@ Processes a GTF file or data frame to extract intron coordinates, including thei
 }
 }
 \examples{
-\dontrun{
-# From a GTF file
-introns <- extract_introns("gencode.v42.gtf")
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
 
 # From a pre-loaded data frame
-gtf_data <- load_file("gencode.v42.gtf")
-introns <- extract_introns(gtf_data)
-}
+gtf_v1 <- load_file(file_v1)
+introns <- extract_introns(gtf_v1)
 
 }
 \seealso{

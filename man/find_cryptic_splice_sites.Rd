@@ -43,15 +43,13 @@ This function performs the following steps:
 }
 }
 \examples{
-\dontrun{
-# Assuming you have a GTF file and have extracted introns:
-gtf_file <- "gencode.v41.annotation.gtf.gz"
-gtf_df <- load_file(gtf_file)
-introns_df <- extract_introns(gtf_df)
+suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+introns_df <- extract_introns(gtf_v1)
 introns_ss <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
 cryptic_sites <- find_cryptic_splice_sites(introns_ss, BSgenome.Hsapiens.UCSC.hg38)
 head(cryptic_sites)
-}
 
 }
 \seealso{

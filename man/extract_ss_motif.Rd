@@ -49,17 +49,15 @@ used as FASTA headers.
 }
 }
 \examples{
-\dontrun{
-# Load the genomic data
-gtf_data <- load_gtf("path_to_gtf_file")
-introns <- extract_introns(gtf_data)
-
-# Extract donor splice site motifs and save them to a FASTA file
-motifs_df <- extract_ss_motif(introns, "5ss", verbose = TRUE)
+file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+gtf_v1 <- load_file(file_v1)
+introns <- extract_introns(gtf_v1)
+suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
+# Extract donor splice site motifs
+motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,"5ss",verbose = FALSE)
 
 # Extract acceptor splice site motifs without saving the FASTA file
-motifs_df <- extract_ss_motif(introns, type = "3ss", verbose = FALSE)
-}
+motifs_df <- extract_ss_motif(introns,BSgenome.Hsapiens.UCSC.hg38,type="3ss",verbose = FALSE)
 
 }
 \seealso{

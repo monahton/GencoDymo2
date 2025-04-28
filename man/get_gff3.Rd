@@ -47,26 +47,26 @@ The function dynamically determines the correct file URL based on the provided p
 If "latest_release" is specified for \code{release_version}, the function will first determine the latest available release using \code{get_latest_release()}.
 }
 \examples{
-# Download the latest human GFF3 file with primary assembly annotations
-\dontrun{
+# Download the latest human GTF file with primary assembly annotations into a temp directory
+temp_dir <- tempdir()
 gff3_file <- get_gff3(
   species = "human",
   release_version = "latest_release",
-  annotation_type = "primary_assembly.basic.annotation.gff3.gz"
+  annotation_type = "primary_assembly.basic.annotation.gff3.gz",
+  dest_folder = temp_dir
 )
 print(gff3_file)
-}
 
-# Download a specific mouse release with long noncoding RNA annotations
-\dontrun{
+# Download a specific mouse release with long noncoding RNA annotations into a temp directory
+temp_dir <- tempdir()
 gff3_file <- get_gff3(
   species = "mouse",
   release_version = "release_M36",
   annotation_type = "long_noncoding_RNAs.gff3.gz",
-  dest_folder = "~/Downloads"
+  dest_folder = temp_dir
 )
 print(gff3_file)
-}
+
 
 }
 \keyword{GENCODE,}

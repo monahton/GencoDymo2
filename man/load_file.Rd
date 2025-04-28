@@ -27,11 +27,11 @@ Files larger than a few hundred MBs may take longer to load and process.
 \dontrun{
 # Load a GTF file from GENCODE
 mouse_v36_gtf <- load_file(filename = "gencode.vM36.annotation.gtf.gz")
-head(mouse_v36_gtf)  # Preview the first few rows of the data frame
+head(mouse_v36_gtf)
 
 # Load a GFF3 file if required
 df_gff3 <- load_file("example.gff3")
-head(df_gff3)  # Preview the first few rows of the data frame
+head(df_gff3)
 }
 }
 \keyword{GENCODE,}

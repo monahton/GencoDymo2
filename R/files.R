@@ -96,24 +96,25 @@ get_latest_release <- function(species, verbose = TRUE) {
 #'
 #'
 #' @examples
-#' # Download the latest human GTF file with primary assembly annotations
-#' \dontrun{
+#' # Download the latest human GTF file with primary assembly annotations into a temp directory
+#' temp_dir <- tempdir()
 #' gtf_file <- get_gtf(
 #'   species = "human",
 #'   release_version = "latest_release",
-#'   annotation_type = "primary_assembly.basic.annotation.gtf.gz"
+#'   annotation_type = "primary_assembly.basic.annotation.gtf.gz",
+#'   dest_folder = temp_dir
 #' )
 #' print(gtf_file)
 #'
-#' # Download a specific mouse release with long noncoding RNA annotations
+#' # Download a specific mouse release with long noncoding RNA annotations into a temp directory
+#' temp_dir <- tempdir()
 #' gtf_file <- get_gtf(
 #'   species = "mouse",
 #'   release_version = "release_M36",
 #'   annotation_type = "long_noncoding_RNAs.gtf.gz",
-#'   dest_folder = "~/Downloads"
+#'   dest_folder = temp_dir
 #' )
 #' print(gtf_file)
-#' }
 #'
 #' @importFrom utils download.file
 #' @export
@@ -216,26 +217,26 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #' If "latest_release" is specified for `release_version`, the function will first determine the latest available release using `get_latest_release()`.
 #'
 #' @examples
-#' # Download the latest human GFF3 file with primary assembly annotations
-#' \dontrun{
+#' # Download the latest human GTF file with primary assembly annotations into a temp directory
+#' temp_dir <- tempdir()
 #' gff3_file <- get_gff3(
 #'   species = "human",
 #'   release_version = "latest_release",
-#'   annotation_type = "primary_assembly.basic.annotation.gff3.gz"
+#'   annotation_type = "primary_assembly.basic.annotation.gff3.gz",
+#'   dest_folder = temp_dir
 #' )
 #' print(gff3_file)
-#' }
 #'
-#' # Download a specific mouse release with long noncoding RNA annotations
-#' \dontrun{
+#' # Download a specific mouse release with long noncoding RNA annotations into a temp directory
+#' temp_dir <- tempdir()
 #' gff3_file <- get_gff3(
 #'   species = "mouse",
 #'   release_version = "release_M36",
 #'   annotation_type = "long_noncoding_RNAs.gff3.gz",
-#'   dest_folder = "~/Downloads"
+#'   dest_folder = temp_dir
 #' )
 #' print(gff3_file)
-#' }
+#'
 #'
 #' @importFrom utils download.file
 #' @export
@@ -318,11 +319,11 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
 #' \dontrun{
 #' # Load a GTF file from GENCODE
 #' mouse_v36_gtf <- load_file(filename = "gencode.vM36.annotation.gtf.gz")
-#' head(mouse_v36_gtf)  # Preview the first few rows of the data frame
+#' head(mouse_v36_gtf)
 #'
 #' # Load a GFF3 file if required
 #' df_gff3 <- load_file("example.gff3")
-#' head(df_gff3)  # Preview the first few rows of the data frame
+#' head(df_gff3)
 #' }
 #' @importFrom rtracklayer import
 #' @importFrom methods is

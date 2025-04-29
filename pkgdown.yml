@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   GencoDymo2_vignette: GencoDymo2_vignette.html
-last_built: 2025-04-29T13:29Z
+last_built: 2025-04-29T14:20Z
 urls:
   reference: https://monahton.github.io/GencoDymo2/reference
   article: https://monahton.github.io/GencoDymo2/articles

@@ -11,11 +11,12 @@ v3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/l
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/monahton)
 [![GitHub
 issues](https://img.shields.io/github/issues/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/issues)
-[![Last
-commit](https://img.shields.io/github/last-commit/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/commits/main)
 [![Platform](https://img.shields.io/badge/platform-all-green)](https://cran.r-project.org/)
 [![Website](https://img.shields.io/badge/docs-website-blue)](https://monahton.github.io/GencoDymo2/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15302316.svg)](https://doi.org/10.5281/zenodo.15302316)
+
+[![Last
+commit](https://img.shields.io/github/last-commit/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/commits/main)
 
 ------------------------------------------------------------------------
 

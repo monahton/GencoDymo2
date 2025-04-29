@@ -1,5 +1,4 @@
 url: https://monahton.github.io/GencoDymo2/
 template:
   bootstrap: 5
-  css: pkgdown/extra.css
 

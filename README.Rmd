@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 
-# GencoDymo2 <img src="https://img.shields.io/badge/version-1.0.1-blue.svg" align="bottom" />
+# GencoDymo2 <img src="man/figures/GencoDymo2_logo.png" align="right" height="140"/>
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Licence: GPL v3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)

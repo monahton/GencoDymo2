@@ -1,15 +1,27 @@
 bibentry(
-  bibtype  = "Article",
-  title    = "GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation",
-  author   = c(
-    person("Monah", "Abou Alezz"),
-    person("Ludovica", "Celli"),
-    person("Giulia", "Belotti"),
-    person("Antonella", "Lisa"),
-    person("Silvia", "Bione")),
-  journal  = "Frontiers in Genetics",
-  year     = 2020,
-  volume   = 11,
-  pages    = "488",
-  doi      = "https://doi.org/10.3389/fgene.2020.00488"
-)
+    bibtype = "Article",
+    title = "GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation",
+    author = c(
+      person("Monah", "Abou Alezz"),
+      person("Ludovica", "Celli"),
+      person("Giulia", "Belotti"),
+      person("Antonella", "Lisa"),
+      person("Silvia", "Bione")
+    ),
+    journal = "Frontiers in Genetics",
+    year = 2020,
+    volume = 11,
+    pages = "488",
+    doi = "10.3389/fgene.2020.00488"
+  )
+
+bibentry(
+    bibtype = "Manual",
+    title = "GencoDymo2: Annotation Comparison and Splice Motif Analysis Using GENCODE Releases",
+    author = person("Monah", "Abou Alezz"),
+    year = 2025,
+    note = "R package version 1.0.1",
+    url = "https://github.com/monahton/GencoDymo2",
+    doi = "10.5281/zenodo.15302316"
+  )
+

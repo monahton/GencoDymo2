@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GencoDymo2 <img src="https://img.shields.io/badge/version-1.0.1-blue.svg" align="right" />
+# GencoDymo2 <img src="https://img.shields.io/badge/version-1.0.1-blue.svg" align="bottom" />
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively

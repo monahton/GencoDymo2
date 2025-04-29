@@ -17,7 +17,7 @@ bibentry(
 
 bibentry(
     bibtype = "Manual",
-    title = "GencoDymo2: Annotation Comparison and Splice Motif Analysis Using GENCODE Releases",
+    title = "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs",
     author = person("Monah", "Abou Alezz"),
     year = 2025,
     note = "R package version 1.0.1",

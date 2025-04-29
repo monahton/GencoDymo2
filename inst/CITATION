@@ -2,11 +2,11 @@ bibentry(
   bibtype  = "Article",
   title    = "GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation",
   author   = c(
-    person("Abou Alezz", "Monah"),
-    person("Celli", "Ludovica"),
-    person("Belotti", "Giulia"),
-    person("Lisa", "Antonella"),
-    person("Bione.", "Silvia")
+    person("Monah", "Abou Alezz"),
+    person("Ludovica", "Celli"),
+    person("Giulia", "Belotti"),
+    person("Antonella", "Lisa"),
+    person("Silvia", "Bione")),
   journal  = "Frontiers in Genetics",
   year     = 2020,
   volume   = 11,

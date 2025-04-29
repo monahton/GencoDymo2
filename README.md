@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GencoDymo2 <img src="man/figures/GencoDymo2_logo.png" align="right" height="140"/>
+# GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs <img src="man/figures/GencoDymo2_logo.png" align="right" height="140"/>
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively

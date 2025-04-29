@@ -1,5 +1,5 @@
 ---
-title: "GencoDymo2"
+title: "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs"
 date: "`r Sys.Date()`"
 author: 
 - name: Monah Abou Alezz<sup>1</sup>, Lorenzo Salviati<sup>2</sup>, Roberta Alfieri<sup>3</sup>, Silvia Bione<sup>4</sup>

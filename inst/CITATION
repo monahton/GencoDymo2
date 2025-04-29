@@ -1,13 +1,15 @@
 bibentry(
-  bibtype  = "Manual",
-  title    = "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs",
+  bibtype  = "Article",
+  title    = "GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation",
   author   = c(
-    person("Monah", "Abou Alezz", email = "aboualezz.monah@hsr.it", role = c("aut", "cre", "cph")),
-    person("Lorenzo", "Salviati", email = "lorenzo.salviati01@universitadipavia.it", role = "ctb"),
-    person("Roberta", "Alfieri", email = "roberta.alfieri@igm.cnr.it", role = "ctb"),
-    person("Silvia", "Bione", email = "bione@igm.cnr.it", role = "ctb")
-  ),
-  year     = "2025",
-  note     = "R package version 1.0.0.9000",
-  url      = "https://github.com/monahton/GencoDymo2"
+    person("Abou Alezz", "Monah"),
+    person("Celli", "Ludovica"),
+    person("Belotti", "Giulia"),
+    person("Lisa", "Antonella"),
+    person("Bione.", "Silvia")
+  journal  = "Frontiers in Genetics",
+  year     = 2020,
+  volume   = 11,
+  pages    = "488",
+  doi      = "https://doi.org/10.3389/fgene.2020.00488"
 )

@@ -13,58 +13,106 @@ knitr::opts_chunk$set(
 )
 ```
 
-# GencoDymo2
 
-<!-- badges: start -->
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+# GencoDymo2 <img src="https://img.shields.io/badge/version-1.0.1-blue.svg" align="right" />
+
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Licence: GPL v3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/monahton)
-![GitHub issues](https://img.shields.io/github/issues/monahton/GencoDymo2)
-![GitHub last
-commit](https://img.shields.io/github/last-commit/monahton/GencoDymo2)
-![Platform](https://img.shields.io/badge/platform-all-green)
+[![GitHub issues](https://img.shields.io/github/issues/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/issues)
+[![Last commit](https://img.shields.io/github/last-commit/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/commits/main)
+[![Platform](https://img.shields.io/badge/platform-all-green)](https://cran.r-project.org/)
+[![Website](https://img.shields.io/badge/docs-website-blue)](https://monahton.github.io/GencoDymo2/)
 
-![Last-changedate](https://img.shields.io/github/last-commit/monahton/GencoDymo2)
-<!-- badges: end -->
+---
 
-----
+## 📦 Overview
 
-# Data Extraction and Manipulation from the GENCODE Database
+**GencoDymo2** is an R package tailored for dynamic extraction, exploration, and comparison of gene annotations from the [GENCODE](https://www.gencodegenes.org) database for human and mouse genomes. This tool facilitates:
 
-## Introduction
+- Automated retrieval of the latest or specific GENCODE releases
+- Visualization and quantification of annotation changes across versions
+- Extraction of introns, exons, splice motifs
+- Generation of splice site FASTA files for tools like MaxEntScan
 
-The **GENCODE** project [1], part of the ENCODE project [2], offers accurate annotations of the human and mouse genomes derived from literature, primary data repositories, computational predictions, manual annotation, and experimental validation of genes and transcripts, including noncoding transcripts that are continually discovered and annotated. GENCODE gene annotations are regularly updated as the Ensembl/GENCODE gene sets, accessible via the official website (https://www.gencodegenes.org) and are released approximately four times a year for mouse and twice a year for human [1].​
+It bridges bioinformatics workflows and annotation dynamics, enhancing reproducibility and comparative studies in transcriptome and splicing research.
 
-**GencoDymo2** is an R package designed to interrogate different releases of GENCODE annotations from the human and mouse genomes. It provides a streamlined interface for accessing and processing GENCODE annotations, providing easily accessible data regarding annotation statistics, release comparisons, and information on introns and splice sites. Moreover, GencoDymo2 can produce FASTA files of donor and acceptor splice site motifs that can be directly uploaded to the MaxEntScan tool [3] for the calculation of splice site scores.
+---
 
-1. Frankish, A., Diekhans, M., Ferreira, A.M., et al. (2023). _GENCODE: reference annotation for the human and mouse genomes in 2023_. Nucleic Acids Research, 51(D1), D942–D949. https://doi.org/10.1093/nar/gkac1071​
-2. ENCODE Project Consortium. (2012). _An integrated encyclopedia of DNA elements in the human genome_. Nature, 489(7414), 57–74. https://doi.org/10.1038/nature11247​
-3. Yeo, G., & Burge, C.B. (2004). _Maximum entropy modeling of short sequence motifs with applications to RNA splicing signals_. Journal of Computational Biology, 11(2-3), 377–394.
+## 💻 Installation
 
-<br>
+You can install the **development version** of `GencoDymo2` directly from GitHub:
 
-## Installation
-
-You can install the development version of GencoDymo2 from GitHub with:
-
-```{r install, eval=FALSE}
+```r
 # install.packages("devtools")
 devtools::install_github("monahton/GencoDymo2")
 ```
 
-After installation, load the package:
+Then load it into your R session:
 
-```{r loading, eval=FALSE}
+```r
 library(GencoDymo2)
 ```
 
-## Usage
+---
 
-For details on how to use this package, please see the vignette.  
-Additional details on how to install and use GencoDymo2 are available on the following link: https://monahton.github.io/GencoDymo2/
+## 🚀 Getting Started
 
-In case of problems installing or using the package, open an issue or send an email to aboualezz.monah@hsr.it.
+To get started, view the vignette:
 
+```r
+vignette("GencoDymo2")
+```
 
+Or visit the documentation website:  
+👉 https://monahton.github.io/GencoDymo2/
 
+---
 
+## 📁 Functions Highlights
+
+| Function              | Description                                                  |
+|-----------------------|--------------------------------------------------------------|
+| `get_latest_release()` | Retrieves the latest available GENCODE release per species |
+| `compare_release()`   | compare annotation statistics between releases                              |
+| `extract_introns()`    | Extracts and processes introns from annotation              |
+| `assign_splice_sites()`     | Assign the donor and acceptor splice sites                         |
+| `extract_ss_motif()` | Extract splicing motifs for MaxEntScan tool            |
+
+---
+
+## 🛠️ Development & Contributing
+
+**GencoDymo2** is actively developed. Contributions and suggestions are welcome!
+
+- 🔧 Open issues: https://github.com/monahton/GencoDymo2/issues
+- 📬 Email: <aboualezz.monah@hsr.it>
+- 🤝 Pull requests encouraged!
+
+---
+
+## :writing_hand: Author
+
+**Monah Abou Alezz, PhD** -- <aboualezz.monah@hsr.it>.  
+
+San Raffaele Telethon Institute for Gene Therapy (SR-TIGET)  
+IRCCS San Raffaele Scientific Institute, Milan, Italy  
+
+🌍 [Personal website](https://monahton.github.io)
+
+[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/monahton)
+`r badger::badge_custom("follow me on", "LinkedIn", "blue", "https://linkedin.com/in/monah-abou-alezz-phd-06a948ba")`
+
+---
+
+## 🧪 Related Projects
+
+- [GENCODE](https://www.gencodegenes.org)
+- [MaxEntScan](http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq.html)
+
+---
+
+## 📣 Acknowledgments
+
+Developed as part of ongoing research on lncRNA splicing and gene annotation evolution.  
+Special thanks to colleagues at IGM-CNR and collaborators across splicing research projects.

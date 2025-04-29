@@ -4,14 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
+
 
 
 # GencoDymo2 <img src="https://img.shields.io/badge/version-1.0.1-blue.svg" align="bottom" />
@@ -103,7 +96,7 @@ IRCCS San Raffaele Scientific Institute, Milan, Italy
 🌍 [Personal website](https://monahton.github.io)
 
 [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/monahton)
-`r badger::badge_custom("follow me on", "LinkedIn", "blue", "https://linkedin.com/in/monah-abou-alezz-phd-06a948ba")`
+[![](https://img.shields.io/badge/follow%20me%20on-LinkedIn-blue.svg)](https://linkedin.com/in/monah-abou-alezz-phd-06a948ba)
 
 ---
 

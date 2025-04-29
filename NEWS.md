@@ -1,3 +1,5 @@
+# GencoDymo2 1.0.1
+
 # GencoDymo2 1.0.0.9000
 
 * Initial release of GencoDymo2.

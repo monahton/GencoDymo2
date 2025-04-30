@@ -53,8 +53,7 @@ get_latest_release <- function(species, verbose = TRUE) {
   if (length(releases) == 0) {
     stop("No release directories found at the GENCODE FTP site.")
   }
-  release_nums <- as.numeric(gsub("release_", "", releases))
-  latest_release <- releases[which.max(release_nums)]
+  latest_release <- releases[length(releases)]
   if (verbose) {
     message(sprintf("Latest %s GENCODE release: %s", species, latest_release))
   }

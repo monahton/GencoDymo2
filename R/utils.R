@@ -592,7 +592,7 @@ df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose =
 #' cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
 #'
 #' # Mouse CDS extraction
-#' # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
+#' # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm39)
 #'
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Biostrings DNAStringSet

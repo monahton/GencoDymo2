@@ -84,59 +84,77 @@ GencoDymo2 can be used to import and process any gtf/gff3 formatted file. It aut
 
 ---
 
-GenocDymo2 runs in the R statistical computing environment. You will need R version 4.1.0 or higher. The most recent version of GencoDymo2 can be installed from GitHub (keep dependencies=TRUE)
+GenocDymo2 runs in the R statistical computing environment. You will need R version 4.1.0 or higher. The most recent version of GencoDymo2 can be installed from GitHub. We recommend using the pak package for fast and reliable installation.
 
 ```{r install, eval=FALSE}
+# Install pak if not already installed
+if (!require("pak")) install.packages("pak")
 # Install from GitHub
-if (!require("devtools")) install.packages("devtools")
-devtools::install_github("monahton/GencoDymo2", dependencies = TRUE)
+pak::pkg_install("github::monahton/GencoDymo2")
 
+# Load the package
 library(GencoDymo2)
 ```
 
 ***
+
 <br>
 
-# Data Retrievel
+# Usage
 
 ---
 
-## Release Management
+## Latest Releases
 
-GENCODE releases annotations approximately every three months, coinciding with Ensembl releases. The latest release from GENCODE for human and mouse genomes can be obtained using the <span style="color:coral">`get_latest_release()`</span> function.
+GENCODE releases annotations approximately every three months, coinciding with Ensembl releases. The latest release from GENCODE for human and mouse genomes can be obtained using the <span style="color:coral">`get_latest_release()`</span> function. This function queries the official GENCODE website to determine the most recent release for a given species (human or mouse).
 
-
-### Basic Usage
 ```{r get_release, eval=FALSE}
-# Get latest human release
-human_release <- get_latest_release("human", verbose = TRUE)
+# Fetch the most recent human and mouse GENCODE release identifiers
+human_release <- get_latest_release("human", verbose = T)
+mouse_release <- get_latest_release("mouse", verbose = T)
 ```
+
+
 ```{r get_release_ex, echo=FALSE}
-# Get latest human release
-cat("Latest human GENCODE release: release_47") 
+# Get latest human and mouse release
+cat("Latest human GENCODE release: release_47")
+cat("Latest human GENCODE release: release_M36") 
 ```
 
 <br>
 
-## File Retrieval
+> **_NOTE:_** Behind the scenes, get_latest_release() parses the Ensembl public FTP site, extracts the release version (e.g., "release_47"), and returns it for programmatic use.
 
-GencoDymo2 allows the download of `gtf` and `gff3` files of the latest release or any release specified by the user. These files can be obtained for human and mouse genome and can be saved in a path specified by the user.
+<br>
 
-### Standard Workflow
+## Download GTF/GFF3 Files
+
+GencoDymo2 allows the download of `gtf` and `gff3` files of the latest release or any release specified by the user. These files can be obtained for human and mouse genome and can be saved in a path specified by the user. With the release identifiers in hand, we can download these annotation files:
+
 ```{r get-files, eval=FALSE}
-# Download latest human lncRNAs GTF
+
+# Download latest human long noncoding RNAs GTF
 lnc_47_gtf <- get_gtf(
   species = "human",
-  release_version = "latest_release",
+  release_version = human_release,
   annotation_type = "long_noncoding_RNAs.gtf.gz",
-  dest_folder = "annotations"
+  dest_folder = "~/Desktop/"
 )
 
-# Download specific mouse GFF3
-lnc_47_gff3 <- get_gff3(
+# Download previous human release (release_46) for comparison
+lnc_46_gtf <- get_gtf(
+  species = "human",
+  release_version = "release_46",
+  annotation_type = "long_noncoding_RNAs.gtf.gz",
+  dest_folder = "~/Desktop/"
+)
+
+# Download latest mouse primary assembly annotations (GFF3)
+mouse_36_gff3 <- get_gff3(
   species = "mouse",
-  release_version = "release_M28",
-  annotation_type = "primary_assembly.annotation.gff3.gz"
+  release_version = mouse_release,
+  annotation_type = "primary_assembly.annotation.gff3.gz",
+  dest_folder = "~/Desktop/"
 )
 ```
 
@@ -161,53 +179,76 @@ valid_annotation_types
 
 <br>
 
-## Data Import
+## Load and Inspect
 
-A `gtf` or `gff3` file can be imported to R as a dataframe using the <span style="color:coral">`load_file()`</span> function
+A `gtf` or `gff3` file can be imported to R as a dataframe using the <span style="color:coral">`load_file()`</span> function. Once downloaded, load the files into R as data frames using load_file(). This function automatically detects GTF vs GFF3 and parses the attributes into columns.
 
-### Basic Usage
 ```{r load-data, eval=FALSE}
-# Import downloaded file
+# Loading using the stored paths from previous steps
 lnc_47_df <- load_file(lnc_47_gtf)
-head(annotation_df)
+head(lnc_47_df)
+
+# Alternatively, specify the file path directly
+lnc_46_df <- load_file("~/Desktop/gencode.v46.long_noncoding_RNAs.gtf.gz")
+head(lnc_46_df)
+
+# Load mouse GFF3
+mouse_pri_36 <- load_file("~/Desktop/gencode.vM36.primary_assembly.annotation.gff3.gz")
+head(mouse_pri_36)
 ```
 
-
-***
 <br>
 
-# Introns Annotations
+## Compare Releases
 
----
+As GENCODE regularly updates its annotations, different releases from GENCODE contain differing number of annotations. Some genes are added in new releases while others are classified into different gene classes. In the majority of cases, the ensembl gene ID of genes remains constant while the gene name might vary. \
+To quantify changes between two releases, use <span style="color:coral">`compare_release()`</span>. Specify the two annotation data frames and the type of feature to compare ("gene", "transcript", "exon", etc.). Additional filters like the gene_type and the baseline can allow to focus on subsets (e.g., only TEC or ptotein_coding genes) and different reference counts for the calculation of the difference percentage.
 
-## Extract introns coordinates
+```{r compare-releases, eval=FALSE}
+# Compare gene counts between release 47 and 46
+gene_comparison <- compare_release(lnc_47_df, lnc_46_df, type = "gene")
+
+# Compare exon counts
+exon_comparison <- compare_release(lnc_47_df, lnc_46_df, type = "exon")
+
+# Compare a specific gene biotype (e.g., TEC) using a custom baseline
+comparison <- compare_release(
+  lnc_47_df,
+  lnc_46_df,
+  type = "gene",
+  gene_type = "TEC",
+  baseline = "count1"
+)
+```
+
+The function produces as an outout a _**Delta**_ value, that corresponds to the difference in number between the specified elements of the two inputs, in addition to its **_Percentage_**.
 
 <br>
 
-The gtf files provided by GENCODE (for example the lncRNAs annotations gtf file) contains data regarding genes, transcripts, and exons only. Given the loaded data frame from the gtf files of GENCODE, the <span style="color:coral">`extract_introns()`</span> function produces a dataframe containing all the intronic regions in between all of those exons.
+> **_NOTE:_** The output is a data frame summarizing absolute and percentage differences in feature counts, enabling rapid assessment of annotation growth or refinement.
+
+<br>
+
+## Extract Introns Coordinates
+
+The gtf files provided by GENCODE list genes, transcripts, and exons while intronic regions must be inferred. Given the loaded data frame from the gtf files of GENCODE, the <span style="color:coral">`extract_introns()`</span> function computes intron coordinates for each transcript by sorting exon ranges and identifying gaps. It returns a dataframe containing introns coordinates and position within each transcript.
 
 
 ```{r introns, eval=FALSE}
-# Extract introns from the gtf file of lncRNAs
-introns_lnc_47 <- extract_introns(lnc_47_df)
+# Human lncRNA introns for release 47
+introns_lnc_47 <- extract_introns(lnc_47_df, verbose = T)
+
+# Mouse introns (filtering to primary chromosomes first)
+mouse_pri_36 <- mouse_pri_36[grepl("^chr", mouse_pri_36$seqnames), ]
+mouse_introns_pri_36 <- extract_introns(mouse_pri_36, verbose = T)
  
 ```
 
 <br>
 
-The obtained data frame includes the introns coordinates, their corresponding gene and transcripts ids, and the ordinal position of the intron.
+## Extract Donor and Acceptor Splice Sites
 
-<br>
-
-# Splicing Analysis
-
----
-
-## Extract the donor and acceptor splice sites
-
-<br>
-
-Introns always have two distinct nucleotides at either end. At the 5' end, the splice donor site includes an almost invariant sequence GT (GU in the RNA). The splice acceptor site at the 3' end of the intron terminates the intron with an almost invariant AG sequence.
+Splice sites are defined by dinucleotide motifs at intron boundaries. At the 5' end, the donor site includes an almost invariant sequence GT (GU in the RNA). At the 3' end, the intron terminates with the acceptor site, an almost invariant AG sequence.
 
 <br>
 
@@ -217,315 +258,191 @@ Introns always have two distinct nucleotides at either end. At the 5' end, the s
 
 The majority of introns belong to the U2-type spliceosome and are flanked by GT–
 AG splice site dinucleotides. The most frequent exception to this rule are the U2-type GC–AG splice sites, comprising ∼0.8% of human splice sites and about ∼0.09% of the human splice sites belong to the U12-type which are processed by the minor spliceosome
-and are flanked by AT–AC dinucleotides [4].
-
-<br>
-
-The <span style="color:coral">`assign_splice_sites()`</span> function adds two new columns to the introns data frame, assigning both the 5' and 3' splice sites. The sequences are retrieved from a loaded BSgenome object such as `BSgenome.Hsapiens.UCSC.hg38` for human and `BSgenome.Mmusculus.UCSC.mm10` for mouse 
-
-The first argument of the function is a dataframe containing intronic coordinates and a second argument should specify the genome sequence of the studied species (the human genome sequence hg38 is used by default). 
+and are flanked by AT–AC dinucleotides [4]. \
+The <span style="color:coral">`assign_splice_sites()`</span> function retrieves these flanking sequences from a BSgenome object. It adds two new columns to the data frame containing the introns coordinates, assigning both the 5' and 3' splice sites. Sequences should be retrieved from a loaded BSgenome object such as `BSgenome.Hsapiens.UCSC.hg38` for human and `BSgenome.Mmusculus.UCSC.mm39` for mouse.
 
 ```{r splice-sites, eval=FALSE}
-lnc_47_ss <- assign_ss(introns_lnc_47, 
-                       genome = BSgenome.Hsapiens.UCSC.hg38, 
-                       verbose = TRUE)
+# Human
+library(BSgenome.Hsapiens.UCSC.hg38)
+lnc_47_ss <- assign_splice_sites(
+  introns_lnc_47,
+  genome = BSgenome.Hsapiens.UCSC.hg38,
+  verbose = T
+)
+
+# Mouse
+library(BSgenome.Mmusculus.UCSC.mm39)
+mouse_pri_36_ss <- assign_splice_sites(
+  mouse_introns_pri_36,
+  genome = BSgenome.Mmusculus.UCSC.mm39,
+  verbose = T
+)
 ```
 
 <br>
 
-## Extract splice sites motifs for MaxEntScan webtool
+### Identify Cryptic splice sites
+
+Cryptic splice sites are those that do not match the canonical donor (GT) or acceptor motifs (AG). The <span style="color:coral">`find_cryptic_splice_sites()`</span> function identifies potential cryptic splice sites by comparing sequence motifs in introns to canonical splice site motifs (donor and acceptor) that can be also specified by the user. It compares the identified splice sites with the provided canonical motifs and flags the sites that differ from the canonical patterns, making it useful for studying aberrant splicing events.
+
+```{r cryptic, eval=FALSE}
+# Identify cryptic (non-canonical) splice sites
+cryptic_ss <- find_cryptic_splice_sites(
+  lnc_47_ss,
+  genome = BSgenome.Hsapiens.UCSC.hg38,
+  canonical_donor = "GT",
+  canonical_acceptor = "AG",
+  verbose = TRUE
+)
+```
 
 <br>
+
+### Extract splice sites motifs for MaxEntScan webtool
 
 **MaxEntScan** is a webtool based on the approach for modeling the sequences of short sequence motifs involved in RNA splicing which simultaneously accounts for non-adjacent as well as adjacent dependencies between positions. This method is based on the _'Maximum Entropy Principle'_ and generalizes most previous probabilistic models of sequence motifs such as weight matrix models and inhomogeneous Markov models [3]. \
 The **MaxEntScan::score5ss** assign scores for donor splice sites according to four models (http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq.html) by using **9-mer SEQUENCES** motif as input in a `.fa file`. The 9-mers motif contain 3 bases in the exon and 6 bases in the intron. \
-The **MaxEntScan::score3ss** assign scores for donor splice sites according to three models (http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq_acc.html). It takes as input a `.fa file` of **23-mer SEQUENCES** in which 20 bases are in the intron and 3 bases in the exon.
-
-<br>
-
+The **MaxEntScan::score3ss** assign scores for donor splice sites according to three models (http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq_acc.html). It takes as input a `.fa file` of **23-mer SEQUENCES** in which 20 bases are in the intron and 3 bases in the exon. \
 The <span style="color:coral">`extract_ss_motif()`</span> function is used along with BSgenome object of the studied species to retrieve _MaxEntScan::score5ss_ and _MaxEntScan::score3ss_ motif sequences. \
 The user can choose to generate a **fasta file** in the working directory or any specified path as an output, that contains either 9-mers or 23-mers, respectively for each 5' and 3' splice-sites. It generates also a **dataframe** for the coordinates and IDs of the corresponding motifs. \
-The generated fasta files can then be directly utilized by _MaxEntScan_ tools.
-
-<br>
-
+The generated fasta files can then be directly utilized by _MaxEntScan_ tools. \
 The first argument `input` is a dataframe containing the intron coordinates. The second argument `genome` is a BSgenome object (the human genome sequence hg38 is used by default). The third argument `type` specifies whether to extract motifs at the 5ss or the 3ss. Users can optionally set the argument `save_fasta` to TRUE to and the `output_file` argument to save a fasta file.
 
 
 ```{r motifs, eval=FALSE}
-# Produce a fasta file with 5'ss 9-mers:
-motifs_donor <- extract_ss_motif(input = introns_lnc_47,
-                                 genome = BSgenome.Hsapiens.UCSC.hg38,
-                                 type = "5ss",
-                                 verbose = TRUE,
-                                 save_fasta = TRUE,
-                                 output_file = "5ss_motifs.fa")
-# Produce a fasta file with 3'ss 23-mers:
-motifs_acc <- extract_ss_motif(input = introns_lnc_47,
-                               genome = BSgenome.Hsapiens.UCSC.hg38,
-                               type = "3ss",
-                               verbose = TRUE,
-                               save_fasta = TRUE,
-                               output_file = "3ss_motifs.fa")
+# Donor motifs (5'ss)
+motifs_donor <- extract_ss_motif(
+  input = lnc_47_ss,
+  genome = BSgenome.Hsapiens.UCSC.hg38,
+  type = "5ss",
+  verbose = T,
+  save_fasta = T,
+  output_file = "~/Desktop/lnc_47_5ss_motifs.fa"
+)
+
+# Acceptor motifs (3'ss)
+motifs_acc <- extract_ss_motif(
+  input = lnc_47_ss,
+  genome = BSgenome.Hsapiens.UCSC.hg38,
+  type = "3ss",
+  verbose = T,
+  save_fasta = T,
+  output_file = "~/Desktop/lnc_47_3ss_motifs.fa"
+)
 ```
 
-<br>
-
-## Extract unspliced transcripts or genes
+***
 
 <br>
+
+# Additional Utilities
+
+---
+
+### Single-Exon Features
 
 Some genes are unspliced: composed by one single exon and have no introns.   
 The <span style="color:coral">`extract_single_exon()`</span> function can extract all the **_single-exon_** genes or transcripts and returns in a dataframe with their ensembl gene IDs or transcript IDs.
 
 ```{r unspliced, eval=FALSE}
 ## identify single exon genes and transcripts
-single_exon_genes <- extract_single_exon(lnc_47, level = "gene")
-single_exon_trans <- extract_single_exon(lnc_47, level = "transcript")
+single_exon_genes <- extract_single_exon(lnc_47_df, level = "gene")
+single_exon_trans <- extract_single_exon(lnc_47_df, level = "transcript")
 ```
 
 <br>
 
-## Extract cryptic splice sites
+### Exon Classification
 
-<br>
+The <span style="color:coral">`classify_exons()`</span> adds a new column `(EXON_CLASSIFICATION)` to the input dataframe, describing the position of each exon. It labels each exon as _(first_exons)_, _(inner_exons)_, _(last_exons)_ and _(single_exons)_ facilitating position-based analyses. This classification is informative considering that first and last exons often have peculiar regulative roles.  
 
-Cryptic splice sites are those that do not match the canonical donor (GT) or acceptor motifs (AG). The <span style="color:coral">`find_cryptic_splice_sites()`</span> function identifies potential cryptic splice sites by comparing sequence motifs in introns to canonical splice site motifs (donor and acceptor) that can be also specified by the user. It compares the identified splice sites with the provided canonical motifs and flags the sites that differ from the canonical patterns, making it useful for studying aberrant splicing events.
-
-```{r cryptic, eval=FALSE}
-## cryptic splice sites
-cryp_ss <- find_cryptic_splice_sites(lnc_47_ss,
-                                     genome = BSgenome.Hsapiens.UCSC.hg38,
-                                     canonical_donor = "GT",
-                                     canonical_acceptor = "AG")
+```{r exon_class, eval=FALSE}
+# Assign the ordinal position of exons
+lnc_47_class_exons <- classify_exons(lnc_47_df, verbose = TRUE)
 ```
 
 <br>
 
-***
-<br>
+### Spliced Transcript Length
 
-# Utilities
-
----
-
-## Assign the ordinal position of exons
-
-<br>
-
-The <span style="color:coral">`classify_exons()`</span> function adds a new column to the dataframe `(EXON_CLASSIFICATION)`, describing the position of each exon. Four categories are automatically generated: _(first_exons)_, _(inner_exons)_, _(last_exons)_ and _(single_exons)_. This classification is informative and useful for subsequent analysis, considering that first and last exons often have peculiar regulative roles.  
-
-
-```{r exon-position, eval=FALSE}
-# Annotate each exons as first, inner, last or single exons.
-  classified_exons <- classify_exons(lnc_47)
-```
-
-<br>
-
-
-## Redundant exons and introns
-
-<br>
-
-The <span style="color:coral">`eliminate_redundant_elements()`</span> function is used to retain unique exons or introns removing all redundant ones.
-In fact, in genes with multiple transcripts, some exons are not alternatively spliced and will be represented in multiple transcripts. They share the same coordinates and Gene ID within the gtf file but different transcript and exon IDs. This function takes an exon/intron-containing dataframe as input and returns a data frame with unique exons only.
-
-<br>
-
-```{r redundant, eval=FALSE}
-## redundant elements
-nonredundant_exons <- eliminate_redundant_elements(classified_exons, element_type = "exon")
-nonredundant_introns <- eliminate_redundant_elements(introns_lnc_47, element_type = "intron")
-```
-
-<br>
-
-## Summary statistics 
-
----
-
-GencoDymo2 provide a number of functions that gives a brief summary of data annotations in a particular GENCODE release regarding genes, transcripts, exons and introns of lncRNAs and protein-coding genes. Moreover, the package can compare different releases of GENCODE showing the variation in the number of annotations between them
-
-<br>
-
-## Compare annotations from GENCODE different releases
-
-<br>
-
-As GENCODE regularly updates its annotations, different releases from GENCODE contain differing number of annotations. Some genes are added in new releases while others are classified into different gene classes. In the majority of cases, the ensembl gene ID of genes remains constant while the gene name might vary. 
-
-The <span style="color:coral">`gencode_compare()`</span> function compares two different releases of GENCODE annotations. \
-The function takes three arguments: the _first release data frame_, _the newer release data frame_, and the _type_. The type represent the genetic element to be compared which can be _"gene"_, _"transcript"_, _"exon"_ or _"intron"_.
-
-<br>
-
-
-Let's load first in addition to the gtf file of lncRNAs annotations from release 32 _(gen32_lncRNA)_, the gtf file of release 30.
-
-<br>
-
-```{r eval=FALSE}
-# download gtf file of lncRNA annotations from release 30
-  download.file(url="ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_30/gencode.v30.long_noncoding_RNAs.gtf.gz", destfile = "gencode.v30.long_noncoding_RNAs.gtf.gz", method = "wget")
-
-# load the downloaded gtf file as a data frame in r
-  gen30_lncRNA <- load_gtf("gencode.v30.long_noncoding_RNAs.gtf.gz")
-  gen30_lncRNA_introns <- extract_introns(gen30_lncRNA)
-```
-
-<br>
-
-Now let's compare the different number of genes, transcripts, exons and introns between these two releases:
-
-<br>
-
-```{r eval=FALSE}
-# Calculates the number of differing genetic elements
-  gencode_compare(gen30_lncRNA, gen32_lncRNA, type = "gene")
-  gencode_compare(gen30_lncRNA, gen32_lncRNA, type = "transcript")
-  gencode_compare(gen30_lncRNA, gen32_lncRNA, type = "exon")
-  gencode_compare(gen30_lncRNA_introns, gen32_lncRNA_introns, type = "intron")
-```
-
-<br>
-
-The function produces as an outout a _**Delta**_ value, that corresponds to the difference in number between the specified elements of the two inputs, in addition to its **_Percentage_**.
-
-<br>
-
-The output is summarised in Table1.
-
-<br>
-
-Table 1. Number and percentage of the different genetic elements between release 30 and release 32 of GENCODE for lncRNAs.
-
-Genetic Element | Release 30  | Release 32 | Delta | Percentage (%)
----- | -----  | ---- | ---- | ----
-Genes | 16193 | 17910 | 1717 | 9.58
-Transcripts | 30369 | 48351 | 17982 | 37.19
-Exons | 96215 | 176413 | 80198 | 45.46
-Introns | 65846 | 128062 | 62216 | 48.58
-
-
-<br>
-
-
-## Number of transcripts per gene
-
-<br>
-
-The <span style="color:coral">`genes_freq()`</span> function is used to produce a **Transcripts per Gene frequency table**. This table describes the number and the percentage of genes for which a given number of transcript isoforms exist.
-
-<br>
-
-```{r eval=FALSE}
-# Transcripts per Gene frequency table:
-  genes_freq_df <- genes_freq(gen32_lncRNA)
-
-```
-
-<br>
-
-The output is a data frame composed of the following columns:
-
-* The first column represents the number of transcript isoforms per gene.   
-* The second column describes how many genes correspond to such isoforms number.   
-* The third column reports the percentage of such elements.   
-
-<br>
-
-## Number of exons per transcript
-
-<br>
-
-The <span style="color:coral">`trans_freq()`</span> function is used to produce an **Exons per Transcript frequency table**. This table describes the number and the percentage of transcripts that are composed by a certain number of exons.
-
-<br>
-
-```{r eval=FALSE}
-# Exons per transcript frequency table:
-  trans_freq_df <- trans_freq(gen32_lncRNA)
-
-```
-
- <br>
-
-The output is a data frame composed of the following columns:
-
-* The first column represents the number of exons per transcript.     
-* The second column describes how many transcripts contain the specified number of exons.      
-* The third column reports the percentage of such elements.   
-
-<br>
-
-## Spliced transcripts length
-
-<br>
-
-The <span style="color:coral">`spliced_trans_length()`</span> function calculates the length of each transcript in its mature form (following the splicing of its introns).
-
-<br>
+The <span style="color:coral">`spliced_trans_length()`</span> function computes the mature (post-splicing) transcript length by summing exon widths per transcript.
 
 ```{r eval=FALSE}
 # Length of spliced transcript  
-  spliced_trans_length(gen32_lncRNA)
+lnc_47_spliced_length <- spliced_trans_length(lnc_47_df)
+head(lnc_47_spliced_length)
 ```
 
 <br>
 
-## Exons length summary statistics
+### Summary Statistics
 
-<br>
+GencoDymo2 provides the <span style="color:coral">`stat_summary()`</span> function that gives a brief summary of data annotations in a particular GENCODE release regarding genes, transcripts, exons and introns.
 
-The <span style="color:coral">`stat_exon()`</span> function produces a data frame describing the _mean_, _median_, _standard deviation_ and _std error_ of exons' length. \
-The function describes these parameters for exons taking into consideration their ordinal position.
+```{r stat, eval=FALSE}
+# Exon length statistics
+lnc_47_exon_stats <- stat_summary(lnc_47_class_exons, type = "exon")
 
-<br>
-
-```{r eval=FALSE}
-# Calculates mean, median, sd and std error of exons
-  stat_exon(gen32_lncRNA)
+# Intron length statistics
+lnc_47_intron_stats <- stat_summary(introns_lnc_47, type = "intron")
 ```
 
 <br>
 
-The output is generated for _single exons_, _first exons_, _inner exons_, and _last exons_. Length is reported in base pairs (bp). 
+### GC Content Calculation
 
+The <span style="color:coral">`calculate_gc_content()`</span> function  computes GC percentage for any feature set using a BSgenome reference.
 
-## Introns Statistics
-
-<br>
-
-The <span style="color:coral">`stat_intron()`</span> function produces a data frame describing the _mean_, _median_, _standard deviation_ and _std error_ of introns' length. \
-The function describes the length of introns taking into consideration also whether they are first or inner, and from each category whether it harbors _GT-AG_, _GC-AG_ or _AT-AC_ splice sites. This classification could be of particular relevance as introns haroboring different splice sites have different length characteristics as reported in [5].
-
-<br>
-
-```{r eval=FALSE}
-# Calculates mean, median, sd and std error of introns
-stat_intron(introns_ss)
+```{r gc-content, eval=FALSE}
+# Human
+lnc_47_gc <- calculate_gc_content(
+  lnc_47_df,
+  genome = BSgenome.Hsapiens.UCSC.hg38,
+  verbose = TRUE
+)
+# Mouse
+mouse_pri_36_gc <- calculate_gc_content(
+  mouse_pri_36,
+  genome = BSgenome.Mmusculus.UCSC.mm39,
+  verbose = TRUE
+)
 ```
 
 <br>
 
-Length is reported in base pairs (bp).
+### Extract CDS Sequences
+
+For coding annotations, <span style="color:coral">`extract_cds_sequences()`</span> writes CDS FASTA files from GRanges objects.
+
+```{r cds, eval=FALSE}
+# Convert to GRanges and extract
+library(GenomicRanges)
+mouse_pri_36_granges <- GRanges(mouse_pri_36)
+mouse_cds_seqs <- extract_cds_sequences(
+  mouse_pri_36_granges,
+  BSgenome.Mmusculus.UCSC.mm39,
+  save_fasta = TRUE,
+  output_file = "~/Desktop/mouse_pri_36_CDS.fa.gz",
+  verbose = TRUE
+)
+```
 
 ***
+
 <br>
 
-# Session information
+# Session Information
 
 ---
 
 The following provides the session information used when compiling this document.
 
-```{r eval=TRUE}
+```{r eval=TRUE, echo=FALSE}
    devtools::session_info()
 ```
 
-
 ***
+
 <br>
 
 # References

@@ -84,7 +84,7 @@ GencoDymo2 can be used to import and process any gtf/gff3 formatted file. It aut
 
 ---
 
-GenocDymo2 runs in the R statistical computing environment. You will need R version 4.1.0 or higher. The most recent version of GencoDymo2 can be installed from GitHub. We recommend using the pak package for fast and reliable installation.
+GencoDymo2 runs in the R statistical computing environment. You will need R version 4.1.0 or higher. The most recent version of GencoDymo2 can be installed from GitHub. We recommend using the pak package for fast and reliable installation.
 
 ```{r install, eval=FALSE}
 # Install pak if not already installed
@@ -201,8 +201,8 @@ head(mouse_pri_36)
 
 ## Compare Releases
 
-As GENCODE regularly updates its annotations, different releases from GENCODE contain differing number of annotations. Some genes are added in new releases while others are classified into different gene classes. In the majority of cases, the ensembl gene ID of genes remains constant while the gene name might vary. \
-To quantify changes between two releases, use <span style="color:coral">`compare_release()`</span>. Specify the two annotation data frames and the type of feature to compare ("gene", "transcript", "exon", etc.). Additional filters like the gene_type and the baseline can allow to focus on subsets (e.g., only TEC or ptotein_coding genes) and different reference counts for the calculation of the difference percentage.
+As GENCODE regularly updates its annotations, different releases from GENCODE contain differing number of annotations. Some genes are added in new releases while others are classified into different gene classes. In the majority of cases, the Ensembl gene ID of genes remains constant while the gene name might vary. \
+To quantify changes between two releases, use <span style="color:coral">`compare_release()`</span>. Specify the two annotation data frames and the type of feature to compare ("gene", "transcript", "exon", etc.). Additional filters like the gene_type and the baseline can allow to focus on subsets (e.g., only TEC or protein_coding genes) and different reference counts for the calculation of the difference percentage.
 
 ```{r compare-releases, eval=FALSE}
 # Compare gene counts between release 47 and 46
@@ -221,7 +221,7 @@ comparison <- compare_release(
 )
 ```
 
-The function produces as an outout a _**Delta**_ value, that corresponds to the difference in number between the specified elements of the two inputs, in addition to its **_Percentage_**.
+The function produces as an output a _**Delta**_ value, that corresponds to the difference in number between the specified elements of the two inputs, in addition to its **_Percentage_**.
 
 <br>
 

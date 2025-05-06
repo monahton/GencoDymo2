@@ -14,6 +14,7 @@ Description: GencoDymo2 provides a suite of functions to facilitate a comprehens
     Additionally, GencoDymo2 can generate FASTA files for donor and acceptor splice site motifs, which can be directly uploaded to the MaxEntScan tool for the calculation of splice site scores.
 License: GPL (>= 3)
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 URL: https://github.com/monahton/GencoDymo2, https://monahton.github.io/GencoDymo2/

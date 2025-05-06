@@ -69,7 +69,7 @@ Scientific Institute, 20132 Milan, Italy<br><sup>2</sup>Human
 Technopole, Viale Rita Levi-Montalcini 1, 20157 Milan, Italy<br><sup>3</sup>National Research Council, Institute for Biomedical
 Technologies, 20054 Segrate, Italy<br><sup>4</sup>Computational Biology
 Unit, Institute of Molecular Genetics Luigi Luca Cavalli-Sforza,
-National Research Council, 27100 Pavia, Italy<br><h4 data-toc-skip class="date">2025-04-30</h4>
+National Research Council, 27100 Pavia, Italy<br><h4 data-toc-skip class="date">2025-05-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/monahton/GencoDymo2/blob/main/vignettes/GencoDymo2_vignette.Rmd" class="external-link"><code>vignettes/GencoDymo2_vignette.Rmd</code></a></small>
       <div class="d-none name"><code>GencoDymo2_vignette.Rmd</code></div>
@@ -152,63 +152,78 @@ mouse genomes</li>
 <hr>
 <p>GenocDymo2 runs in the R statistical computing environment. You will
 need R version 4.1.0 or higher. The most recent version of GencoDymo2
-can be installed from GitHub (keep dependencies=TRUE)</p>
+can be installed from GitHub. We recommend using the pak package for
+fast and reliable installation.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install from GitHub</span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"monahton/GencoDymo2"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Install pak if not already installed</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://pak.r-lib.org/" class="external-link">"pak"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="co"># Install from GitHub</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"github::monahton/GencoDymo2"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Load the package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/monahton/GencoDymo2" class="external-link">GencoDymo2</a></span><span class="op">)</span></span></code></pre></div>
 <hr>
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="data-retrievel">Data Retrievel<a class="anchor" aria-label="anchor" href="#data-retrievel"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <hr>
 <div class="section level3">
-<h3 id="release-management">Release Management<a class="anchor" aria-label="anchor" href="#release-management"></a>
+<h3 id="latest-releases">Latest Releases<a class="anchor" aria-label="anchor" href="#latest-releases"></a>
 </h3>
 <p>GENCODE releases annotations approximately every three months,
 coinciding with Ensembl releases. The latest release from GENCODE for
-human and mouse genomes can be obtained using the <span style="color:coral"><code><a href="../reference/get_latest_release.html">get_latest_release()</a></code></span>
-function.</p>
-<div class="section level4">
-<h4 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
-</h4>
+human and mouse genomes can be obtained using the <span style="color:coral"><code><a href="../reference/get_latest_release.html">get_latest_release()</a></code></span> function.
+This function queries the official GENCODE website to determine the most
+recent release for a given species (human or mouse).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get latest human release</span></span>
-<span><span class="va">human_release</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_latest_release.html">get_latest_release</a></span><span class="op">(</span><span class="st">"human"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Fetch the most recent human and mouse GENCODE release identifiers</span></span>
+<span><span class="va">human_release</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_latest_release.html">get_latest_release</a></span><span class="op">(</span><span class="st">"human"</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">mouse_release</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_latest_release.html">get_latest_release</a></span><span class="op">(</span><span class="st">"mouse"</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Latest human GENCODE release: release_47</span></span></code></pre>
+<pre><code><span><span class="co">## Latest human GENCODE release: release_M36</span></span></code></pre>
+<p><br></p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> Behind the scenes,
+get_latest_release() parses the Ensembl public FTP site, extracts the
+release version (e.g., “release_47”), and returns it for programmatic
+use.</p>
+</blockquote>
 <p><br></p>
 </div>
-</div>
 <div class="section level3">
-<h3 id="file-retrieval">File Retrieval<a class="anchor" aria-label="anchor" href="#file-retrieval"></a>
+<h3 id="download-gtfgff3-files">Download GTF/GFF3 Files<a class="anchor" aria-label="anchor" href="#download-gtfgff3-files"></a>
 </h3>
 <p>GencoDymo2 allows the download of <code>gtf</code> and
 <code>gff3</code> files of the latest release or any release specified
 by the user. These files can be obtained for human and mouse genome and
-can be saved in a path specified by the user.</p>
-<div class="section level4">
-<h4 id="standard-workflow">Standard Workflow<a class="anchor" aria-label="anchor" href="#standard-workflow"></a>
-</h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Download latest human lncRNAs GTF</span></span>
+can be saved in a path specified by the user. With the release
+identifiers in hand, we can download these annotation files:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Download latest human long noncoding RNAs GTF</span></span>
 <span><span class="va">lnc_47_gtf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_gtf.html">get_gtf</a></span><span class="op">(</span></span>
 <span>  species <span class="op">=</span> <span class="st">"human"</span>,</span>
-<span>  release_version <span class="op">=</span> <span class="st">"latest_release"</span>,</span>
+<span>  release_version <span class="op">=</span> <span class="va">human_release</span>,</span>
 <span>  annotation_type <span class="op">=</span> <span class="st">"long_noncoding_RNAs.gtf.gz"</span>,</span>
-<span>  dest_folder <span class="op">=</span> <span class="st">"annotations"</span></span>
+<span>  dest_folder <span class="op">=</span> <span class="st">"~/Desktop/"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Download specific mouse GFF3</span></span>
-<span><span class="va">lnc_47_gff3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_gff3.html">get_gff3</a></span><span class="op">(</span></span>
+<span><span class="co"># Download previous human release (release_46) for comparison</span></span>
+<span><span class="va">lnc_46_gtf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_gtf.html">get_gtf</a></span><span class="op">(</span></span>
+<span>  species <span class="op">=</span> <span class="st">"human"</span>,</span>
+<span>  release_version <span class="op">=</span> <span class="st">"release_46"</span>,</span>
+<span>  annotation_type <span class="op">=</span> <span class="st">"long_noncoding_RNAs.gtf.gz"</span>,</span>
+<span>  dest_folder <span class="op">=</span> <span class="st">"~/Desktop/"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Download latest mouse primary assembly annotations (GFF3)</span></span>
+<span><span class="va">mouse_36_gff3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_gff3.html">get_gff3</a></span><span class="op">(</span></span>
 <span>  species <span class="op">=</span> <span class="st">"mouse"</span>,</span>
-<span>  release_version <span class="op">=</span> <span class="st">"release_M28"</span>,</span>
-<span>  annotation_type <span class="op">=</span> <span class="st">"primary_assembly.annotation.gff3.gz"</span></span>
+<span>  release_version <span class="op">=</span> <span class="va">mouse_release</span>,</span>
+<span>  annotation_type <span class="op">=</span> <span class="st">"primary_assembly.annotation.gff3.gz"</span>,</span>
+<span>  dest_folder <span class="op">=</span> <span class="st">"~/Desktop/"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</div>
 <div class="section level4">
 <h4 id="supported-annotation-types">Supported Annotation Types<a class="anchor" aria-label="anchor" href="#supported-annotation-types"></a>
 </h4>
@@ -228,58 +243,93 @@ one of the following:</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="data-import">Data Import<a class="anchor" aria-label="anchor" href="#data-import"></a>
+<h3 id="load-and-inspect">Load and Inspect<a class="anchor" aria-label="anchor" href="#load-and-inspect"></a>
 </h3>
 <p>A <code>gtf</code> or <code>gff3</code> file can be imported to R as
-a dataframe using the <span style="color:coral"><code><a href="../reference/load_file.html">load_file()</a></code></span> function</p>
-<div class="section level4">
-<h4 id="basic-usage-1">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage-1"></a>
-</h4>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Import downloaded file</span></span>
-<span><span class="va">lnc_47_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_file.html">load_file</a></span><span class="op">(</span><span class="va">lnc_47_gtf</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">annotation_df</span><span class="op">)</span></span></code></pre></div>
-<hr>
-<p><br></p>
-</div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="introns-annotations">Introns Annotations<a class="anchor" aria-label="anchor" href="#introns-annotations"></a>
-</h2>
-<hr>
-<div class="section level3">
-<h3 id="extract-introns-coordinates">Extract introns coordinates<a class="anchor" aria-label="anchor" href="#extract-introns-coordinates"></a>
-</h3>
-<p><br></p>
-<p>The gtf files provided by GENCODE (for example the lncRNAs
-annotations gtf file) contains data regarding genes, transcripts, and
-exons only. Given the loaded data frame from the gtf files of GENCODE,
-the <span style="color:coral"><code><a href="../reference/extract_introns.html">extract_introns()</a></code></span>
-function produces a dataframe containing all the intronic regions in
-between all of those exons.</p>
+a dataframe using the <span style="color:coral"><code><a href="../reference/load_file.html">load_file()</a></code></span> function. Once
+downloaded, load the files into R as data frames using load_file(). This
+function automatically detects GTF vs GFF3 and parses the attributes
+into columns.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extract introns from the gtf file of lncRNAs</span></span>
-<span><span class="va">introns_lnc_47</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_introns.html">extract_introns</a></span><span class="op">(</span><span class="va">lnc_47_df</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The obtained data frame includes the introns coordinates, their
-corresponding gene and transcripts ids, and the ordinal position of the
-intron.</p>
+<code class="sourceCode R"><span><span class="co"># Loading using the stored paths from previous steps</span></span>
+<span><span class="va">lnc_47_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_file.html">load_file</a></span><span class="op">(</span><span class="va">lnc_47_gtf</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lnc_47_df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Alternatively, specify the file path directly</span></span>
+<span><span class="va">lnc_46_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_file.html">load_file</a></span><span class="op">(</span><span class="st">"~/Desktop/gencode.v46.long_noncoding_RNAs.gtf.gz"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lnc_46_df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load mouse GFF3</span></span>
+<span><span class="va">mouse_pri_36</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_file.html">load_file</a></span><span class="op">(</span><span class="st">"~/Desktop/gencode.vM36.primary_assembly.annotation.gff3.gz"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mouse_pri_36</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="splicing-analysis">Splicing Analysis<a class="anchor" aria-label="anchor" href="#splicing-analysis"></a>
-</h2>
-<hr>
 <div class="section level3">
-<h3 id="extract-the-donor-and-acceptor-splice-sites">Extract the donor and acceptor splice sites<a class="anchor" aria-label="anchor" href="#extract-the-donor-and-acceptor-splice-sites"></a>
+<h3 id="compare-releases">Compare Releases<a class="anchor" aria-label="anchor" href="#compare-releases"></a>
 </h3>
+<p>As GENCODE regularly updates its annotations, different releases from
+GENCODE contain differing number of annotations. Some genes are added in
+new releases while others are classified into different gene classes. In
+the majority of cases, the ensembl gene ID of genes remains constant
+while the gene name might vary.<br>
+To quantify changes between two releases, use <span style="color:coral"><code><a href="../reference/compare_release.html">compare_release()</a></code></span>. Specify the
+two annotation data frames and the type of feature to compare (“gene”,
+“transcript”, “exon”, etc.). Additional filters like the gene_type and
+the baseline can allow to focus on subsets (e.g., only TEC or
+ptotein_coding genes) and different reference counts for the calculation
+of the difference percentage.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Compare gene counts between release 47 and 46</span></span>
+<span><span class="va">gene_comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_release.html">compare_release</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, <span class="va">lnc_46_df</span>, type <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compare exon counts</span></span>
+<span><span class="va">exon_comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_release.html">compare_release</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, <span class="va">lnc_46_df</span>, type <span class="op">=</span> <span class="st">"exon"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compare a specific gene biotype (e.g., TEC) using a custom baseline</span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_release.html">compare_release</a></span><span class="op">(</span></span>
+<span>  <span class="va">lnc_47_df</span>,</span>
+<span>  <span class="va">lnc_46_df</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"gene"</span>,</span>
+<span>  gene_type <span class="op">=</span> <span class="st">"TEC"</span>,</span>
+<span>  baseline <span class="op">=</span> <span class="st">"count1"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The function produces as an outout a <em><strong>Delta</strong></em>
+value, that corresponds to the difference in number between the
+specified elements of the two inputs, in addition to its
+<strong><em>Percentage</em></strong>.</p>
 <p><br></p>
-<p>Introns always have two distinct nucleotides at either end. At the 5’
-end, the splice donor site includes an almost invariant sequence GT (GU
-in the RNA). The splice acceptor site at the 3’ end of the intron
-terminates the intron with an almost invariant AG sequence.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong> The output is a data frame
+summarizing absolute and percentage differences in feature counts,
+enabling rapid assessment of annotation growth or refinement.</p>
+</blockquote>
+<p><br></p>
+</div>
+<div class="section level3">
+<h3 id="extract-introns-coordinates">Extract Introns Coordinates<a class="anchor" aria-label="anchor" href="#extract-introns-coordinates"></a>
+</h3>
+<p>The gtf files provided by GENCODE list genes, transcripts, and exons
+while intronic regions must be inferred. Given the loaded data frame
+from the gtf files of GENCODE, the <span style="color:coral"><code><a href="../reference/extract_introns.html">extract_introns()</a></code></span> function
+computes intron coordinates for each transcript by sorting exon ranges
+and identifying gaps. It returns a dataframe containing introns
+coordinates and position within each transcript.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Human lncRNA introns for release 47</span></span>
+<span><span class="va">introns_lnc_47</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_introns.html">extract_introns</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Mouse introns (filtering to primary chromosomes first)</span></span>
+<span><span class="va">mouse_pri_36</span> <span class="op">&lt;-</span> <span class="va">mouse_pri_36</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^chr"</span>, <span class="va">mouse_pri_36</span><span class="op">$</span><span class="va">seqnames</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">mouse_introns_pri_36</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_introns.html">extract_introns</a></span><span class="op">(</span><span class="va">mouse_pri_36</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p><br></p>
+</div>
+<div class="section level3">
+<h3 id="extract-donor-and-acceptor-splice-sites">Extract Donor and Acceptor Splice Sites<a class="anchor" aria-label="anchor" href="#extract-donor-and-acceptor-splice-sites"></a>
+</h3>
+<p>Splice sites are defined by dinucleotide motifs at intron boundaries.
+At the 5’ end, the donor site includes an almost invariant sequence GT
+(GU in the RNA). At the 3’ end, the intron terminates with the acceptor
+site, an almost invariant AG sequence.</p>
 <p><br></p>
 <div class="float">
 <img src="Consensus_intron.jpg" alt="Fig1. Donor and acceptor splice sites consensus. Image taken from (https://commons.wikimedia.org/wiki/File:Consensus_intron.jpg)."><div class="figcaption">Fig1. Donor and acceptor splice sites consensus.
@@ -291,27 +341,56 @@ flanked by GT– AG splice site dinucleotides. The most frequent exception
 to this rule are the U2-type GC–AG splice sites, comprising ∼0.8% of
 human splice sites and about ∼0.09% of the human splice sites belong to
 the U12-type which are processed by the minor spliceosome and are
-flanked by AT–AC dinucleotides [4].</p>
+flanked by AT–AC dinucleotides [4].<br>
+The <span style="color:coral"><code><a href="../reference/assign_splice_sites.html">assign_splice_sites()</a></code></span>
+function retrieves these flanking sequences from a BSgenome object. It
+adds two new columns to the data frame containing the introns
+coordinates, assigning both the 5’ and 3’ splice sites. Sequences should
+be retrieved from a loaded BSgenome object such as
+<code>BSgenome.Hsapiens.UCSC.hg38</code> for human and
+<code>BSgenome.Mmusculus.UCSC.mm39</code> for mouse.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Human</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">BSgenome.Hsapiens.UCSC.hg38</span><span class="op">)</span></span>
+<span><span class="va">lnc_47_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assign_splice_sites.html">assign_splice_sites</a></span><span class="op">(</span></span>
+<span>  <span class="va">introns_lnc_47</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Mouse</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">BSgenome.Mmusculus.UCSC.mm39</span><span class="op">)</span></span>
+<span><span class="va">mouse_pri_36_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assign_splice_sites.html">assign_splice_sites</a></span><span class="op">(</span></span>
+<span>  <span class="va">mouse_introns_pri_36</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Mmusculus.UCSC.mm39</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The <span style="color:coral"><code><a href="../reference/assign_splice_sites.html">assign_splice_sites()</a></code></span> function
-adds two new columns to the introns data frame, assigning both the 5’
-and 3’ splice sites. The sequences are retrieved from a loaded BSgenome
-object such as <code>BSgenome.Hsapiens.UCSC.hg38</code> for human and
-<code>BSgenome.Mmusculus.UCSC.mm10</code> for mouse</p>
-<p>The first argument of the function is a dataframe containing intronic
-coordinates and a second argument should specify the genome sequence of
-the studied species (the human genome sequence hg38 is used by
-default).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lnc_47_ss</span> <span class="op">&lt;-</span> <span class="fu">assign_ss</span><span class="op">(</span><span class="va">introns_lnc_47</span>, </span>
-<span>                       genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>, </span>
-<span>                       verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="identify-cryptic-splice-sites">Identify Cryptic splice sites<a class="anchor" aria-label="anchor" href="#identify-cryptic-splice-sites"></a>
+</h4>
+<p>Cryptic splice sites are those that do not match the canonical donor
+(GT) or acceptor motifs (AG). The <span style="color:coral"><code><a href="../reference/find_cryptic_splice_sites.html">find_cryptic_splice_sites()</a></code></span>
+function identifies potential cryptic splice sites by comparing sequence
+motifs in introns to canonical splice site motifs (donor and acceptor)
+that can be also specified by the user. It compares the identified
+splice sites with the provided canonical motifs and flags the sites that
+differ from the canonical patterns, making it useful for studying
+aberrant splicing events.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Identify cryptic (non-canonical) splice sites</span></span>
+<span><span class="va">cryptic_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_cryptic_splice_sites.html">find_cryptic_splice_sites</a></span><span class="op">(</span></span>
+<span>  <span class="va">lnc_47_ss</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
+<span>  canonical_donor <span class="op">=</span> <span class="st">"GT"</span>,</span>
+<span>  canonical_acceptor <span class="op">=</span> <span class="st">"AG"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
-<div class="section level3">
-<h3 id="extract-splice-sites-motifs-for-maxentscan-webtool">Extract splice sites motifs for MaxEntScan webtool<a class="anchor" aria-label="anchor" href="#extract-splice-sites-motifs-for-maxentscan-webtool"></a>
-</h3>
-<p><br></p>
+<div class="section level4">
+<h4 id="extract-splice-sites-motifs-for-maxentscan-webtool">Extract splice sites motifs for MaxEntScan webtool<a class="anchor" aria-label="anchor" href="#extract-splice-sites-motifs-for-maxentscan-webtool"></a>
+</h4>
 <p><strong>MaxEntScan</strong> is a webtool based on the approach for
 modeling the sequences of short sequence motifs involved in RNA splicing
 which simultaneously accounts for non-adjacent as well as adjacent
@@ -328,9 +407,8 @@ The <strong>MaxEntScan::score3ss</strong> assign scores for donor splice
 sites according to three models (<a href="http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq_acc.html" class="external-link uri">http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq_acc.html</a>).
 It takes as input a <code>.fa file</code> of <strong>23-mer
 SEQUENCES</strong> in which 20 bases are in the intron and 3 bases in
-the exon.</p>
-<p><br></p>
-<p>The <span style="color:coral"><code><a href="../reference/extract_ss_motif.html">extract_ss_motif()</a></code></span>
+the exon.<br>
+The <span style="color:coral"><code><a href="../reference/extract_ss_motif.html">extract_ss_motif()</a></code></span>
 function is used along with BSgenome object of the studied species to
 retrieve <em>MaxEntScan::score5ss</em> and <em>MaxEntScan::score3ss</em>
 motif sequences.<br>
@@ -340,324 +418,146 @@ either 9-mers or 23-mers, respectively for each 5’ and 3’ splice-sites.
 It generates also a <strong>dataframe</strong> for the coordinates and
 IDs of the corresponding motifs.<br>
 The generated fasta files can then be directly utilized by
-<em>MaxEntScan</em> tools.</p>
-<p><br></p>
-<p>The first argument <code>input</code> is a dataframe containing the
+<em>MaxEntScan</em> tools.<br>
+The first argument <code>input</code> is a dataframe containing the
 intron coordinates. The second argument <code>genome</code> is a
 BSgenome object (the human genome sequence hg38 is used by default). The
 third argument <code>type</code> specifies whether to extract motifs at
 the 5ss or the 3ss. Users can optionally set the argument
 <code>save_fasta</code> to TRUE to and the <code>output_file</code>
 argument to save a fasta file.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Produce a fasta file with 5'ss 9-mers:</span></span>
-<span><span class="va">motifs_donor</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_ss_motif.html">extract_ss_motif</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">introns_lnc_47</span>,</span>
-<span>                                 genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
-<span>                                 type <span class="op">=</span> <span class="st">"5ss"</span>,</span>
-<span>                                 verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                 save_fasta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                 output_file <span class="op">=</span> <span class="st">"5ss_motifs.fa"</span><span class="op">)</span></span>
-<span><span class="co"># Produce a fasta file with 3'ss 23-mers:</span></span>
-<span><span class="va">motifs_acc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_ss_motif.html">extract_ss_motif</a></span><span class="op">(</span>input <span class="op">=</span> <span class="va">introns_lnc_47</span>,</span>
-<span>                               genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
-<span>                               type <span class="op">=</span> <span class="st">"3ss"</span>,</span>
-<span>                               verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                               save_fasta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                               output_file <span class="op">=</span> <span class="st">"3ss_motifs.fa"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Donor motifs (5'ss)</span></span>
+<span><span class="va">motifs_donor</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_ss_motif.html">extract_ss_motif</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="va">lnc_47_ss</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"5ss"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  save_fasta <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="st">"~/Desktop/lnc_47_5ss_motifs.fa"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Acceptor motifs (3'ss)</span></span>
+<span><span class="va">motifs_acc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_ss_motif.html">extract_ss_motif</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="va">lnc_47_ss</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"3ss"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  save_fasta <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="st">"~/Desktop/lnc_47_3ss_motifs.fa"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<hr>
 <p><br></p>
 </div>
-<div class="section level3">
-<h3 id="extract-unspliced-transcripts-or-genes">Extract unspliced transcripts or genes<a class="anchor" aria-label="anchor" href="#extract-unspliced-transcripts-or-genes"></a>
-</h3>
-<p><br></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="additional-utilities">Additional Utilities<a class="anchor" aria-label="anchor" href="#additional-utilities"></a>
+</h2>
+<hr>
+<div class="section level4">
+<h4 id="single-exon-features">Single-Exon Features<a class="anchor" aria-label="anchor" href="#single-exon-features"></a>
+</h4>
 <p>Some genes are unspliced: composed by one single exon and have no
 introns.<br>
 The <span style="color:coral"><code><a href="../reference/extract_single_exon.html">extract_single_exon()</a></code></span>
 function can extract all the <strong><em>single-exon</em></strong> genes
 or transcripts and returns in a dataframe with their ensembl gene IDs or
 transcript IDs.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## identify single exon genes and transcripts</span></span>
-<span><span class="va">single_exon_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_single_exon.html">extract_single_exon</a></span><span class="op">(</span><span class="va">lnc_47</span>, level <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
-<span><span class="va">single_exon_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_single_exon.html">extract_single_exon</a></span><span class="op">(</span><span class="va">lnc_47</span>, level <span class="op">=</span> <span class="st">"transcript"</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="extract-cryptic-splice-sites">Extract cryptic splice sites<a class="anchor" aria-label="anchor" href="#extract-cryptic-splice-sites"></a>
-</h3>
-<p><br></p>
-<p>Cryptic splice sites are those that do not match the canonical donor
-(GT) or acceptor motifs (AG). The <span style="color:coral"><code><a href="../reference/find_cryptic_splice_sites.html">find_cryptic_splice_sites()</a></code></span>
-function identifies potential cryptic splice sites by comparing sequence
-motifs in introns to canonical splice site motifs (donor and acceptor)
-that can be also specified by the user. It compares the identified
-splice sites with the provided canonical motifs and flags the sites that
-differ from the canonical patterns, making it useful for studying
-aberrant splicing events.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## cryptic splice sites</span></span>
-<span><span class="va">cryp_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find_cryptic_splice_sites.html">find_cryptic_splice_sites</a></span><span class="op">(</span><span class="va">lnc_47_ss</span>,</span>
-<span>                                     genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
-<span>                                     canonical_donor <span class="op">=</span> <span class="st">"GT"</span>,</span>
-<span>                                     canonical_acceptor <span class="op">=</span> <span class="st">"AG"</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<hr>
-<p><br></p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
-</h2>
-<hr>
-<div class="section level3">
-<h3 id="assign-the-ordinal-position-of-exons">Assign the ordinal position of exons<a class="anchor" aria-label="anchor" href="#assign-the-ordinal-position-of-exons"></a>
-</h3>
-<p><br></p>
-<p>The <span style="color:coral"><code><a href="../reference/classify_exons.html">classify_exons()</a></code></span>
-function adds a new column to the dataframe
-<code>(EXON_CLASSIFICATION)</code>, describing the position of each
-exon. Four categories are automatically generated:
-<em>(first_exons)</em>, <em>(inner_exons)</em>, <em>(last_exons)</em>
-and <em>(single_exons)</em>. This classification is informative and
-useful for subsequent analysis, considering that first and last exons
-often have peculiar regulative roles.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Annotate each exons as first, inner, last or single exons.</span></span>
-<span>  <span class="va">classified_exons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify_exons.html">classify_exons</a></span><span class="op">(</span><span class="va">lnc_47</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="redundant-exons-and-introns">Redundant exons and introns<a class="anchor" aria-label="anchor" href="#redundant-exons-and-introns"></a>
-</h3>
-<p><br></p>
-<p>The <span style="color:coral"><code><a href="../reference/eliminate_redundant_elements.html">eliminate_redundant_elements()</a></code></span>
-function is used to retain unique exons or introns removing all
-redundant ones. In fact, in genes with multiple transcripts, some exons
-are not alternatively spliced and will be represented in multiple
-transcripts. They share the same coordinates and Gene ID within the gtf
-file but different transcript and exon IDs. This function takes an
-exon/intron-containing dataframe as input and returns a data frame with
-unique exons only.</p>
-<p><br></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## redundant elements</span></span>
-<span><span class="va">nonredundant_exons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eliminate_redundant_elements.html">eliminate_redundant_elements</a></span><span class="op">(</span><span class="va">classified_exons</span>, element_type <span class="op">=</span> <span class="st">"exon"</span><span class="op">)</span></span>
-<span><span class="va">nonredundant_introns</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eliminate_redundant_elements.html">eliminate_redundant_elements</a></span><span class="op">(</span><span class="va">introns_lnc_47</span>, element_type <span class="op">=</span> <span class="st">"intron"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## identify single exon genes and transcripts</span></span>
+<span><span class="va">single_exon_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_single_exon.html">extract_single_exon</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, level <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
+<span><span class="va">single_exon_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_single_exon.html">extract_single_exon</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, level <span class="op">=</span> <span class="st">"transcript"</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
-<div class="section level3">
-<h3 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a>
-</h3>
-<hr>
-<p>GencoDymo2 provide a number of functions that gives a brief summary
-of data annotations in a particular GENCODE release regarding genes,
-transcripts, exons and introns of lncRNAs and protein-coding genes.
-Moreover, the package can compare different releases of GENCODE showing
-the variation in the number of annotations between them</p>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="compare-annotations-from-gencode-different-releases">Compare annotations from GENCODE different releases<a class="anchor" aria-label="anchor" href="#compare-annotations-from-gencode-different-releases"></a>
-</h3>
-<p><br></p>
-<p>As GENCODE regularly updates its annotations, different releases from
-GENCODE contain differing number of annotations. Some genes are added in
-new releases while others are classified into different gene classes. In
-the majority of cases, the ensembl gene ID of genes remains constant
-while the gene name might vary.</p>
-<p>The <span style="color:coral"><code>gencode_compare()</code></span>
-function compares two different releases of GENCODE annotations.<br>
-The function takes three arguments: the <em>first release data
-frame</em>, <em>the newer release data frame</em>, and the
-<em>type</em>. The type represent the genetic element to be compared
-which can be <em>“gene”</em>, <em>“transcript”</em>, <em>“exon”</em> or
-<em>“intron”</em>.</p>
-<p><br></p>
-<p>Let’s load first in addition to the gtf file of lncRNAs annotations
-from release 32 <em>(gen32_lncRNA)</em>, the gtf file of release 30.</p>
-<p><br></p>
+<div class="section level4">
+<h4 id="exon-classification">Exon Classification<a class="anchor" aria-label="anchor" href="#exon-classification"></a>
+</h4>
+<p>The <span style="color:coral"><code><a href="../reference/classify_exons.html">classify_exons()</a></code></span>
+adds a new column <code>(EXON_CLASSIFICATION)</code> to the input
+dataframe, describing the position of each exon. It labels each exon as
+<em>(first_exons)</em>, <em>(inner_exons)</em>, <em>(last_exons)</em>
+and <em>(single_exons)</em> facilitating position-based analyses. This
+classification is informative considering that first and last exons
+often have peculiar regulative roles.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># download gtf file of lncRNA annotations from release 30</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span>url<span class="op">=</span><span class="st">"ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_30/gencode.v30.long_noncoding_RNAs.gtf.gz"</span>, destfile <span class="op">=</span> <span class="st">"gencode.v30.long_noncoding_RNAs.gtf.gz"</span>, method <span class="op">=</span> <span class="st">"wget"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># load the downloaded gtf file as a data frame in r</span></span>
-<span>  <span class="va">gen30_lncRNA</span> <span class="op">&lt;-</span> <span class="fu">load_gtf</span><span class="op">(</span><span class="st">"gencode.v30.long_noncoding_RNAs.gtf.gz"</span><span class="op">)</span></span>
-<span>  <span class="va">gen30_lncRNA_introns</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_introns.html">extract_introns</a></span><span class="op">(</span><span class="va">gen30_lncRNA</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>Now let’s compare the different number of genes, transcripts, exons
-and introns between these two releases:</p>
-<p><br></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Calculates the number of differing genetic elements</span></span>
-<span>  <span class="fu">gencode_compare</span><span class="op">(</span><span class="va">gen30_lncRNA</span>, <span class="va">gen32_lncRNA</span>, type <span class="op">=</span> <span class="st">"gene"</span><span class="op">)</span></span>
-<span>  <span class="fu">gencode_compare</span><span class="op">(</span><span class="va">gen30_lncRNA</span>, <span class="va">gen32_lncRNA</span>, type <span class="op">=</span> <span class="st">"transcript"</span><span class="op">)</span></span>
-<span>  <span class="fu">gencode_compare</span><span class="op">(</span><span class="va">gen30_lncRNA</span>, <span class="va">gen32_lncRNA</span>, type <span class="op">=</span> <span class="st">"exon"</span><span class="op">)</span></span>
-<span>  <span class="fu">gencode_compare</span><span class="op">(</span><span class="va">gen30_lncRNA_introns</span>, <span class="va">gen32_lncRNA_introns</span>, type <span class="op">=</span> <span class="st">"intron"</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The function produces as an outout a <em><strong>Delta</strong></em>
-value, that corresponds to the difference in number between the
-specified elements of the two inputs, in addition to its
-<strong><em>Percentage</em></strong>.</p>
-<p><br></p>
-<p>The output is summarised in Table1.</p>
-<p><br></p>
-<p>Table 1. Number and percentage of the different genetic elements
-between release 30 and release 32 of GENCODE for lncRNAs.</p>
-<table class="table">
-<thead><tr class="header">
-<th>Genetic Element</th>
-<th>Release 30</th>
-<th>Release 32</th>
-<th>Delta</th>
-<th>Percentage (%)</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Genes</td>
-<td>16193</td>
-<td>17910</td>
-<td>1717</td>
-<td>9.58</td>
-</tr>
-<tr class="even">
-<td>Transcripts</td>
-<td>30369</td>
-<td>48351</td>
-<td>17982</td>
-<td>37.19</td>
-</tr>
-<tr class="odd">
-<td>Exons</td>
-<td>96215</td>
-<td>176413</td>
-<td>80198</td>
-<td>45.46</td>
-</tr>
-<tr class="even">
-<td>Introns</td>
-<td>65846</td>
-<td>128062</td>
-<td>62216</td>
-<td>48.58</td>
-</tr>
-</tbody>
-</table>
+<code class="sourceCode R"><span><span class="co"># Assign the ordinal position of exons</span></span>
+<span><span class="va">lnc_47_class_exons</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify_exons.html">classify_exons</a></span><span class="op">(</span><span class="va">lnc_47_df</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
-<div class="section level3">
-<h3 id="number-of-transcripts-per-gene">Number of transcripts per gene<a class="anchor" aria-label="anchor" href="#number-of-transcripts-per-gene"></a>
-</h3>
-<p><br></p>
-<p>The <span style="color:coral"><code>genes_freq()</code></span>
-function is used to produce a <strong>Transcripts per Gene frequency
-table</strong>. This table describes the number and the percentage of
-genes for which a given number of transcript isoforms exist.</p>
-<p><br></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Transcripts per Gene frequency table:</span></span>
-<span>  <span class="va">genes_freq_df</span> <span class="op">&lt;-</span> <span class="fu">genes_freq</span><span class="op">(</span><span class="va">gen32_lncRNA</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The output is a data frame composed of the following columns:</p>
-<ul>
-<li>The first column represents the number of transcript isoforms per
-gene.<br>
-</li>
-<li>The second column describes how many genes correspond to such
-isoforms number.<br>
-</li>
-<li>The third column reports the percentage of such elements.</li>
-</ul>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="number-of-exons-per-transcript">Number of exons per transcript<a class="anchor" aria-label="anchor" href="#number-of-exons-per-transcript"></a>
-</h3>
-<p><br></p>
-<p>The <span style="color:coral"><code>trans_freq()</code></span>
-function is used to produce an <strong>Exons per Transcript frequency
-table</strong>. This table describes the number and the percentage of
-transcripts that are composed by a certain number of exons.</p>
-<p><br></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Exons per transcript frequency table:</span></span>
-<span>  <span class="va">trans_freq_df</span> <span class="op">&lt;-</span> <span class="fu">trans_freq</span><span class="op">(</span><span class="va">gen32_lncRNA</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The output is a data frame composed of the following columns:</p>
-<ul>
-<li>The first column represents the number of exons per
-transcript.<br>
-</li>
-<li>The second column describes how many transcripts contain the
-specified number of exons.<br>
-</li>
-<li>The third column reports the percentage of such elements.</li>
-</ul>
-<p><br></p>
-</div>
-<div class="section level3">
-<h3 id="spliced-transcripts-length">Spliced transcripts length<a class="anchor" aria-label="anchor" href="#spliced-transcripts-length"></a>
-</h3>
-<p><br></p>
+<div class="section level4">
+<h4 id="spliced-transcript-length">Spliced Transcript Length<a class="anchor" aria-label="anchor" href="#spliced-transcript-length"></a>
+</h4>
 <p>The <span style="color:coral"><code><a href="../reference/spliced_trans_length.html">spliced_trans_length()</a></code></span> function
-calculates the length of each transcript in its mature form (following
-the splicing of its introns).</p>
-<p><br></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+computes the mature (post-splicing) transcript length by summing exon
+widths per transcript.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Length of spliced transcript  </span></span>
-<span>  <span class="fu"><a href="../reference/spliced_trans_length.html">spliced_trans_length</a></span><span class="op">(</span><span class="va">gen32_lncRNA</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">lnc_47_spliced_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spliced_trans_length.html">spliced_trans_length</a></span><span class="op">(</span><span class="va">lnc_47_df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lnc_47_spliced_length</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
 </div>
-<div class="section level3">
-<h3 id="exons-length-summary-statistics">Exons length summary statistics<a class="anchor" aria-label="anchor" href="#exons-length-summary-statistics"></a>
-</h3>
+<div class="section level4">
+<h4 id="summary-statistics">Summary Statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a>
+</h4>
+<p>GencoDymo2 provides the <span style="color:coral"><code><a href="../reference/stat_summary.html">stat_summary()</a></code></span> function that
+gives a brief summary of data annotations in a particular GENCODE
+release regarding genes, transcripts, exons and introns.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Exon length statistics</span></span>
+<span><span class="va">lnc_47_exon_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stat_summary.html">stat_summary</a></span><span class="op">(</span><span class="va">lnc_47_class_exons</span>, type <span class="op">=</span> <span class="st">"exon"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Intron length statistics</span></span>
+<span><span class="va">lnc_47_intron_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stat_summary.html">stat_summary</a></span><span class="op">(</span><span class="va">introns_lnc_47</span>, type <span class="op">=</span> <span class="st">"intron"</span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The <span style="color:coral"><code>stat_exon()</code></span>
-function produces a data frame describing the <em>mean</em>,
-<em>median</em>, <em>standard deviation</em> and <em>std error</em> of
-exons’ length.<br>
-The function describes these parameters for exons taking into
-consideration their ordinal position.</p>
-<p><br></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Calculates mean, median, sd and std error of exons</span></span>
-<span>  <span class="fu">stat_exon</span><span class="op">(</span><span class="va">gen32_lncRNA</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>The output is generated for <em>single exons</em>, <em>first
-exons</em>, <em>inner exons</em>, and <em>last exons</em>. Length is
-reported in base pairs (bp).</p>
 </div>
-<div class="section level3">
-<h3 id="introns-statistics">Introns Statistics<a class="anchor" aria-label="anchor" href="#introns-statistics"></a>
-</h3>
+<div class="section level4">
+<h4 id="gc-content-calculation">GC Content Calculation<a class="anchor" aria-label="anchor" href="#gc-content-calculation"></a>
+</h4>
+<p>The <span style="color:coral"><code><a href="../reference/calculate_gc_content.html">calculate_gc_content()</a></code></span> function
+computes GC percentage for any feature set using a BSgenome
+reference.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Human</span></span>
+<span><span class="va">lnc_47_gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_gc_content.html">calculate_gc_content</a></span><span class="op">(</span></span>
+<span>  <span class="va">lnc_47_df</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Hsapiens.UCSC.hg38</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Mouse</span></span>
+<span><span class="va">mouse_pri_36_gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_gc_content.html">calculate_gc_content</a></span><span class="op">(</span></span>
+<span>  <span class="va">mouse_pri_36</span>,</span>
+<span>  genome <span class="op">=</span> <span class="va">BSgenome.Mmusculus.UCSC.mm39</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>The <span style="color:coral"><code>stat_intron()</code></span>
-function produces a data frame describing the <em>mean</em>,
-<em>median</em>, <em>standard deviation</em> and <em>std error</em> of
-introns’ length.<br>
-The function describes the length of introns taking into consideration
-also whether they are first or inner, and from each category whether it
-harbors <em>GT-AG</em>, <em>GC-AG</em> or <em>AT-AC</em> splice sites.
-This classification could be of particular relevance as introns
-haroboring different splice sites have different length characteristics
-as reported in [5].</p>
-<p><br></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Calculates mean, median, sd and std error of introns</span></span>
-<span><span class="fu">stat_intron</span><span class="op">(</span><span class="va">introns_ss</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>Length is reported in base pairs (bp).</p>
+</div>
+<div class="section level4">
+<h4 id="extract-cds-sequences">Extract CDS Sequences<a class="anchor" aria-label="anchor" href="#extract-cds-sequences"></a>
+</h4>
+<p>For coding annotations, <span style="color:coral"><code><a href="../reference/extract_cds_sequences.html">extract_cds_sequences()</a></code></span> writes
+CDS FASTA files from GRanges objects.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert to GRanges and extract</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/GenomicRanges" class="external-link">GenomicRanges</a></span><span class="op">)</span></span>
+<span><span class="va">mouse_pri_36_granges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></span><span class="op">(</span><span class="va">mouse_pri_36</span><span class="op">)</span></span>
+<span><span class="va">mouse_cds_seqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_cds_sequences.html">extract_cds_sequences</a></span><span class="op">(</span></span>
+<span>  <span class="va">mouse_pri_36_granges</span>,</span>
+<span>  <span class="va">BSgenome.Mmusculus.UCSC.mm39</span>,</span>
+<span>  save_fasta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="st">"~/Desktop/mouse_pri_36_CDS.fa.gz"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <hr>
 <p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+<h2 id="session-information">Session Information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <hr>
 <p>The following provides the session information used when compiling
 this document.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>   <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://sessioninfo.r-lib.org/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">##  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
 <span><span class="co">##  version  R version 4.5.0 (2025-04-11)</span></span>
@@ -668,7 +568,7 @@ this document.</p>
 <span><span class="co">##  collate  C.UTF-8</span></span>
 <span><span class="co">##  ctype    C.UTF-8</span></span>
 <span><span class="co">##  tz       UTC</span></span>
-<span><span class="co">##  date     2025-04-30</span></span>
+<span><span class="co">##  date     2025-05-06</span></span>
 <span><span class="co">##  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)</span></span>
 <span><span class="co">##  quarto   NA</span></span>
 <span><span class="co">## </span></span>
@@ -712,8 +612,8 @@ this document.</p>
 <span><span class="co">##  sass          0.4.10  <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  sessioninfo   1.2.3   <span style="color: #555555;">2025-02-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  shiny         1.10.0  <span style="color: #555555;">2024-12-14</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  systemfonts   1.2.2   <span style="color: #555555;">2025-04-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  textshaping   1.0.0   <span style="color: #555555;">2025-01-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  systemfonts   1.2.3   <span style="color: #555555;">2025-04-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  textshaping   1.0.1   <span style="color: #555555;">2025-05-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  urlchecker    1.0.1   <span style="color: #555555;">2021-11-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  usethis       3.1.0   <span style="color: #555555;">2024-11-26</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  vctrs         0.6.5   <span style="color: #555555;">2023-12-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>

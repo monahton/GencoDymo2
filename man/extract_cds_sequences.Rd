@@ -36,7 +36,7 @@ gtf_granges <- GRanges(gtf_v1)
 cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
 
 # Mouse CDS extraction
-# cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm10)
+# cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm39)
 
 }
 \keyword{cds}

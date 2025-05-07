@@ -17,7 +17,7 @@ output:
     number_sections: false
     theme: cerulean
 vignette: >
-  %\VignetteIndexEntry{vignette}
+  %\VignetteIndexEntry{GencoDymo2 Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

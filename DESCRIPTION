@@ -1,6 +1,6 @@
 Package: GencoDymo2
 Type: Package
-Title: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs
+Title: Comprehensive Analysis of 'GENCODE' Annotations and Splice Site Motifs
 Version: 1.0.1
 Authors@R: c(
     person("Monah", "Abou Alezz", email = "aboualezz.monah@hsr.it", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2006-4250")),
@@ -8,10 +8,7 @@ Authors@R: c(
     person("Roberta", "Alfieri", email = "roberta.alfieri@igm.cnr.it", role = "ctb"),
     person("Silvia", "Bione", email = "bione@igm.cnr.it", role = "ctb"))
 Maintainer: Monah Abou Alezz <aboualezz.monah@hsr.it>
-Description: GencoDymo2 provides a suite of functions to facilitate a comprehensive analysis of genomic annotations from the GENCODE database <https://www.gencodegenes.org>. 
-    Designed for human and mouse genome studies, this package enables users to extract and analyze a wide range of data derived from GENCODE annotations. 
-    It supports cross-version comparisons, allowing researchers to track changes and updates across multiple database releases. 
-    Additionally, GencoDymo2 can generate FASTA files for donor and acceptor splice site motifs, which can be directly uploaded to the MaxEntScan tool for the calculation of splice site scores.
+Description: A comprehensive suite of helper functions designed to facilitate the analysis of genomic annotations from the 'GENCODE' database, supporting both human and mouse genomes. This toolkit enables users to extract, filter, and analyze a wide range of annotation features including genes, transcripts, exons, and introns across different 'GENCODE' releases. It provides functionality for cross-version comparisons, allowing researchers to systematically track annotation updates, structural changes, and feature-level differences between releases. In addition, the package can generate high-quality FASTA files containing donor and acceptor splice site motifs, which are formatted for direct input into the 'MaxEntScan' tool, enabling accurate calculation of splice site strength scores.
 License: GPL (>= 3)
 Encoding: UTF-8
 Language: en-US

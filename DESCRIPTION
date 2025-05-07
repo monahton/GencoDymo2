@@ -8,7 +8,7 @@ Authors@R: c(
     person("Roberta", "Alfieri", email = "roberta.alfieri@igm.cnr.it", role = "ctb"),
     person("Silvia", "Bione", email = "bione@igm.cnr.it", role = "ctb"))
 Maintainer: Monah Abou Alezz <aboualezz.monah@hsr.it>
-Description: GencoDymo2 provides a suite of functions to facilitate a comprehensive analysis of genomic annotations from the GENCODE database (https://www.gencodegenes.org/). 
+Description: GencoDymo2 provides a suite of functions to facilitate a comprehensive analysis of genomic annotations from the GENCODE database <https://www.gencodegenes.org>. 
     Designed for human and mouse genome studies, this package enables users to extract and analyze a wide range of data derived from GENCODE annotations. 
     It supports cross-version comparisons, allowing researchers to track changes and updates across multiple database releases. 
     Additionally, GencoDymo2 can generate FASTA files for donor and acceptor splice site motifs, which can be directly uploaded to the MaxEntScan tool for the calculation of splice site scores.

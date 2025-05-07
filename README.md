@@ -109,7 +109,7 @@ IRCCS San Raffaele Scientific Institute, Milan, Italy
 ## 🧪 Related Projects
 
 - [GENCODE](https://www.gencodegenes.org)
-- [MaxEntScan](http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq.html)
+- MaxEntScan
 
 ------------------------------------------------------------------------
 

@@ -29,6 +29,3 @@ nonredundant_exons <- eliminate_redundant_elements(gtf_v1, element_type = "exon"
 # nonredundant_introns <- eliminate_redundant_elements(gtf_v1, element_type = "intron")
 
 }
-\keyword{elements}
-\keyword{genomic}
-\keyword{redundant}

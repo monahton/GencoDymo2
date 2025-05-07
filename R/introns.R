@@ -35,7 +35,7 @@
 #' @seealso \code{\link{load_file}}, \code{\link{classify_exons}}
 #' @import dplyr
 #' @export
-#' @keywords GTF introns coordinates splicing
+
 extract_introns <- function(input, verbose = TRUE) {
   if (is.character(input)) {
     if (!file.exists(input)) {
@@ -203,7 +203,6 @@ extract_introns <- function(input, verbose = TRUE) {
 #'
 #' @importFrom utils write.table
 #' @export
-#' @keywords single-exon genes transcripts annotation GENCODE
 
 extract_single_exon <- function(input, level = "gene", output_file = NULL) {
   if (!level %in% c("gene", "transcript")) {
@@ -293,7 +292,6 @@ extract_single_exon <- function(input, level = "gene", output_file = NULL) {
 #' @import dplyr
 #' @importFrom BSgenome getSeq
 #' @export
-#' @keywords splice site donor acceptor introns genome sequence
 
 assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = TRUE) {
   log_message <- function(msg) {
@@ -422,7 +420,6 @@ assign_splice_sites <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, ver
 #' @importFrom BSgenome getSeq
 #' @importFrom dplyr left_join %>% mutate
 #' @export
-#' @keywords cryptic splice site donor acceptor aberrant splicing sequence
 
 find_cryptic_splice_sites <- function(input, genome,
                                       canonical_donor = c("GT"),
@@ -514,7 +511,6 @@ find_cryptic_splice_sites <- function(input, genome,
 #' @importFrom BSgenome getSeq
 #' @importFrom dplyr bind_rows
 #' @export
-#' @keywords splice site motif extraction 5ss 3ss FASTA MaxEntScan
 
 extract_ss_motif <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, type = "5ss", verbose = TRUE, save_fasta = FALSE, output_file = NULL) {
   if (!is.data.frame(input)) {

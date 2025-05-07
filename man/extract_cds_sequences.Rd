@@ -39,6 +39,3 @@ cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save
 # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm39)
 
 }
-\keyword{cds}
-\keyword{genome}
-\keyword{sequence}

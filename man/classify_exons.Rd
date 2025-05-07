@@ -45,7 +45,3 @@ gtf_v1 <- load_file(file_v1)
 classified_data_v1 <- classify_exons(gtf_v1)
 
 }
-\keyword{classification}
-\keyword{exons}
-\keyword{structure}
-\keyword{transcript}

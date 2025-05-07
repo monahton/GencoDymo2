@@ -31,7 +31,6 @@
 #'
 #' @importFrom RCurl getURL
 #' @export
-#' @keywords GENCODE, latest release, annotations
 
 get_latest_release <- function(species, verbose = TRUE) {
   if (!species %in% c("human", "mouse")) {
@@ -118,7 +117,6 @@ get_latest_release <- function(species, verbose = TRUE) {
 #'
 #' @importFrom utils download.file
 #' @export
-#' @keywords GENCODE, GTF, annotations, download
 
 get_gtf <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
   if (!species %in% c("human", "mouse")) {
@@ -243,7 +241,6 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #'
 #' @importFrom utils download.file
 #' @export
-#' @keywords GENCODE, GFF3, annotations, download
 
 get_gff3 <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
   if (!species %in% c("human", "mouse")) {
@@ -331,7 +328,6 @@ get_gff3 <- function(species, release_version = "latest_release", annotation_typ
 #' @importFrom rtracklayer import
 #' @importFrom methods is
 #' @export
-#' @keywords import, GENCODE, GTF, GFF3
 
 load_file <- function(filename) {
   if (!is.character(filename) || length(filename) != 1) {

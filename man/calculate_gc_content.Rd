@@ -29,6 +29,3 @@ gtf_v1 <- load_file(file_v1)
 gtf_with_gc <- calculate_gc_content(gtf_v1, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = FALSE)
 
 }
-\keyword{content}
-\keyword{gc}
-\keyword{genomics}

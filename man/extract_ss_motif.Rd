@@ -63,11 +63,3 @@ motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, type = "3ss"
 \seealso{
 \code{\link{assign_splice_sites}}, \code{\link{df_to_fasta}}
 }
-\keyword{3ss}
-\keyword{5ss}
-\keyword{FASTA}
-\keyword{MaxEntScan}
-\keyword{extraction}
-\keyword{motif}
-\keyword{site}
-\keyword{splice}

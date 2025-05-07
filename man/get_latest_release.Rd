@@ -37,7 +37,3 @@ cat("Latest human GENCODE release: release_47")
 mouse_release <- get_latest_release("mouse", verbose = TRUE)
 
 }
-\keyword{GENCODE,}
-\keyword{annotations}
-\keyword{latest}
-\keyword{release,}

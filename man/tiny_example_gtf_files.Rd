@@ -41,6 +41,3 @@ head(gtf2)
 \seealso{
 \code{\link{load_file}}
 }
-\keyword{GTF,}
-\keyword{datasets,}
-\keyword{example}

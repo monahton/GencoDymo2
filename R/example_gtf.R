@@ -17,7 +17,6 @@
 #' \code{system.file("extdata", "gencode.v2.example.gtf.gz", package = "GencoDymo2")}.
 #'
 #' @format Two external GTF files.
-#' @keywords datasets, GTF, example
 #' @seealso \code{\link{load_file}}
 #' @source Generated manually for testing purposes.
 #' @examples

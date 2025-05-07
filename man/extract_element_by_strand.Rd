@@ -34,7 +34,3 @@ forward_genes_v1 <- extract_element_by_strand(gtf_v1, type = "gene", strand = "+
 reverse_exons_v1 <- extract_element_by_strand(gtf_v1, type = "exon", strand = "-")
 
 }
-\keyword{elements}
-\keyword{extraction}
-\keyword{genomic}
-\keyword{strand}

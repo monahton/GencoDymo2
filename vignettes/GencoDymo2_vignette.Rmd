@@ -61,7 +61,7 @@ knitr::opts_chunk$set(
 
 Gene annotations are provided by several databases that integrate data from systematic explorations of various experimental and computational resources. The **GENCODE** project [1], part of the ENCODE project [2], offers accurate annotations of the human and mouse genomes derived from literature, primary data repositories, computational predictions, manual annotation, and experimental validation of genes and transcripts, including noncoding transcripts that are continually discovered and annotated. GENCODE is one of the most comprehensive and standardized databases for gene annotations, widely used by the scientific community.​
 
-The gene sets provided by GENCODE are comprehensive and include protein-coding and non-coding loci, encompassing alternatively spliced isoforms and pseudogenes. GENCODE gene annotations are regularly updated and released as the Ensembl/GENCODE gene sets, accessible via the official website (https://www.gencodegenes.org). As of October 2024, the latest human release is GENCODE 47, and the latest mouse release is GENCODE M36 [1]. GENCODE gene sets are released approximately four times a year for mouse and twice a year for human [1].​
+The gene sets provided by GENCODE are comprehensive and include protein-coding and non-coding loci, encompassing alternatively spliced isoforms and pseudogenes. GENCODE gene annotations are regularly updated and released as the Ensembl/GENCODE gene sets, accessible via the official website <https://www.gencodegenes.org>. As of October 2024, the latest human release is GENCODE 47, and the latest mouse release is GENCODE M36 [1]. GENCODE gene sets are released approximately four times a year for mouse and twice a year for human [1].​
 
 **GencoDymo2** is an R package designed to interrogate different releases of GENCODE annotations from the human and mouse genomes. It provides a streamlined interface for accessing and processing GENCODE annotations, providing easily accessible data regarding annotation statistics, release comparisons, and information on introns and splice sites. Moreover, GencoDymo2 can produce FASTA files of donor and acceptor splice site motifs that can be directly uploaded to the MaxEntScan tool [3] for the calculation of splice site scores.
 
@@ -301,8 +301,8 @@ cryptic_ss <- find_cryptic_splice_sites(
 ### Extract splice sites motifs for MaxEntScan webtool
 
 **MaxEntScan** is a webtool based on the approach for modeling the sequences of short sequence motifs involved in RNA splicing which simultaneously accounts for non-adjacent as well as adjacent dependencies between positions. This method is based on the _'Maximum Entropy Principle'_ and generalizes most previous probabilistic models of sequence motifs such as weight matrix models and inhomogeneous Markov models [3]. \
-The **MaxEntScan::score5ss** assign scores for donor splice sites according to four models (http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq.html) by using **9-mer SEQUENCES** motif as input in a `.fa file`. The 9-mers motif contain 3 bases in the exon and 6 bases in the intron. \
-The **MaxEntScan::score3ss** assign scores for donor splice sites according to three models (http://hollywood.mit.edu/burgelab/maxent/Xmaxentscan_scoreseq_acc.html). It takes as input a `.fa file` of **23-mer SEQUENCES** in which 20 bases are in the intron and 3 bases in the exon. \
+The **MaxEntScan::score5ss** assign scores for donor splice sites according to four models by using **9-mer SEQUENCES** motif as input in a `.fa file`. The 9-mers motif contain 3 bases in the exon and 6 bases in the intron. \
+The **MaxEntScan::score3ss** assign scores for donor splice sites according to three models. It takes as input a `.fa file` of **23-mer SEQUENCES** in which 20 bases are in the intron and 3 bases in the exon. \
 The <span style="color:coral">`extract_ss_motif()`</span> function is used along with BSgenome object of the studied species to retrieve _MaxEntScan::score5ss_ and _MaxEntScan::score3ss_ motif sequences. \
 The user can choose to generate a **fasta file** in the working directory or any specified path as an output, that contains either 9-mers or 23-mers, respectively for each 5' and 3' splice-sites. It generates also a **dataframe** for the coordinates and IDs of the corresponding motifs. \
 The generated fasta files can then be directly utilized by _MaxEntScan_ tools. \
@@ -449,8 +449,8 @@ The following provides the session information used when compiling this document
 
 ---
 
-1. Frankish, A., Diekhans, M., Ferreira, A.M., et al. (2023). _GENCODE: reference annotation for the human and mouse genomes in 2023_. Nucleic Acids Research, 51(D1), D942–D949. https://doi.org/10.1093/nar/gkac1071​
-2. ENCODE Project Consortium. (2012). _An integrated encyclopedia of DNA elements in the human genome_. Nature, 489(7414), 57–74. https://doi.org/10.1038/nature11247​
-3. Yeo, G., & Burge, C.B. (2004). _Maximum entropy modeling of short sequence motifs with applications to RNA splicing signals_. Journal of Computational Biology, 11(2-3), 377–394. https://doi.org/10.1089/1066527041410418​
-4. Parada GE, Munita R, Cerda CA and Gysling K. _“A comprehensive survey of non-canonical splice sites in the human transcriptome”_. Nucleic Acids Res. 2014. 42: 10564-10578. doi: 10.1093/nar/gku744.
-5. Abou Alezz, M., Celli, L., Belotti, G., et al. (2020). _GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation_. Front. Genet. 2020 11:488. https://doi:10.3389/fgene.2020.00488
+1. Frankish, A., Diekhans, M., Ferreira, A.M., et al. (2023). _GENCODE: reference annotation for the human and mouse genomes in 2023_. Nucleic Acids Research, 51(D1), D942–D949. \
+2. ENCODE Project Consortium. (2012). _An integrated encyclopedia of DNA elements in the human genome_. Nature, 489(7414), 57–74. \
+3. Yeo, G., & Burge, C.B. (2004). _Maximum entropy modeling of short sequence motifs with applications to RNA splicing signals_. Journal of Computational Biology, 11(2-3), 377–394. \
+4. Parada GE, Munita R, Cerda CA and Gysling K. _“A comprehensive survey of non-canonical splice sites in the human transcriptome”_. Nucleic Acids Res. 2014. 42: 10564-10578. \
+5. Abou Alezz, M., Celli, L., Belotti, G., et al. (2020). _GC-AG Introns Features in Long Non-coding and Protein-Coding Genes Suggest Their Role in Gene Expression Regulation_. Front. Genet. 2020 11:488.

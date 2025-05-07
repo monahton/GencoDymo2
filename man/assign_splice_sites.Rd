@@ -55,10 +55,3 @@ result <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
 \seealso{
 \code{\link{extract_introns}}, \code{\link{find_cryptic_splice_sites}}
 }
-\keyword{acceptor}
-\keyword{donor}
-\keyword{genome}
-\keyword{introns}
-\keyword{sequence}
-\keyword{site}
-\keyword{splice}

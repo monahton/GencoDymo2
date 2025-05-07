@@ -55,11 +55,3 @@ head(cryptic_sites)
 \seealso{
 \code{\link{assign_splice_sites}}, \code{\link{extract_ss_motif}}
 }
-\keyword{aberrant}
-\keyword{acceptor}
-\keyword{cryptic}
-\keyword{donor}
-\keyword{sequence}
-\keyword{site}
-\keyword{splice}
-\keyword{splicing}

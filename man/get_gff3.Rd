@@ -68,7 +68,3 @@ gff3_file <- get_gff3(
 print(gff3_file)
 
 }
-\keyword{GENCODE,}
-\keyword{GFF3,}
-\keyword{annotations,}
-\keyword{download}

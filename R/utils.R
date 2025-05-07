@@ -47,7 +47,6 @@
 #'
 #' @seealso \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.
 #' @export
-#' @keywords gencode comparison annotation releases delta
 
 compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "count2") {
   load_if_file <- function(input) {
@@ -134,7 +133,6 @@ compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "
 #'
 #' @import dplyr
 #' @export
-#' @keywords exons classification transcript structure
 
 classify_exons <- function(input, verbose = TRUE) {
   if (is.character(input)) {
@@ -203,7 +201,6 @@ classify_exons <- function(input, verbose = TRUE) {
 #' @importFrom tidyr unite
 #' @importFrom data.table rleidv
 #' @export
-#' @keywords redundant genomic elements
 
 eliminate_redundant_elements <- function(input, element_type = "exon") {
   if (!element_type %in% c("exon", "intron")) {
@@ -252,7 +249,6 @@ eliminate_redundant_elements <- function(input, element_type = "exon") {
 #' @importFrom dplyr filter
 #' @importFrom tools toTitleCase
 #' @export
-#' @keywords strand genomic elements extraction
 
 extract_element_by_strand <- function(input, type, strand, verbose = TRUE) {
   if (!is.data.frame(input)) {
@@ -306,7 +302,6 @@ extract_element_by_strand <- function(input, type, strand, verbose = TRUE) {
 #'
 #' @importFrom data.table setDT
 #' @export
-#' @keywords spliced transcript length
 
 spliced_trans_length <- function(input) {
   if (!is.data.frame(input)) {
@@ -351,7 +346,6 @@ spliced_trans_length <- function(input) {
 #' @import dplyr
 #' @importFrom plotrix std.error
 #' @export
-#' @keywords summary statistics genomics
 
 stat_summary <- function(input, type, verbose = TRUE) {
   if (!type %in% c("exon", "intron")) {
@@ -434,7 +428,6 @@ stat_summary <- function(input, type, verbose = TRUE) {
 #' @importFrom GenomicRanges GRanges
 #' @import BSgenome.Hsapiens.UCSC.hg38
 #' @export
-#' @keywords gc content genomics
 
 calculate_gc_content <- function(input, genome, verbose = TRUE) {
   if (!methods::is(genome, "BSgenome")) {
@@ -525,7 +518,6 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 #'
 #' @importFrom progress progress_bar
 #' @export
-#' @keywords fasta sequence conversion
 
 df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose = TRUE) {
   if (!id_col %in% colnames(df)) {
@@ -600,7 +592,6 @@ df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose =
 #' @importFrom methods is
 #' @import BSgenome.Hsapiens.UCSC.hg38
 #' @export
-#' @keywords cds genome sequence
 
 extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE, output_file = NULL, verbose = TRUE) {
   if (!methods::is(genome, "BSgenome")) {

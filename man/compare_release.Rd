@@ -62,8 +62,3 @@ comparison <- compare_release(gtf_v1, gtf_v2, type = "gene")
 \seealso{
 \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.
 }
-\keyword{annotation}
-\keyword{comparison}
-\keyword{delta}
-\keyword{gencode}
-\keyword{releases}

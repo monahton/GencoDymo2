@@ -44,7 +44,3 @@ introns <- extract_introns(gtf_v1)
 \seealso{
 \code{\link{load_file}}, \code{\link{classify_exons}}
 }
-\keyword{GTF}
-\keyword{coordinates}
-\keyword{introns}
-\keyword{splicing}

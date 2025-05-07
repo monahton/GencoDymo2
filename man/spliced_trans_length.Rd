@@ -31,6 +31,3 @@ gtf_v1 <- load_file(file_v1)
 spliced_lengths <- spliced_trans_length(gtf_v1)
 
 }
-\keyword{length}
-\keyword{spliced}
-\keyword{transcript}

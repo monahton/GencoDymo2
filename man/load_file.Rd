@@ -30,7 +30,3 @@ gtf_v1 <- load_file(file_v1)
 head(gtf_v1)
 
 }
-\keyword{GENCODE,}
-\keyword{GFF3}
-\keyword{GTF,}
-\keyword{import,}

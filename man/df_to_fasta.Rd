@@ -38,6 +38,3 @@ seq_data <- data.frame(
 df_to_fasta(seq_data, "transcript_id", "sequence", temp_output)
 
 }
-\keyword{conversion}
-\keyword{fasta}
-\keyword{sequence}

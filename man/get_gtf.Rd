@@ -68,7 +68,3 @@ gtf_file <- get_gtf(
 print(gtf_file)
 
 }
-\keyword{GENCODE,}
-\keyword{GTF,}
-\keyword{annotations,}
-\keyword{download}

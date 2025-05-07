@@ -58,8 +58,3 @@ print(single_exon_transcripts)
 \seealso{
 \code{\link{extract_introns}}, \code{\link{load_file}}
 }
-\keyword{GENCODE}
-\keyword{annotation}
-\keyword{genes}
-\keyword{single-exon}
-\keyword{transcripts}

@@ -32,6 +32,3 @@ exon_stats <- stat_summary(gtf_v1, type = "exon")
 # intron_stats <- stat_summary(gtf_v1, type = "intron")
 
 }
-\keyword{genomics}
-\keyword{statistics}
-\keyword{summary}

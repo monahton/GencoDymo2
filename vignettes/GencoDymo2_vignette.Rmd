@@ -138,7 +138,7 @@ lnc_47_gtf <- get_gtf(
   species = "human",
   release_version = human_release,
   annotation_type = "long_noncoding_RNAs.gtf.gz",
-  dest_folder = "~/Desktop/"
+  dest_folder = tempdir()
 )
 
 # Download previous human release (release_46) for comparison
@@ -146,7 +146,7 @@ lnc_46_gtf <- get_gtf(
   species = "human",
   release_version = "release_46",
   annotation_type = "long_noncoding_RNAs.gtf.gz",
-  dest_folder = "~/Desktop/"
+  dest_folder = tempdir()
 )
 
 # Download latest mouse primary assembly annotations (GFF3)
@@ -154,7 +154,7 @@ mouse_36_gff3 <- get_gff3(
   species = "mouse",
   release_version = mouse_release,
   annotation_type = "primary_assembly.annotation.gff3.gz",
-  dest_folder = "~/Desktop/"
+  dest_folder = tempdir()
 )
 ```
 
@@ -189,11 +189,11 @@ lnc_47_df <- load_file(lnc_47_gtf)
 head(lnc_47_df)
 
 # Alternatively, specify the file path directly
-lnc_46_df <- load_file("~/Desktop/gencode.v46.long_noncoding_RNAs.gtf.gz")
+lnc_46_df <- load_file(file.path(tempdir(), "gencode.v46.long_noncoding_RNAs.gtf.gz"))
 head(lnc_46_df)
 
 # Load mouse GFF3
-mouse_pri_36 <- load_file("~/Desktop/gencode.vM36.primary_assembly.annotation.gff3.gz")
+mouse_pri_36 <- load_file(file.path(tempdir(),"gencode.vM36.primary_assembly.annotation.gff3.gz"))
 head(mouse_pri_36)
 ```
 
@@ -317,7 +317,7 @@ motifs_donor <- extract_ss_motif(
   type = "5ss",
   verbose = T,
   save_fasta = T,
-  output_file = "~/Desktop/lnc_47_5ss_motifs.fa"
+  output_file = file.path(tempdir(), "lnc_47_5ss_motifs.fa")
 )
 
 # Acceptor motifs (3'ss)
@@ -327,7 +327,7 @@ motifs_acc <- extract_ss_motif(
   type = "3ss",
   verbose = T,
   save_fasta = T,
-  output_file = "~/Desktop/lnc_47_3ss_motifs.fa"
+  output_file = file.path(tempdir(), "lnc_47_3ss_motifs.fa")
 )
 ```
 
@@ -422,7 +422,7 @@ mouse_cds_seqs <- extract_cds_sequences(
   mouse_pri_36_granges,
   BSgenome.Mmusculus.UCSC.mm39,
   save_fasta = TRUE,
-  output_file = "~/Desktop/mouse_pri_36_CDS.fa.gz",
+  output_file = file.path(tempdir(), "mouse_pri_36_CDS.fa.gz")
   verbose = TRUE
 )
 ```

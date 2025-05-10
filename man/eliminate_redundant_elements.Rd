@@ -25,7 +25,5 @@ file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoD
 gtf_v1 <- load_file(file_v1)
 # Eliminate redundant exons
 nonredundant_exons <- eliminate_redundant_elements(gtf_v1, element_type = "exon")
-# Eliminate redundant introns
-# nonredundant_introns <- eliminate_redundant_elements(gtf_v1, element_type = "intron")
 
 }

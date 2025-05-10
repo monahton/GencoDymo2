@@ -55,9 +55,6 @@ comparison <- compare_release(gtf_v1, gtf_v2, type = "gene")
 # Example 2: Using file paths
 # comparison <- compare_release(file_v1, file_v2, type = "exon")
 
-# Example 3: Specifying a gene_type and baseline if applicable
-# comparison<-compare_release(gtf_v1,gtf_v2,"gene",gene_type="protein_coding",baseline = "average")
-
 }
 \seealso{
 \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.

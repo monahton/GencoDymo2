@@ -42,9 +42,6 @@
 #' # Example 2: Using file paths
 #' # comparison <- compare_release(file_v1, file_v2, type = "exon")
 #'
-#' # Example 3: Specifying a gene_type and baseline if applicable
-#' # comparison<-compare_release(gtf_v1,gtf_v2,"gene",gene_type="protein_coding",baseline = "average")
-#'
 #' @seealso \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.
 #' @export
 
@@ -195,8 +192,6 @@ classify_exons <- function(input, verbose = TRUE) {
 #' gtf_v1 <- load_file(file_v1)
 #' # Eliminate redundant exons
 #' nonredundant_exons <- eliminate_redundant_elements(gtf_v1, element_type = "exon")
-#' # Eliminate redundant introns
-#' # nonredundant_introns <- eliminate_redundant_elements(gtf_v1, element_type = "intron")
 #'
 #' @importFrom tidyr unite
 #' @importFrom data.table rleidv
@@ -340,8 +335,6 @@ spliced_trans_length <- function(input) {
 #' # Exon statistics
 #' exon_stats <- stat_summary(gtf_v1, type = "exon")
 #'
-#' # Intron statistics
-#' # intron_stats <- stat_summary(gtf_v1, type = "intron")
 #'
 #' @import dplyr
 #' @importFrom plotrix std.error
@@ -495,11 +488,11 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 #'
 #' @description Converts a data frame containing sequence IDs and sequences into a FASTA-formatted file, optionally compressed as gzip.
 #'
-#' @usage df_to_fasta(df, id_col, seq_col, output_file, gzip = TRUE, verbose = TRUE)
+#' @usage df_to_fasta(df, id_col, seq_col, output_file = NULL, gzip = TRUE, verbose = TRUE)
 #' @param df A data frame with at least two columns: one for sequence IDs and one for sequences.
 #' @param id_col A character string specifying the column name containing sequence IDs.
 #' @param seq_col A character string specifying the column name containing sequence data.
-#' @param output_file A character string specifying the output file path.
+#' @param output_file A character string specifying the output file path. If NULL, the function will stop with an informative message.
 #' @param gzip A logical indicating whether to compress the output as a gzip file. Defaults to \code{TRUE}.
 #' @param verbose A logical indicating whether to print progress messages. Defaults to \code{TRUE}.
 #'
@@ -519,7 +512,10 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 #' @importFrom progress progress_bar
 #' @export
 
-df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose = TRUE) {
+df_to_fasta <- function(df, id_col, seq_col, output_file = NULL, gzip = TRUE, verbose = TRUE) {
+  if (is.null(output_file)) {
+    stop("The 'output_file' argument cannot be NULL. Please specify a valid output path.")
+  }
   if (!id_col %in% colnames(df)) {
     stop(paste("The column", id_col, "is not present in the dataframe."))
   }
@@ -582,9 +578,6 @@ df_to_fasta <- function(df, id_col, seq_col, output_file, gzip = TRUE, verbose =
 #' suppressPackageStartupMessages(library(GenomicRanges))
 #' gtf_granges <- GRanges(gtf_v1)
 #' cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
-#'
-#' # Mouse CDS extraction
-#' # cds_mouse <- extract_cds_sequences("gencode.vM27.gtf", BSgenome.Mmusculus.UCSC.mm39)
 #'
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Biostrings DNAStringSet

@@ -118,7 +118,7 @@ get_latest_release <- function(species, verbose = TRUE) {
 #' @importFrom utils download.file
 #' @export
 
-get_gtf <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
+get_gtf <- function(species, release_version = "latest_release", annotation_type, dest_folder = tempdir()) {
   if (!species %in% c("human", "mouse")) {
     stop("Invalid species. Please use 'human' or 'mouse'.")
   }
@@ -242,7 +242,7 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #' @importFrom utils download.file
 #' @export
 
-get_gff3 <- function(species, release_version = "latest_release", annotation_type, dest_folder = getwd()) {
+get_gff3 <- function(species, release_version = "latest_release", annotation_type, dest_folder = tempdir()) {
   if (!species %in% c("human", "mouse")) {
     stop("Invalid species. Please use 'human' or 'mouse'.")
   }

@@ -504,7 +504,7 @@ find_cryptic_splice_sites <- function(input, genome,
 #' motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, "5ss", verbose = FALSE)
 #'
 #' # Extract acceptor splice site motifs without saving the FASTA file
-#' motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, type = "3ss", verbose = FALSE)
+#' motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, "3ss", verbose = FALSE)
 #'
 #' @seealso \code{\link{assign_splice_sites}}, \code{\link{df_to_fasta}}
 #'

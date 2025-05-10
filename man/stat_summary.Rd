@@ -28,7 +28,5 @@ gtf_v1 <- load_file(file_v1)
 # Exon statistics
 exon_stats <- stat_summary(gtf_v1, type = "exon")
 
-# Intron statistics
-# intron_stats <- stat_summary(gtf_v1, type = "intron")
 
 }

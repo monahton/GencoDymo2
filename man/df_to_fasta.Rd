@@ -4,7 +4,7 @@
 \alias{df_to_fasta}
 \title{Convert Data Frame to FASTA File}
 \usage{
-df_to_fasta(df, id_col, seq_col, output_file, gzip = TRUE, verbose = TRUE)
+df_to_fasta(df, id_col, seq_col, output_file = NULL, gzip = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame with at least two columns: one for sequence IDs and one for sequences.}
@@ -13,7 +13,7 @@ df_to_fasta(df, id_col, seq_col, output_file, gzip = TRUE, verbose = TRUE)
 
 \item{seq_col}{A character string specifying the column name containing sequence data.}
 
-\item{output_file}{A character string specifying the output file path.}
+\item{output_file}{A character string specifying the output file path. If NULL, the function will stop with an informative message.}
 
 \item{gzip}{A logical indicating whether to compress the output as a gzip file. Defaults to \code{TRUE}.}
 

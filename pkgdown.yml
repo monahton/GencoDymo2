@@ -3,7 +3,7 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   GencoDymo2_vignette: GencoDymo2_vignette.html
-last_built: 2025-05-13T09:31Z
+last_built: 2025-05-13T10:01Z
 urls:
   reference: https://monahton.github.io/GencoDymo2/reference
   article: https://monahton.github.io/GencoDymo2/articles

@@ -95,6 +95,7 @@ get_latest_release <- function(species, verbose = TRUE) {
 #'
 #'
 #' @examples
+#' \donttest{
 #' # Download the latest human GTF file with primary assembly annotations into a temp directory
 #' temp_dir <- tempdir()
 #' gtf_file <- get_gtf(
@@ -114,6 +115,7 @@ get_latest_release <- function(species, verbose = TRUE) {
 #'   dest_folder = temp_dir
 #' )
 #' print(gtf_file)
+#' }
 #'
 #' @importFrom utils download.file
 #' @export
@@ -219,6 +221,7 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #' If "latest_release" is specified for `release_version`, the function will first determine the latest available release using `get_latest_release()`.
 #'
 #' @examples
+#' \donttest{
 #' # Download the latest human GTF file with primary assembly annotations into a temp directory
 #' temp_dir <- tempdir()
 #' gff3_file <- get_gff3(
@@ -238,6 +241,7 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #'   dest_folder = temp_dir
 #' )
 #' print(gff3_file)
+#' }
 #'
 #' @importFrom utils download.file
 #' @export

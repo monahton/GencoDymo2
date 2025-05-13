@@ -47,6 +47,7 @@ The function dynamically determines the correct file URL based on the provided p
 If "latest_release" is specified for \code{release_version}, the function will first determine the latest available release using \code{get_latest_release()}.
 }
 \examples{
+\donttest{
 # Download the latest human GTF file with primary assembly annotations into a temp directory
 temp_dir <- tempdir()
 gff3_file <- get_gff3(
@@ -66,5 +67,6 @@ gff3_file <- get_gff3(
   dest_folder = temp_dir
 )
 print(gff3_file)
+}
 
 }

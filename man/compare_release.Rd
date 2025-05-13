@@ -52,8 +52,6 @@ gtf_v1 <- load_file(file_v1)
 gtf_v2 <- load_file(file_v2)
 comparison <- compare_release(gtf_v1, gtf_v2, type = "gene")
 
-# Example 2: Using file paths
-# comparison <- compare_release(file_v1, file_v2, type = "exon")
 
 }
 \seealso{

@@ -104,7 +104,7 @@ If "latest_release" is specified for <code>release_version</code>, the function 
 <span class="r-in"><span>  annotation_type <span class="op">=</span> <span class="st">"primary_assembly.basic.annotation.gtf.gz"</span>,</span></span>
 <span class="r-in"><span>  dest_folder <span class="op">=</span> <span class="va">temp_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in function (type, msg, asError = TRUE) {    if (!is.character(type)) {        i = match(type, CURLcodeValues)        typeName = if (is.na(i))             character()        else names(CURLcodeValues)[i]    }    typeName = gsub("^CURLE_", "", typeName)    fun = (if (asError)         stop    else warning)    fun(structure(list(message = msg, call = sys.call()), class = c(typeName,         "GenericCurlError", "error", "condition")))}(7L, "Failed to connect to ftp.ebi.ac.uk port 443 after 339 ms: Couldn't connect to server",     TRUE):</span> Failed to connect to ftp.ebi.ac.uk port 443 after 339 ms: Couldn't connect to server</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in function (type, msg, asError = TRUE) {    if (!is.character(type)) {        i = match(type, CURLcodeValues)        typeName = if (is.na(i))             character()        else names(CURLcodeValues)[i]    }    typeName = gsub("^CURLE_", "", typeName)    fun = (if (asError)         stop    else warning)    fun(structure(list(message = msg, call = sys.call()), class = c(typeName,         "GenericCurlError", "error", "condition")))}(7L, "Failed to connect to ftp.ebi.ac.uk port 443 after 271 ms: Couldn't connect to server",     TRUE):</span> Failed to connect to ftp.ebi.ac.uk port 443 after 271 ms: Couldn't connect to server</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gtf_file</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'gtf_file' not found</span>
 <span class="r-in"><span></span></span>
@@ -117,9 +117,11 @@ If "latest_release" is specified for <code>release_version</code>, the function 
 <span class="r-in"><span>  dest_folder <span class="op">=</span> <span class="va">temp_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading GTF file from https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M36/gencode.vM36.long_noncoding_RNAs.gtf.gz</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> GTF file downloaded successfully: /tmp/RtmpdSoeuE/gencode.vM36.long_noncoding_RNAs.gtf.gz</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>URL 'https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M36/gencode.vM36.long_noncoding_RNAs.gtf.gz': status was 'Couldn't connect to server'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Error downloading file: cannot open URL 'https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M36/gencode.vM36.long_noncoding_RNAs.gtf.gz'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_gtf(species = "mouse", release_version = "release_M36", annotation_type = "long_noncoding_RNAs.gtf.gz",     dest_folder = temp_dir):</span> Failed to download the GTF file. Please check the URL or your internet connection.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gtf_file</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpdSoeuE/gencode.vM36.long_noncoding_RNAs.gtf.gz"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'gtf_file' not found</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

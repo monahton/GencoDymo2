@@ -46,18 +46,25 @@ It bridges bioinformatics workflows and annotation dynamics, enhancing reproduci
 
 ## 💻 Installation
 
-You can install the **development version** of `GencoDymo2` directly from GitHub:
+You can install the **stable version** of `GencoDymo2` from [CRAN](https://cran.r-project.org/package=GencoDymo2):
 
 ```r
-# install.packages("devtools")
-devtools::install_github("monahton/GencoDymo2")
+# Install the stable version from CRAN
+install.packages("GencoDymo2")
+```
+Or you can install the **development version** from GitHub for the latest features:
+
+```r
+#Install the development version from GitHub
+install.packages("pak")
+pak::pkg_install("monahton/GencoDymo2")
 ```
 
-Then load it into your R session:
-
 ```r
+# Load the package
 library(GencoDymo2)
 ```
+
 
 ---
 

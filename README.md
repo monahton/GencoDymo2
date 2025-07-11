@@ -15,7 +15,11 @@ issues](https://img.shields.io/github/issues/monahton/GencoDymo2)](https://githu
 [![Website](https://img.shields.io/badge/docs-website-blue)](https://monahton.github.io/GencoDymo2/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15302316.svg)](https://doi.org/10.5281/zenodo.15302316)
 [![](https://www.r-pkg.org/badges/version/GencoDymo2?color=green)](https://cran.r-project.org/package=GencoDymo2)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/GencoDymo2?color=green)](https://cran.r-project.org/package=GencoDymo2)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/GencoDymo2?color=green)](https://cran.r-project.org/package=GencoDymo2)  
+[![name status
+badge](https://monahton.r-universe.dev/badges/:name)](https://monahton.r-universe.dev/)
+[![registry status
+badge](https://monahton.r-universe.dev/badges/:registry)](https://monahton.r-universe.dev/)
 
 [![Last
 commit](https://img.shields.io/github/last-commit/monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/commits/main)

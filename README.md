@@ -76,6 +76,7 @@ vignette("GencoDymo2")
 
 Or visit the documentation website:  
 👉 <https://monahton.github.io/GencoDymo2/>
+👉 <https://monahton.github.io/GencoDymo2/articles/GencoDymo2_vignette.html>
 
 ------------------------------------------------------------------------
 

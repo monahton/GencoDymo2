@@ -1,7 +1,7 @@
 Package: GencoDymo2
 Type: Package
 Title: Comprehensive Analysis of 'GENCODE' Annotations and Splice Site Motifs
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Monah", "Abou Alezz", email = "aboualezz.monah@hsr.it", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2006-4250")),
     person("Lorenzo", "Salviati", email = "lorenzo.salviati01@universitadipavia.it", role = "ctb"),

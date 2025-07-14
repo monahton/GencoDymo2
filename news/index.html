@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GencoDymo2</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,19 @@
       <small>Source: <a href="https://github.com/monahton/GencoDymo2/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.2" id="gencodymo2-102">GencoDymo2 1.0.2<a class="anchor" aria-label="anchor" href="#gencodymo2-102"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-2"></a></h3>
+<ul><li>Removed hard dependency on <code>BSgenome.Hsapiens.UCSC.hg38</code>; now listed in <code>Suggests</code>.</li>
+<li>Updated multiple functions to handle genome input more robustly using <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace()</a></code> pattern.</li>
+<li>Ensured CRAN compatibility for functions using <code><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html" class="external-link">getSeq()</a></code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-0-2">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-0-2"></a></h3>
+<ul><li>Cleaned up examples to avoid running genome-heavy code during CRAN checks.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="gencodymo2-101">GencoDymo2 1.0.1<a class="anchor" aria-label="anchor" href="#gencodymo2-101"></a></h2><p class="text-muted">CRAN release: 2025-05-15</p>
 <ul><li>Initial stable release of GencoDymo2</li>

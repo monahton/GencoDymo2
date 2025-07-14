@@ -43,13 +43,17 @@ This function performs the following steps:
 }
 }
 \examples{
-suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
-file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-gtf_v1 <- load_file(file_v1)
-introns_df <- extract_introns(gtf_v1)
-introns_ss <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
-cryptic_sites <- find_cryptic_splice_sites(introns_ss, BSgenome.Hsapiens.UCSC.hg38)
-head(cryptic_sites)
+\dontrun{
+  if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+    file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+    gtf_v1 <- load_file(file_v1)
+    introns_df <- extract_introns(gtf_v1)
+    introns_ss <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
+    cryptic_sites <- find_cryptic_splice_sites(introns_ss, BSgenome.Hsapiens.UCSC.hg38)
+    head(cryptic_sites)
+  }
+}
+
 
 }
 \seealso{

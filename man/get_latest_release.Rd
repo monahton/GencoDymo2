@@ -29,11 +29,13 @@ The function accesses the GENCODE FTP directory and parses the available folders
 It is particularly useful for bioinformatics workflows that require up-to-date annotation files without manual checks.
 }
 \examples{
+\dontrun{
 # Retrieve the latest release version for human
 human_release <- get_latest_release(species = "human", verbose = FALSE)
 cat("Latest human GENCODE release: release_47")
 
 # Get the latest release for mouse
 mouse_release <- get_latest_release("mouse", verbose = TRUE)
+}
 
 }

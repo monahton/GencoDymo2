@@ -400,29 +400,35 @@ stat_summary <- function(input, type, verbose = TRUE) {
 #'
 #' @usage calculate_gc_content(input, genome, verbose = TRUE)
 #'
-#' @param input A data frame containing genomic features (exons/introns) with \code{seqnames}, \code{start}, \code{end}, and \code{strand} columns.
+#' @param input A data frame containing genomic features (exons/introns) with \code{seqnames}, \code{start} or \code{intron_start}, \code{end} or \code{intron_end}, and \code{strand} columns.
 #' @param genome A BSgenome object representing the reference genome (e.g., \code{BSgenome.Hsapiens.UCSC.hg38}).
 #' @param verbose A logical indicating whether to print progress messages. Defaults to \code{TRUE}.
 #'
 #' @return The input data frame with an additional \code{gc_content} column containing GC percentages for each feature.
 #'
-#' @details This function extracts the DNA sequence for each feature using genomic coordinates, then calculates the proportion of G and C nucleotides. Requires a BSgenome package for the relevant genome.
-#'
 #' @examples
-#' library(BSgenome.Hsapiens.UCSC.hg38)
-#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-#' gtf_v1 <- load_file(file_v1)
-#' gtf_with_gc <- calculate_gc_content(gtf_v1, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = FALSE)
+#' \dontrun{
+#' if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+#'   genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+#'   file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#'   gtf_v1 <- load_file(file_v1)
+#'   gtf_with_gc <- calculate_gc_content(gtf_v1, genome = genome, verbose = FALSE)
+#' }
+#' }
 #'
 #' @importFrom BSgenome getSeq
 #' @importFrom Biostrings letterFrequency
 #' @importFrom GenomicRanges GRanges
-#' @import BSgenome.Hsapiens.UCSC.hg38
+#' @importFrom IRanges IRanges
 #' @export
 
 calculate_gc_content <- function(input, genome, verbose = TRUE) {
-  if (!methods::is(genome, "BSgenome")) {
-    stop("The 'genome' argument must be a BSgenome object.")
+  if (missing(genome) || is.null(genome)) {
+    stop("A valid BSgenome object must be provided via the 'genome' argument.")
+  }
+
+  if (!inherits(genome, "BSgenome")) {
+    stop("The 'genome' argument must be a valid BSgenome object.")
   }
 
   if (!is.data.frame(input)) {
@@ -434,7 +440,7 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
     stop("Input data frame must contain at least: ", paste(required_cols, collapse = ", "))
   }
 
-  # Determine if exon or intron coordinates are used
+  # Check presence of start/end or intron_start/intron_end
   if (!("start" %in% colnames(input)) && !("intron_start" %in% colnames(input))) {
     stop("Input must contain either 'start' or 'intron_start' column.")
   }
@@ -450,9 +456,8 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
     return(input)
   }
 
-  # Add universal start and end for GRanges construction
   features$start_unified <- if ("start" %in% colnames(features)) features$start else features$intron_start
-  features$end_unified <- if ("end" %in% colnames(features)) features$end else features$intron_end
+  features$end_unified   <- if ("end" %in% colnames(features)) features$end else features$intron_end
 
   if (verbose) message("Creating GRanges object...")
   gr <- GenomicRanges::GRanges(
@@ -463,12 +468,8 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 
   if (verbose) message("Extracting sequences...")
   seqs <- tryCatch(
-    {
-      BSgenome::getSeq(genome, gr)
-    },
-    error = function(e) {
-      stop("Error extracting sequences: ", e$message)
-    }
+    BSgenome::getSeq(genome, gr),
+    error = function(e) stop("Error extracting sequences: ", e$message)
   )
 
   if (verbose) message("Calculating GC content...")
@@ -481,6 +482,7 @@ calculate_gc_content <- function(input, genome, verbose = TRUE) {
 
   return(input)
 }
+
 
 #' @title Convert Data Frame to FASTA File
 #'
@@ -550,60 +552,62 @@ df_to_fasta <- function(df, id_col, seq_col, output_file = NULL, gzip = TRUE, ve
   }
 }
 
-
-
 #' @title Extract Coding Sequences (CDS) from GTF Annotations
 #'
 #' @description Extracts CDS regions from a GTF annotation file or data frame using genomic coordinates and retrieves corresponding DNA sequences from a BSgenome reference.
 #'
 #' @usage extract_cds_sequences(input, genome, save_fasta, output_file, verbose)
 #'
-#' @param input A character string (GTF file path) or data frame containing CDS annotations.
-#' @param genome A BSgenome object for the relevant genome. Defaults to human (hg38).
-#' @param save_fasta A logical indicating whether to save sequences to a FASTA file. Defaults to \code{FALSE}.
-#' @param output_file A character string specifying the FASTA output path. If \code{NULL}, uses "CDS.fa".
-#' @param verbose A logical indicating whether to print progress messages. Defaults to \code{TRUE}.
+#' @param input A character string (GTF file path) or GRanges object containing CDS annotations.
+#' @param genome A BSgenome object for the relevant genome (e.g., BSgenome.Hsapiens.UCSC.hg38).
+#' @param save_fasta Logical indicating whether to save sequences to a FASTA file.
+#' @param output_file Character string specifying the FASTA output path.
+#' @param verbose Logical indicating whether to print progress messages.
 #'
 #' @return A data frame containing CDS annotations with corresponding sequences. If \code{save_fasta = TRUE}, also writes a FASTA file.
 #'
-#' @details This function processes CDS entries from the input GTF, extracts their sequences from the reference genome, and optionally saves them in FASTA format. Useful for downstream analyses like protein translation.
-#'
 #' @examples
-#' file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-#' gtf_v1 <- load_file(file_v1)
-#' # Human CDS extraction
-#' suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
-#' suppressPackageStartupMessages(library(GenomicRanges))
-#' gtf_granges <- GRanges(gtf_v1)
-#' cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
+#' \dontrun{
+#' if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+#'   suppressPackageStartupMessages(library(GenomicRanges))
+#'   genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+#'   file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+#'   gtf_v1 <- load_file(file_v1) # Should return GRanges
+#'   cds_seqs <- extract_cds_sequences(gtf_v1, genome, save_fasta = FALSE)
+#' }
+#' }
 #'
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Biostrings DNAStringSet
 #' @importFrom BSgenome getSeq
 #' @importFrom methods is
-#' @import BSgenome.Hsapiens.UCSC.hg38
 #' @export
 
-extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE, output_file = NULL, verbose = TRUE) {
+extract_cds_sequences <- function(input, genome, save_fasta = FALSE, output_file = NULL, verbose = TRUE) {
+  if (missing(genome) || is.null(genome)) {
+    stop("A valid BSgenome object must be provided via the 'genome' argument.")
+  }
+
   if (!methods::is(genome, "BSgenome")) {
     stop("The 'genome' argument must be a BSgenome object.")
   }
-  # Handle input
+
+  # Handle input: file path or GRanges
   if (is.character(input)) {
     if (!file.exists(input)) {
       stop("GTF file not found: ", input)
     }
     if (verbose) message("Loading GTF file...")
-    gtf <- load_file(input) # returns GRanges
+    gtf <- load_file(input)  # Should return GRanges
   } else if (methods::is(input, "GRanges")) {
     if (verbose) message("Using provided GRanges object...")
     gtf <- input
   } else {
     stop("Input must be a file path or a GRanges object.")
   }
+
   gtf <- GenomicRanges::GRanges(gtf)
 
-  # Extract CDS features
   cds <- subset(gtf, gtf$type == "CDS")
 
   if (length(cds) == 0) {
@@ -614,27 +618,27 @@ extract_cds_sequences <- function(input, genome = BSgenome.Hsapiens.UCSC.hg38, s
   if (verbose) message("Extracting CDS sequences from genome...")
 
   cds_seqs <- tryCatch(
-    {
-      BSgenome::getSeq(genome, cds)
-    },
+    BSgenome::getSeq(genome, cds),
     error = function(e) {
       stop("Error extracting sequences from genome: ", e$message)
     }
   )
 
-  # Prepare output table
   cds_df <- as.data.frame(cds)
   cds_df$CDS_seq <- as.character(cds_seqs)
 
-  # Optionally write FASTA
   if (save_fasta) {
     if (verbose) cat("Compiling sequences into a FASTA file...\n")
     if (is.null(output_file)) {
       output_file <- "CDS.fa"
     }
+    # Create unique IDs for FASTA header
     cds_df$ID <- paste0(cds_df$transcript_id, ";", cds_df$exon_id)
-    df_to_fasta(cds_df, id_col = "ID", seq_col = "CDS_seq", output_file = output_file, verbose = TRUE)
+    df_to_fasta(cds_df, id_col = "ID", seq_col = "CDS_seq", output_file = output_file, verbose = verbose)
     cds_df$ID <- NULL
   }
+
   return(cds_df)
 }
+
+

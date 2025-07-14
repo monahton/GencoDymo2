@@ -7,57 +7,34 @@
 extract_ss_motif(input, genome, type, verbose, save_fasta, output_file)
 }
 \arguments{
-\item{input}{A data frame containing genomic information with the following required columns:
-\itemize{
-\item \code{seqnames}: Chromosome or scaffold names.
-\item \code{strand}: Strand orientation, either '+' or '-'.
-\item \code{intron_start}: Start position of the intron.
-\item \code{intron_end}: End position of the intron.
-\item \code{transcript_id}: Identifier for the transcript.
-\item \code{intron_number}: Identifier for the intron within the transcript.
-}}
+\item{input}{A data frame with columns: \code{seqnames}, \code{strand}, \code{intron_start}, \code{intron_end}, \code{transcript_id}, \code{intron_number}.}
 
-\item{genome}{A genome object from the BSgenome package (default is \code{BSgenome.Hsapiens.UCSC.hg38}).}
+\item{genome}{A BSgenome object (e.g., from BSgenome.Hsapiens.UCSC.hg38).}
 
-\item{type}{A string indicating which splice site motif to extract. One of \code{"5ss"} (donor splice site) or \code{"3ss"} (acceptor splice site).}
+\item{type}{One of \code{"5ss"} (donor) or \code{"3ss"} (acceptor).}
 
-\item{verbose}{Logical; if \code{TRUE}, progress messages will be printed. Default is \code{TRUE}.}
+\item{verbose}{Logical; print progress messages.}
 
-\item{save_fasta}{Logical; if \code{TRUE}, a FASTA file will be saved containing the extracted motifs. Default is \code{FALSE}.}
+\item{save_fasta}{Logical; write a FASTA file of extracted motifs.}
 
-\item{output_file}{A string specifying the output file path and name for the FASTA file. If \code{NULL}, a default name will be used (either "5ss_motif_fasta.fa" or "3ss_motif_fasta.fa").}
+\item{output_file}{Name/path of the output FASTA file.}
 }
 \value{
-A data frame with:
-\itemize{
-\item \code{donor_ss_motif} or \code{acceptor_ss_motif}: 9bp (5' ss) or 23bp (3' ss) sequence.
-\item Genomic coordinates and transcript metadata.
-}
+A data frame including extracted splice site motifs.
 }
 \description{
-This function extracts splice site motifs (5' splice site (5ss) or 3' splice site (3ss)) from a genomic dataset. It retrieves the donor or acceptor splice site motifs for each intron, based on the strand orientation,
-and compiles them into a FASTA file, which can be used for further analysis (e.g., MaxEntScan).
-}
-\details{
-This function performs the following steps:
-\itemize{
-\item Based on the \code{type} argument, the function prepares coordinates for extracting either donor (5ss) or acceptor (3ss) splice site motifs,
-adjusting the motif start and end positions depending on the strand orientation.
-\item The motif sequences are then extracted from the specified genome using the \code{getSeq} function from the BSgenome package.
-\item If \code{save_fasta} is \code{TRUE}, a FASTA file is generated containing the extracted motifs, with transcript IDs and intron numbers
-used as FASTA headers.
-}
+Extracts donor (5') or acceptor (3') splice site motifs from a genomic dataset using BSgenome sequences.
 }
 \examples{
-file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-gtf_v1 <- load_file(file_v1)
-introns <- extract_introns(gtf_v1)
-suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
-# Extract donor splice site motifs
-motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, "5ss", verbose = FALSE)
-
-# Extract acceptor splice site motifs without saving the FASTA file
-motifs_df <- extract_ss_motif(introns, BSgenome.Hsapiens.UCSC.hg38, "3ss", verbose = FALSE)
+\dontrun{
+if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+  genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+  file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+  gtf_v1 <- load_file(file_v1)
+  introns <- extract_introns(gtf_v1)
+  motifs_df <- extract_ss_motif(introns, genome, "5ss", verbose = FALSE)
+}
+}
 
 }
 \seealso{

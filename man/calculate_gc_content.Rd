@@ -7,7 +7,7 @@
 calculate_gc_content(input, genome, verbose = TRUE)
 }
 \arguments{
-\item{input}{A data frame containing genomic features (exons/introns) with \code{seqnames}, \code{start}, \code{end}, and \code{strand} columns.}
+\item{input}{A data frame containing genomic features (exons/introns) with \code{seqnames}, \code{start} or \code{intron_start}, \code{end} or \code{intron_end}, and \code{strand} columns.}
 
 \item{genome}{A BSgenome object representing the reference genome (e.g., \code{BSgenome.Hsapiens.UCSC.hg38}).}
 
@@ -19,13 +19,14 @@ The input data frame with an additional \code{gc_content} column containing GC p
 \description{
 Computes the GC content percentage for exons or introns using genome sequence data from a BSgenome object.
 }
-\details{
-This function extracts the DNA sequence for each feature using genomic coordinates, then calculates the proportion of G and C nucleotides. Requires a BSgenome package for the relevant genome.
-}
 \examples{
-library(BSgenome.Hsapiens.UCSC.hg38)
-file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-gtf_v1 <- load_file(file_v1)
-gtf_with_gc <- calculate_gc_content(gtf_v1, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = FALSE)
+\dontrun{
+if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+  genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+  file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+  gtf_v1 <- load_file(file_v1)
+  gtf_with_gc <- calculate_gc_content(gtf_v1, genome = genome, verbose = FALSE)
+}
+}
 
 }

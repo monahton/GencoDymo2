@@ -4,23 +4,12 @@
 \alias{assign_splice_sites}
 \title{Assign intron donor and acceptor splice sites consensus}
 \usage{
-assign_splice_sites(input, genome = BSgenome.Hsapiens.UCSC.hg38, verbose = TRUE)
+assign_splice_sites(input, genome, verbose = TRUE)
 }
 \arguments{
-\item{input}{A data frame containing intron coordinates with the following columns:
-\itemize{
-\item \code{seqnames}: The chromosome name.
-\item \code{intron_start}: The start position of the intron.
-\item \code{intron_end}: The end position of the intron.
-\item \code{strand}: The strand on which the intron is located (\code{+} or \code{-}).
-\item \code{transcript_id}: The ID of the transcript to which the intron belongs.
-\item \code{intron_number}: The number of the intron within the transcript.
-\item \code{gene_name}: The name of the gene.
-\item \code{gene_id}: The gene ID.
-}}
+\item{input}{A data frame containing intron coordinates.}
 
-\item{genome}{The genome sequence (BSgenome object) for the species. Default is the human genome (hg38).
-This object is required for extracting the consensus sequences from the genome at the specified intron positions.}
+\item{genome}{A \code{BSgenome} object like \code{BSgenome.Hsapiens.UCSC.hg38}. Must be explicitly passed.}
 
 \item{verbose}{Logical. If TRUE, the function prints progress messages while preparing the splice site data. Default is TRUE.}
 }
@@ -35,21 +24,16 @@ A data frame containing the original intron data, with two additional columns:
 This function takes a data frame of intron coordinates and a genome sequence (ideally human or mouse) and returns a data frame with two additional columns for the donor and acceptor splice site consensus sequences.
 It prepares the donor and acceptor sequences based on the provided intron coordinates and the specified genome (e.g., human hg38), making it useful for downstream analysis of splicing events.
 }
-\details{
-This function performs the following steps:
-\itemize{
-\item First, it prepares the splice site sequences for both donor and acceptor sites by calculating their positions based on the strand orientation and intron coordinates. The donor splice site is typically located at the 5' end of the intron, while the acceptor splice site is at the 3' end.
-\item The function utilizes the \code{getSeq} function from the \code{BSgenome} package to extract the nucleotide sequences for both donor and acceptor sites from the specified genome (default is hg38 for humans).
-\item The resulting sequences are added as new columns (\code{donor_ss} and \code{acceptor_ss}) to the original input data frame.
-\item The final data frame includes the splice site sequences for each intron, allowing for analysis of splicing efficiency or identification of consensus motifs.
-}
-}
 \examples{
-suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
-file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-gtf_v1 <- load_file(file_v1)
-introns_df <- extract_introns(gtf_v1)
-result <- assign_splice_sites(introns_df, genome = BSgenome.Hsapiens.UCSC.hg38)
+\dontrun{
+  if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+    genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+    file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+    gtf_v1 <- load_file(file_v1)
+    introns_df <- extract_introns(gtf_v1)
+    result <- assign_splice_sites(introns_df, genome)
+  }
+}
 
 }
 \seealso{

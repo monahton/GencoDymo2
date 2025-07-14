@@ -22,12 +22,14 @@
 #' It is particularly useful for bioinformatics workflows that require up-to-date annotation files without manual checks.
 #'
 #' @examples
+#' \dontrun{
 #' # Retrieve the latest release version for human
 #' human_release <- get_latest_release(species = "human", verbose = FALSE)
 #' cat("Latest human GENCODE release: release_47")
 #'
 #' # Get the latest release for mouse
 #' mouse_release <- get_latest_release("mouse", verbose = TRUE)
+#' }
 #'
 #' @importFrom RCurl getURL
 #' @export
@@ -95,7 +97,7 @@ get_latest_release <- function(species, verbose = TRUE) {
 #'
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Download the latest human GTF file with primary assembly annotations into a temp directory
 #' temp_dir <- tempdir()
 #' gtf_file <- get_gtf(
@@ -221,7 +223,7 @@ get_gtf <- function(species, release_version = "latest_release", annotation_type
 #' If "latest_release" is specified for `release_version`, the function will first determine the latest available release using `get_latest_release()`.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Download the latest human GTF file with primary assembly annotations into a temp directory
 #' temp_dir <- tempdir()
 #' gff3_file <- get_gff3(

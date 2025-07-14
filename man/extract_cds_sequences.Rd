@@ -7,15 +7,15 @@
 extract_cds_sequences(input, genome, save_fasta, output_file, verbose)
 }
 \arguments{
-\item{input}{A character string (GTF file path) or data frame containing CDS annotations.}
+\item{input}{A character string (GTF file path) or GRanges object containing CDS annotations.}
 
-\item{genome}{A BSgenome object for the relevant genome. Defaults to human (hg38).}
+\item{genome}{A BSgenome object for the relevant genome (e.g., BSgenome.Hsapiens.UCSC.hg38).}
 
-\item{save_fasta}{A logical indicating whether to save sequences to a FASTA file. Defaults to \code{FALSE}.}
+\item{save_fasta}{Logical indicating whether to save sequences to a FASTA file.}
 
-\item{output_file}{A character string specifying the FASTA output path. If \code{NULL}, uses "CDS.fa".}
+\item{output_file}{Character string specifying the FASTA output path.}
 
-\item{verbose}{A logical indicating whether to print progress messages. Defaults to \code{TRUE}.}
+\item{verbose}{Logical indicating whether to print progress messages.}
 }
 \value{
 A data frame containing CDS annotations with corresponding sequences. If \code{save_fasta = TRUE}, also writes a FASTA file.
@@ -23,16 +23,15 @@ A data frame containing CDS annotations with corresponding sequences. If \code{s
 \description{
 Extracts CDS regions from a GTF annotation file or data frame using genomic coordinates and retrieves corresponding DNA sequences from a BSgenome reference.
 }
-\details{
-This function processes CDS entries from the input GTF, extracts their sequences from the reference genome, and optionally saves them in FASTA format. Useful for downstream analyses like protein translation.
-}
 \examples{
-file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
-gtf_v1 <- load_file(file_v1)
-# Human CDS extraction
-suppressPackageStartupMessages(library(BSgenome.Hsapiens.UCSC.hg38))
-suppressPackageStartupMessages(library(GenomicRanges))
-gtf_granges <- GRanges(gtf_v1)
-cds_seqs <- extract_cds_sequences(gtf_granges, BSgenome.Hsapiens.UCSC.hg38, save_fasta = FALSE)
+\dontrun{
+if (requireNamespace("BSgenome.Hsapiens.UCSC.hg38", quietly = TRUE)) {
+  suppressPackageStartupMessages(library(GenomicRanges))
+  genome <- BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38
+  file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
+  gtf_v1 <- load_file(file_v1) # Should return GRanges
+  cds_seqs <- extract_cds_sequences(gtf_v1, genome, save_fasta = FALSE)
+}
+}
 
 }

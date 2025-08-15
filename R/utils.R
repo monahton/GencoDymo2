@@ -43,7 +43,7 @@
 #' @seealso \code{\link{load_file}}, \code{\link{get_gtf}}, \code{\link{get_gff3}}.
 #' @export
 
-compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "count2") {
+compare_release <- function(input1, input2, type, gene_biotype = NULL, baseline = "count2") {
   load_if_file <- function(input) {
     if (is.character(input) && file.exists(input)) {
       message("Loading data from file: ", input)
@@ -64,9 +64,9 @@ compare_release <- function(input1, input2, type, gene_type = NULL, baseline = "
   }
   df1 <- load_if_file(input1)
   df2 <- load_if_file(input2)
-  if (!is.null(gene_type)) {
-    df1 <- subset(df1, gene_type == gene_type)
-    df2 <- subset(df2, gene_type == gene_type)
+  if (!is.null(gene_biotype)) {
+    df1 <- subset(df1, gene_type == gene_biotype)
+    df2 <- subset(df2, gene_type == gene_biotype)
   }
   count_elements <- function(df, element_type) {
     return(nrow(subset(df, type == element_type)))

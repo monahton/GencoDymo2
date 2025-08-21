@@ -274,8 +274,8 @@ the majority of cases, the Ensembl gene ID of genes remains constant
 while the gene name might vary.<br>
 To quantify changes between two releases, use <span style="color:coral"><code><a href="../reference/compare_release.html">compare_release()</a></code></span>. Specify the
 two annotation data frames and the type of feature to compare (“gene”,
-“transcript”, “exon”, etc.). Additional filters like the gene_type and
-the baseline can allow to focus on subsets (e.g., only TEC or
+“transcript”, “exon”, etc.). Additional filters like the gene_biotype
+and the baseline can allow to focus on subsets (e.g., only TEC or
 protein_coding genes) and different reference counts for the calculation
 of the difference percentage.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -290,7 +290,7 @@ of the difference percentage.</p>
 <span>  <span class="va">lnc_47_df</span>,</span>
 <span>  <span class="va">lnc_46_df</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"gene"</span>,</span>
-<span>  gene_type <span class="op">=</span> <span class="st">"TEC"</span>,</span>
+<span>  gene_biotype <span class="op">=</span> <span class="st">"TEC"</span>,</span>
 <span>  baseline <span class="op">=</span> <span class="st">"count1"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The function produces as an output a <em><strong>Delta</strong></em>

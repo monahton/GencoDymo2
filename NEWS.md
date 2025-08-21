@@ -1,3 +1,7 @@
+# GencoDymo2 1.0.3
+
+- Fixed issue [#2](https://github.com/monahton/GencoDymo2/issues/2): Corrected handling of gene_type argument in the `compare_release()` function. Now the argument is gene_biotype
+
 # GencoDymo2 1.0.2
 
 ## Bug Fixes

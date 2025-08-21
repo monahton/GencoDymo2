@@ -24,6 +24,7 @@ if (base::getRversion() >= "2.15.1") {
     "quantile",
     "sd",
     "cryptic_acceptor",
-    "cryptic_donor"
+    "cryptic_donor",
+    "gene_type"
   ))
 }

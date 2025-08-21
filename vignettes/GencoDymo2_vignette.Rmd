@@ -202,7 +202,7 @@ head(mouse_pri_36)
 ## Compare Releases
 
 As GENCODE regularly updates its annotations, different releases from GENCODE contain differing number of annotations. Some genes are added in new releases while others are classified into different gene classes. In the majority of cases, the Ensembl gene ID of genes remains constant while the gene name might vary. \
-To quantify changes between two releases, use <span style="color:coral">`compare_release()`</span>. Specify the two annotation data frames and the type of feature to compare ("gene", "transcript", "exon", etc.). Additional filters like the gene_type and the baseline can allow to focus on subsets (e.g., only TEC or protein_coding genes) and different reference counts for the calculation of the difference percentage.
+To quantify changes between two releases, use <span style="color:coral">`compare_release()`</span>. Specify the two annotation data frames and the type of feature to compare ("gene", "transcript", "exon", etc.). Additional filters like the gene_biotype and the baseline can allow to focus on subsets (e.g., only TEC or protein_coding genes) and different reference counts for the calculation of the difference percentage.
 
 ```{r compare-releases, eval=FALSE}
 # Compare gene counts between release 47 and 46
@@ -216,7 +216,7 @@ comparison <- compare_release(
   lnc_47_df,
   lnc_46_df,
   type = "gene",
-  gene_type = "TEC",
+  gene_biotype = "TEC",
   baseline = "count1"
 )
 ```

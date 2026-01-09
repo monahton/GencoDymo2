@@ -1,0 +1,52 @@
+# Get the Latest Gencode Release Dynamically
+
+This function retrieves the latest available release of the Gencode
+database for a given species (human or mouse) by querying the relevant
+FTP directory. It automates the process of identifying the latest
+release of annotations for human or mouse.
+
+## Usage
+
+``` r
+get_latest_release(species, verbose = TRUE)
+```
+
+## Arguments
+
+- species:
+
+  A character string indicating the species. Supported values are:
+
+  - "human"
+
+  - "mouse"
+
+- verbose:
+
+  Logical. If TRUE (default), the function prints the latest release.
+
+## Value
+
+A character string representing the latest release version for the
+specified species (e.g., "release_42" for human or "release_36" for
+mouse).
+
+## Details
+
+The function accesses the GENCODE FTP directory and parses the available
+folders to determine the latest release. It is particularly useful for
+bioinformatics workflows that require up-to-date annotation files
+without manual checks.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Retrieve the latest release version for human
+human_release <- get_latest_release(species = "human", verbose = FALSE)
+cat("Latest human GENCODE release: release_47")
+
+# Get the latest release for mouse
+mouse_release <- get_latest_release("mouse", verbose = TRUE)
+} # }
+```

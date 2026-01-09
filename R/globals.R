@@ -25,6 +25,7 @@ if (base::getRversion() >= "2.15.1") {
     "sd",
     "cryptic_acceptor",
     "cryptic_donor",
-    "gene_type"
+    "gene_type",
+    "id"
   ))
 }

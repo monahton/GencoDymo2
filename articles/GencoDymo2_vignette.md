@@ -526,7 +526,7 @@ document.
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-01-09
+    ##  date     2026-01-12
     ##  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
@@ -555,11 +555,11 @@ document.
     ##  pkgbuild      1.4.8   2025-05-26 [1] RSPM
     ##  pkgdown       2.2.0   2025-11-06 [1] RSPM
     ##  pkgload       1.4.1   2025-09-23 [1] RSPM
-    ##  purrr         1.2.0   2025-11-04 [1] RSPM
+    ##  purrr         1.2.1   2026-01-09 [1] RSPM
     ##  R6            2.6.1   2025-02-15 [1] RSPM
     ##  ragg          1.5.0   2025-09-02 [1] RSPM
     ##  remotes       2.5.0   2024-03-17 [1] RSPM
-    ##  rlang         1.1.6   2025-04-11 [1] RSPM
+    ##  rlang         1.1.7   2026-01-09 [1] RSPM
     ##  rmarkdown     2.30    2025-09-28 [1] RSPM
     ##  sass          0.4.10  2025-04-11 [1] RSPM
     ##  sessioninfo   1.2.3   2025-02-05 [1] RSPM

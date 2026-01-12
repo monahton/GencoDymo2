@@ -1,5 +1,13 @@
 # Changelog
 
+## GencoDymo2 1.0.4
+
+### Bug fixes
+
+- Added missing global variable declaration to fix dplyr update (PR
+  [\#04](https://github.com/monahton/GencoDymo2/issues/04), thanks
+  [@DavisVaughan](https://github.com/DavisVaughan)).
+
 ## GencoDymo2 1.0.3
 
 CRAN release: 2025-08-21

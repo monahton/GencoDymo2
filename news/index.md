@@ -2,6 +2,8 @@
 
 ## GencoDymo2 1.0.4
 
+CRAN release: 2026-01-12
+
 ### Bug fixes
 
 - Added missing global variable declaration to fix dplyr update (PR

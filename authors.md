@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/monahton/GencoDymo2/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/monahton/GencoDymo2/blob/v1.0.4/inst/CITATION)
 
 Abou Alezz M, Celli L, Belotti G, Lisa A, Bione S (2020). “GC-AG Introns
 Features in Long Non-coding and Protein-Coding Genes Suggest Their Role

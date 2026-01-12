@@ -1,7 +1,7 @@
 Package: GencoDymo2
 Type: Package
 Title: Comprehensive Analysis of 'GENCODE' Annotations and Splice Site Motifs
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
     person("Monah", "Abou Alezz", email = "aboualezz.monah@hsr.it", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2006-4250")),
     person("Lorenzo", "Salviati", email = "lorenzo.salviati01@universitadipavia.it", role = "ctb"),
@@ -13,7 +13,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://github.com/monahton/GencoDymo2, https://monahton.github.io/GencoDymo2/
 BugReports: https://github.com/monahton/GencoDymo2/issues
 Imports: 

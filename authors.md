@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/monahton/GencoDymo2/blob/v1.0.4/inst/CITATION)
+[`inst/CITATION`](https://github.com/monahton/GencoDymo2/blob/main/inst/CITATION)
 
 Abou Alezz M, Celli L, Belotti G, Lisa A, Bione S (2020). “GC-AG Introns
 Features in Long Non-coding and Protein-Coding Genes Suggest Their Role
@@ -34,13 +34,13 @@ in Gene Expression Regulation.” *Frontiers in Genetics*, **11**, 488.
 Abou Alezz M (2025). *GencoDymo2: Comprehensive Analysis of GENCODE
 Annotations and Splice Site Motifs*.
 [doi:10.5281/zenodo.15302316](https://doi.org/10.5281/zenodo.15302316),
-R package version 1.0.1, <https://github.com/monahton/GencoDymo2>.
+R package version 1.0.4, <https://github.com/monahton/GencoDymo2>.
 
     @Manual{,
       title = {GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs},
       author = {Monah {Abou Alezz}},
       year = {2025},
-      note = {R package version 1.0.1},
+      note = {R package version 1.0.4},
       url = {https://github.com/monahton/GencoDymo2},
       doi = {10.5281/zenodo.15302316},
     }

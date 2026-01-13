@@ -20,7 +20,7 @@ bibentry(
     title = "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs",
     author = person("Monah", "Abou Alezz"),
     year = 2025,
-    note = "R package version 1.0.1",
+    note = "R package version 1.0.4",
     url = "https://github.com/monahton/GencoDymo2",
     doi = "10.5281/zenodo.15302316"
   )

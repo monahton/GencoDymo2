@@ -131,3 +131,13 @@ IRCCS San Raffaele Scientific Institute, Milan, Italy
 
 Developed as part of ongoing research on lncRNA splicing and gene annotation evolution.  
 Special thanks to colleagues at IGM-CNR and collaborators across splicing research projects.
+
+---
+
+## Contributors
+
+<a href="https://github.com/monahton/GencoDymo2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=monahton/GencoDymo2" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).

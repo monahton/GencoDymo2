@@ -132,3 +132,11 @@ Developed as part of ongoing research on lncRNA splicing and gene
 annotation evolution.  
 Special thanks to colleagues at IGM-CNR and collaborators across
 splicing research projects.
+
+------------------------------------------------------------------------
+
+## Contributors
+
+[![](https://contrib.rocks/image?repo=monahton/GencoDymo2)](https://github.com/monahton/GencoDymo2/graphs/contributors)
+
+Made with [contrib.rocks](https://contrib.rocks).

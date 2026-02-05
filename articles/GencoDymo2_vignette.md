@@ -526,13 +526,13 @@ document.
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-01-13
+    ##  date     2026-02-05
     ##  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date (UTC) lib source
-    ##  bslib         0.9.0   2025-01-30 [1] RSPM
+    ##  bslib         0.10.0  2026-01-26 [1] RSPM
     ##  cachem        1.1.0   2024-05-16 [1] RSPM
     ##  cli           3.6.5   2025-04-23 [1] RSPM
     ##  desc          1.4.3   2023-12-10 [1] RSPM
@@ -554,7 +554,7 @@ document.
     ##  otel          0.2.0   2025-08-29 [1] RSPM
     ##  pkgbuild      1.4.8   2025-05-26 [1] RSPM
     ##  pkgdown       2.2.0   2025-11-06 [1] RSPM
-    ##  pkgload       1.4.1   2025-09-23 [1] RSPM
+    ##  pkgload       1.5.0   2026-02-03 [1] RSPM
     ##  purrr         1.2.1   2026-01-09 [1] RSPM
     ##  R6            2.6.1   2025-02-15 [1] RSPM
     ##  ragg          1.5.0   2025-09-02 [1] RSPM
@@ -566,8 +566,8 @@ document.
     ##  systemfonts   1.3.1   2025-10-01 [1] RSPM
     ##  textshaping   1.0.4   2025-10-10 [1] RSPM
     ##  usethis       3.2.1   2025-09-06 [1] RSPM
-    ##  vctrs         0.6.5   2023-12-01 [1] RSPM
-    ##  xfun          0.55    2025-12-16 [1] RSPM
+    ##  vctrs         0.7.1   2026-01-23 [1] RSPM
+    ##  xfun          0.56    2026-01-18 [1] RSPM
     ##  yaml          2.3.12  2025-12-10 [1] RSPM
     ## 
     ##  [1] /home/runner/work/_temp/Library

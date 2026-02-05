@@ -61,5 +61,5 @@ seq_data <- data.frame(
 )
 df_to_fasta(seq_data, "transcript_id", "sequence", temp_output)
 #> Writing FASTA file...
-#> FASTA file successfully saved to /tmp/Rtmp2crDc2/output.fa.gz 
+#> FASTA file successfully saved to /tmp/Rtmpqdnl4m/output.fa.gz 
 ```

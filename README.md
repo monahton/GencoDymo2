@@ -144,4 +144,4 @@ splicing research projects.
   <img src="https://contrib.rocks/image?repo=monahton/GencoDymo2" />
 </a>
 
-Made with [contrib.rocks](https://contrib.rocks).
+

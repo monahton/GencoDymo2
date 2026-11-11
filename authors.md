@@ -33,7 +33,7 @@ in Gene Expression Regulation.” *Frontiers in Genetics*, **11**, 488.
 
 Abou Alezz M (2025). *GencoDymo2: Comprehensive Analysis of GENCODE
 Annotations and Splice Site Motifs*.
-[doi:10.5281/zenodo.15302316](https://doi.org/10.5281/zenodo.15302316),
+[doi:10.5281/zenodo.15302316](https://doi.org/10.5281/zenodo.15302316).
 R package version 1.0.4, <https://github.com/monahton/GencoDymo2>.
 
     @Manual{,

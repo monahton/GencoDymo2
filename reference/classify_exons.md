@@ -57,6 +57,7 @@ If `verbose = TRUE`, the function prints counts of each exon type.
 ## Examples
 
 ``` r
+
 # Example 1: Using the provided example GTF files
 file_v1 <- system.file("extdata", "gencode.v1.example.gtf.gz", package = "GencoDymo2")
 gtf_v1 <- classify_exons(file_v1)

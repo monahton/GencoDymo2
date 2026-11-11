@@ -1,5 +1,12 @@
 # Changelog
 
+## GencoDymo2 1.0.5
+
+- Fixed vignette YAML metadata for compatibility with Pandoc \>= 3.13.
+- Fixed syntax in the
+  [`extract_cds_sequences()`](https://monahton.github.io/GencoDymo2/reference/extract_cds_sequences.md)
+  vignette example.
+
 ## GencoDymo2 1.0.4
 
 CRAN release: 2026-01-12

@@ -47,6 +47,7 @@ You can install the **stable version** of `GencoDymo2` from
 [CRAN](https://cran.r-project.org/package=GencoDymo2):
 
 ``` r
+
 # Install the stable version from CRAN
 install.packages("GencoDymo2")
 ```
@@ -55,12 +56,14 @@ Or you can install the **development version** from GitHub for the
 latest features:
 
 ``` r
+
 #Install the development version from GitHub
 install.packages("pak")
 pak::pkg_install("monahton/GencoDymo2")
 ```
 
 ``` r
+
 # Load the package
 library(GencoDymo2)
 ```
@@ -72,6 +75,7 @@ library(GencoDymo2)
 To get started, view the vignette:
 
 ``` r
+
 vignette("GencoDymo2")
 ```
 
@@ -84,13 +88,13 @@ Or visit the documentation website:
 
 ## 📁 Functions Highlights
 
-| Function                                                                                          | Description                                                |
-|---------------------------------------------------------------------------------------------------|------------------------------------------------------------|
-| [`get_latest_release()`](https://monahton.github.io/GencoDymo2/reference/get_latest_release.md)   | Retrieves the latest available GENCODE release per species |
-| [`compare_release()`](https://monahton.github.io/GencoDymo2/reference/compare_release.md)         | compare annotation statistics between releases             |
-| [`extract_introns()`](https://monahton.github.io/GencoDymo2/reference/extract_introns.md)         | Extracts and processes introns from annotation             |
-| [`assign_splice_sites()`](https://monahton.github.io/GencoDymo2/reference/assign_splice_sites.md) | Assign the donor and acceptor splice sites                 |
-| [`extract_ss_motif()`](https://monahton.github.io/GencoDymo2/reference/extract_ss_motif.md)       | Extract splicing motifs for MaxEntScan tool                |
+| Function | Description |
+|----|----|
+| [`get_latest_release()`](https://monahton.github.io/GencoDymo2/reference/get_latest_release.md) | Retrieves the latest available GENCODE release per species |
+| [`compare_release()`](https://monahton.github.io/GencoDymo2/reference/compare_release.md) | compare annotation statistics between releases |
+| [`extract_introns()`](https://monahton.github.io/GencoDymo2/reference/extract_introns.md) | Extracts and processes introns from annotation |
+| [`assign_splice_sites()`](https://monahton.github.io/GencoDymo2/reference/assign_splice_sites.md) | Assign the donor and acceptor splice sites |
+| [`extract_ss_motif()`](https://monahton.github.io/GencoDymo2/reference/extract_ss_motif.md) | Extract splicing motifs for MaxEntScan tool |
 
 ------------------------------------------------------------------------
 

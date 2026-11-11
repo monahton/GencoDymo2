@@ -66,6 +66,7 @@ can be installed from GitHub. We recommend using the pak package for
 fast and reliable installation.
 
 ``` r
+
 # Install pak if not already installed
 if (!require("pak")) install.packages("pak")
 # Install from GitHub
@@ -93,6 +94,7 @@ function. This function queries the official GENCODE website to
 determine the most recent release for a given species (human or mouse).
 
 ``` r
+
 # Fetch the most recent human and mouse GENCODE release identifiers
 human_release <- get_latest_release("human", verbose = T)
 mouse_release <- get_latest_release("mouse", verbose = T)
@@ -119,6 +121,7 @@ by the user. With the release identifiers in hand, we can download these
 annotation files:
 
 ``` r
+
 # Download latest human long noncoding RNAs GTF
 lnc_47_gtf <- get_gtf(
   species = "human",
@@ -172,6 +175,7 @@ load_file(). This function automatically detects GTF vs GFF3 and parses
 the attributes into columns.
 
 ``` r
+
 # Loading using the stored paths from previous steps
 lnc_47_df <- load_file(lnc_47_gtf)
 head(lnc_47_df)
@@ -203,6 +207,7 @@ only TEC or protein_coding genes) and different reference counts for the
 calculation of the difference percentage.
 
 ``` r
+
 # Compare gene counts between release 47 and 46
 gene_comparison <- compare_release(lnc_47_df, lnc_46_df, type = "gene")
 
@@ -242,6 +247,7 @@ ranges and identifying gaps. It returns a dataframe containing introns
 coordinates and position within each transcript.
 
 ``` r
+
 # Human lncRNA introns for release 47
 introns_lnc_47 <- extract_introns(lnc_47_df, verbose = T)
 
@@ -285,6 +291,7 @@ be retrieved from a loaded BSgenome object such as
 `BSgenome.Mmusculus.UCSC.mm39` for mouse.
 
 ``` r
+
 # Human
 library(BSgenome.Hsapiens.UCSC.hg38)
 lnc_47_ss <- assign_splice_sites(
@@ -317,6 +324,7 @@ differ from the canonical patterns, making it useful for studying
 aberrant splicing events.
 
 ``` r
+
 # Identify cryptic (non-canonical) splice sites
 cryptic_ss <- find_cryptic_splice_sites(
   lnc_47_ss,
@@ -366,6 +374,7 @@ can optionally set the argument `save_fasta` to TRUE to and the
 `output_file` argument to save a fasta file.
 
 ``` r
+
 # Donor motifs (5'ss)
 motifs_donor <- extract_ss_motif(
   input = lnc_47_ss,
@@ -405,6 +414,7 @@ function can extract all the ***single-exon*** genes or transcripts and
 returns in a dataframe with their ensembl gene IDs or transcript IDs.
 
 ``` r
+
 ## identify single exon genes and transcripts
 single_exon_genes <- extract_single_exon(lnc_47_df, level = "gene")
 single_exon_trans <- extract_single_exon(lnc_47_df, level = "transcript")
@@ -424,6 +434,7 @@ considering that first and last exons often have peculiar regulative
 roles.
 
 ``` r
+
 # Assign the ordinal position of exons
 lnc_47_class_exons <- classify_exons(lnc_47_df, verbose = TRUE)
 ```
@@ -438,6 +449,7 @@ function computes the mature (post-splicing) transcript length by
 summing exon widths per transcript.
 
 ``` r
+
 # Length of spliced transcript  
 lnc_47_spliced_length <- spliced_trans_length(lnc_47_df)
 head(lnc_47_spliced_length)
@@ -453,6 +465,7 @@ function that gives a brief summary of data annotations in a particular
 GENCODE release regarding genes, transcripts, exons and introns.
 
 ``` r
+
 # Exon length statistics
 lnc_47_exon_stats <- stat_summary(lnc_47_class_exons, type = "exon")
 
@@ -470,6 +483,7 @@ function computes GC percentage for any feature set using a BSgenome
 reference.
 
 ``` r
+
 # Human
 lnc_47_gc <- calculate_gc_content(
   lnc_47_df,
@@ -493,6 +507,7 @@ For coding annotations,
 writes CDS FASTA files from GRanges objects.
 
 ``` r
+
 # Convert to GRanges and extract
 library(GenomicRanges)
 mouse_pri_36_granges <- GRanges(mouse_pri_36)
@@ -500,7 +515,7 @@ mouse_cds_seqs <- extract_cds_sequences(
   mouse_pri_36_granges,
   BSgenome.Mmusculus.UCSC.mm39,
   save_fasta = TRUE,
-  output_file = file.path(tempdir(), "mouse_pri_36_CDS.fa.gz")
+  output_file = file.path(tempdir(), "mouse_pri_36_CDS.fa.gz"),
   verbose = TRUE
 )
 ```
@@ -518,61 +533,60 @@ document.
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value
-    ##  version  R version 4.5.2 (2025-10-31)
-    ##  os       Ubuntu 24.04.3 LTS
+    ##  version  R version 4.6.2 (2026-10-29)
+    ##  os       Ubuntu 24.04.5 LTS
     ##  system   x86_64, linux-gnu
     ##  ui       X11
     ##  language en-US
     ##  collate  C.UTF-8
     ##  ctype    C.UTF-8
     ##  tz       UTC
-    ##  date     2026-02-05
-    ##  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
+    ##  date     2026-11-11
+    ##  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
     ##  quarto   NA
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date (UTC) lib source
-    ##  bslib         0.10.0  2026-01-26 [1] RSPM
+    ##  bslib         0.12.0  2026-08-04 [1] RSPM
     ##  cachem        1.1.0   2024-05-16 [1] RSPM
-    ##  cli           3.6.5   2025-04-23 [1] RSPM
+    ##  cli           3.6.6   2026-04-09 [1] RSPM
     ##  desc          1.4.3   2023-12-10 [1] RSPM
-    ##  devtools      2.4.6   2025-10-03 [1] RSPM
+    ##  devtools      2.5.2   2026-04-30 [1] RSPM
     ##  digest        0.6.39  2025-11-19 [1] RSPM
-    ##  ellipsis      0.3.2   2021-04-29 [1] RSPM
+    ##  ellipsis      0.3.3   2026-04-04 [1] RSPM
     ##  evaluate      1.0.5   2025-08-27 [1] RSPM
     ##  fastmap       1.2.0   2024-05-15 [1] RSPM
-    ##  fs            1.6.6   2025-04-12 [1] RSPM
-    ##  glue          1.8.0   2024-09-30 [1] RSPM
+    ##  fs            2.1.0   2026-04-18 [1] RSPM
+    ##  glue          1.8.1   2026-04-17 [1] RSPM
     ##  htmltools     0.5.9   2025-12-04 [1] RSPM
     ##  htmlwidgets   1.6.4   2023-12-06 [1] RSPM
     ##  jquerylib     0.1.4   2021-04-26 [1] RSPM
     ##  jsonlite      2.0.0   2025-03-27 [1] RSPM
-    ##  knitr         1.51    2025-12-20 [1] RSPM
+    ##  knitr         1.52    2026-09-06 [1] RSPM
     ##  lifecycle     1.0.5   2026-01-08 [1] RSPM
-    ##  magrittr      2.0.4   2025-09-12 [1] RSPM
+    ##  magrittr      2.0.5   2026-04-04 [1] RSPM
     ##  memoise       2.0.1   2021-11-26 [1] RSPM
-    ##  otel          0.2.0   2025-08-29 [1] RSPM
+    ##  otel          0.3.0   2026-11-07 [1] RSPM
     ##  pkgbuild      1.4.8   2025-05-26 [1] RSPM
-    ##  pkgdown       2.2.0   2025-11-06 [1] RSPM
-    ##  pkgload       1.5.0   2026-02-03 [1] RSPM
-    ##  purrr         1.2.1   2026-01-09 [1] RSPM
+    ##  pkgdown       2.2.1   2026-07-07 [1] RSPM
+    ##  pkgload       1.5.3   2026-06-15 [1] RSPM
+    ##  purrr         1.2.2   2026-04-10 [1] RSPM
     ##  R6            2.6.1   2025-02-15 [1] RSPM
-    ##  ragg          1.5.0   2025-09-02 [1] RSPM
-    ##  remotes       2.5.0   2024-03-17 [1] RSPM
-    ##  rlang         1.1.7   2026-01-09 [1] RSPM
-    ##  rmarkdown     2.30    2025-09-28 [1] RSPM
+    ##  ragg          1.5.2   2026-03-23 [1] RSPM
+    ##  rlang         1.3.0   2026-07-05 [1] RSPM
+    ##  rmarkdown     2.32    2026-09-01 [1] RSPM
     ##  sass          0.4.10  2025-04-11 [1] RSPM
-    ##  sessioninfo   1.2.3   2025-02-05 [1] RSPM
-    ##  systemfonts   1.3.1   2025-10-01 [1] RSPM
-    ##  textshaping   1.0.4   2025-10-10 [1] RSPM
-    ##  usethis       3.2.1   2025-09-06 [1] RSPM
-    ##  vctrs         0.7.1   2026-01-23 [1] RSPM
-    ##  xfun          0.56    2026-01-18 [1] RSPM
+    ##  sessioninfo   1.2.4   2026-06-04 [1] RSPM
+    ##  systemfonts   1.3.2   2026-03-05 [1] RSPM
+    ##  textshaping   1.0.5   2026-03-06 [1] RSPM
+    ##  usethis       3.2.2   2026-09-10 [1] RSPM
+    ##  vctrs         0.7.3   2026-04-11 [1] RSPM
+    ##  xfun          0.62    2026-10-16 [1] RSPM
     ##  yaml          2.3.12  2025-12-10 [1] RSPM
     ## 
     ##  [1] /home/runner/work/_temp/Library
-    ##  [2] /opt/R/4.5.2/lib/R/site-library
-    ##  [3] /opt/R/4.5.2/lib/R/library
+    ##  [2] /opt/R/4.6.2/lib/R/site-library
+    ##  [3] /opt/R/4.6.2/lib/R/library
     ## 
     ## ──────────────────────────────────────────────────────────────────────────────
 

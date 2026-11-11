@@ -1,19 +1,20 @@
 ---
 title: "GencoDymo2: Comprehensive Analysis of GENCODE Annotations and Splice Site Motifs"
 date: "`r Sys.Date()`"
-author: 
-- name: Monah Abou Alezz<sup>1</sup>, Lorenzo Salviati<sup>2</sup>, Roberta Alfieri<sup>3</sup>, Silvia Bione<sup>4</sup>
-  affiliation: "<sup>1</sup>San Raffaele Telethon Institute for Gene Therapy, Istituto di Ricovero e Cura a Carattere Scientifico (IRCCS) San Raffaele Scientific Institute, 20132 Milan, Italy<br>
-  <sup>2</sup>Human Technopole, Viale Rita Levi-Montalcini 1, 20157 Milan, Italy<br>
-  <sup>3</sup>National Research Council, Institute for Biomedical Technologies, 20054 Segrate, Italy<br>
-  <sup>4</sup>Computational Biology Unit, Institute of Molecular Genetics Luigi Luca Cavalli-Sforza, National Research Council, 27100 Pavia, Italy"
+author:
+  - name: Monah Abou Alezz<sup>1</sup>, Lorenzo Salviati<sup>2</sup>, Roberta Alfieri<sup>3</sup>, Silvia Bione<sup>4</sup>
+    affiliation: >
+      <sup>1</sup>San Raffaele Telethon Institute for Gene Therapy, Istituto di Ricovero e Cura a Carattere Scientifico (IRCCS) San Raffaele Scientific Institute, 20132 Milan, Italy<br>
+      <sup>2</sup>Human Technopole, Viale Rita Levi-Montalcini 1, 20157 Milan, Italy<br>
+      <sup>3</sup>National Research Council, Institute for Biomedical Technologies, 20054 Segrate, Italy<br>
+      <sup>4</sup>Computational Biology Unit, Institute of Molecular Genetics Luigi Luca Cavalli-Sforza, National Research Council, 27100 Pavia, Italy
 keywords: GENCODE, gene annotations, introns, splice sites annotations, splice sites scores
-output: 
+output:
   html_document:
     toc: true
     toc_depth: 5
-    toc_float:  
-     collapsed: true  
+    toc_float:
+      collapsed: true
     number_sections: false
     theme: cerulean
 vignette: >
@@ -422,7 +423,7 @@ mouse_cds_seqs <- extract_cds_sequences(
   mouse_pri_36_granges,
   BSgenome.Mmusculus.UCSC.mm39,
   save_fasta = TRUE,
-  output_file = file.path(tempdir(), "mouse_pri_36_CDS.fa.gz")
+  output_file = file.path(tempdir(), "mouse_pri_36_CDS.fa.gz"),
   verbose = TRUE
 )
 ```
